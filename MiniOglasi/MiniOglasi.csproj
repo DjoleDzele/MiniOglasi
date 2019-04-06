@@ -176,17 +176,37 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OglasiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201904051652340_InitialModel.cs" />
-    <Compile Include="Migrations\201904051652340_InitialModel.Designer.cs">
-      <DependentUpon>201904051652340_InitialModel.cs</DependentUpon>
+    <Compile Include="Migrations\201904061220043_InitialModel.cs" />
+    <Compile Include="Migrations\201904061220043_InitialModel.Designer.cs">
+      <DependentUpon>201904061220043_InitialModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061755251_DodaniOstaliModeli.cs" />
+    <Compile Include="Migrations\201904061755251_DodaniOstaliModeli.Designer.cs">
+      <DependentUpon>201904061755251_DodaniOstaliModeli.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
+    <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
+    <Compile Include="Models\OmiljeniOglasiByUser.cs" />
+    <Compile Include="Models\RacunarOglasModels\GrafickaKartaMarka.cs" />
+    <Compile Include="Models\RacunarOglasModels\MarkaRacunara.cs" />
+    <Compile Include="Models\Stanje.cs" />
+    <Compile Include="Models\IdentityModels\AccountViewModels.cs" />
+    <Compile Include="Models\AutoOglasModels\AutoOglas.cs" />
+    <Compile Include="Models\Grad.cs" />
+    <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
+    <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
+    <Compile Include="Models\IdentityModels\ManageViewModels.cs" />
+    <Compile Include="Models\NekretninaOglasModels\NekretninaOglas.cs" />
+    <Compile Include="Models\NekretninaOglasModels\TipNekretnine.cs" />
+    <Compile Include="Models\Oglas.cs" />
+    <Compile Include="Models\RacunarOglasModels\RacunarOglas.cs" />
+    <Compile Include="Models\RacunarOglasModels\TipRacunara.cs" />
+    <Compile Include="Models\Slika.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -249,6 +269,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Oglasi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -264,8 +285,11 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201904051652340_InitialModel.resx">
-      <DependentUpon>201904051652340_InitialModel.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201904061220043_InitialModel.resx">
+      <DependentUpon>201904061220043_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061755251_DodaniOstaliModeli.resx">
+      <DependentUpon>201904061755251_DodaniOstaliModeli.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

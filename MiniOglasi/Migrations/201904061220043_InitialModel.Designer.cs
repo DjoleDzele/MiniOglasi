@@ -13,7 +13,7 @@ namespace MiniOglasi.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201904051652340_InitialModel"; }
+            get { return "201904061220043_InitialModel"; }
         }
         
         string IMigrationMetadata.Source
