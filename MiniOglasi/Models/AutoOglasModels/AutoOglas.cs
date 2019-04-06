@@ -17,6 +17,13 @@ namespace MiniOglasi.Models
         [Range(0, 1000000)]
         public int Kilometraza { get; set; }
 
+        [Range(0, 1000)]
+        [Display(Name = "Konjskih snaga")]
+        public int KonjskeSnage { get; set; }
+
+        [Range(100, 10000)]
+        public int Kubikaza { get; set; }
+
         public int Godiste { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

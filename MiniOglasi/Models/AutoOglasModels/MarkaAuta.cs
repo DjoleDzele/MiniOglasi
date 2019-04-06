@@ -10,7 +10,5 @@ namespace MiniOglasi.Models.AutoOglasModels
         public string Marka { get; set; }
 
         public ICollection<AutoOglas> OglasiAuto { get; set; }
-
-        public ICollection<ModelAuta> ModeliAuta { get; set; }
     }
 }

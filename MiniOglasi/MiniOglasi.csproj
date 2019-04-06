@@ -188,19 +188,62 @@
     <Compile Include="Migrations\201904061755251_DodaniOstaliModeli.Designer.cs">
       <DependentUpon>201904061755251_DodaniOstaliModeli.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904061759223_SeedTabelaStanja.cs" />
+    <Compile Include="Migrations\201904061759223_SeedTabelaStanja.Designer.cs">
+      <DependentUpon>201904061759223_SeedTabelaStanja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061810317_SeedTabelaGradovi.cs" />
+    <Compile Include="Migrations\201904061810317_SeedTabelaGradovi.Designer.cs">
+      <DependentUpon>201904061810317_SeedTabelaGradovi.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061817413_SeedTabelaMarkeAuta.cs" />
+    <Compile Include="Migrations\201904061817413_SeedTabelaMarkeAuta.Designer.cs">
+      <DependentUpon>201904061817413_SeedTabelaMarkeAuta.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061831238_IzbrisanModelAutaTabela.cs" />
+    <Compile Include="Migrations\201904061831238_IzbrisanModelAutaTabela.Designer.cs">
+      <DependentUpon>201904061831238_IzbrisanModelAutaTabela.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061838375_DodanaPoljaZaOglasNekretnine.cs" />
+    <Compile Include="Migrations\201904061838375_DodanaPoljaZaOglasNekretnine.Designer.cs">
+      <DependentUpon>201904061838375_DodanaPoljaZaOglasNekretnine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061840169_SeedTabelaTipNekretnine.cs" />
+    <Compile Include="Migrations\201904061840169_SeedTabelaTipNekretnine.Designer.cs">
+      <DependentUpon>201904061840169_SeedTabelaTipNekretnine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061844132_SeedTabelaGrafickeKarte.cs" />
+    <Compile Include="Migrations\201904061844132_SeedTabelaGrafickeKarte.Designer.cs">
+      <DependentUpon>201904061844132_SeedTabelaGrafickeKarte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061847359_SeedTabelaMarkeRacunara.cs" />
+    <Compile Include="Migrations\201904061847359_SeedTabelaMarkeRacunara.Designer.cs">
+      <DependentUpon>201904061847359_SeedTabelaMarkeRacunara.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061854146_SeedTabelaTipoviRacunara.cs" />
+    <Compile Include="Migrations\201904061854146_SeedTabelaTipoviRacunara.Designer.cs">
+      <DependentUpon>201904061854146_SeedTabelaTipoviRacunara.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061920091_DodateKoloneUAutoOglas.cs" />
+    <Compile Include="Migrations\201904061920091_DodateKoloneUAutoOglas.Designer.cs">
+      <DependentUpon>201904061920091_DodateKoloneUAutoOglas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904061945063_CreateAdminUser.cs" />
+    <Compile Include="Migrations\201904061945063_CreateAdminUser.Designer.cs">
+      <DependentUpon>201904061945063_CreateAdminUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
-    <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
     <Compile Include="Models\OmiljeniOglasiByUser.cs" />
     <Compile Include="Models\RacunarOglasModels\GrafickaKartaMarka.cs" />
     <Compile Include="Models\RacunarOglasModels\MarkaRacunara.cs" />
     <Compile Include="Models\Stanje.cs" />
-    <Compile Include="Models\IdentityModels\AccountViewModels.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\AutoOglasModels\AutoOglas.cs" />
     <Compile Include="Models\Grad.cs" />
     <Compile Include="Models\IdentityModels\ApplicationUser.cs" />
     <Compile Include="Models\IdentityModels\ApplicationDbContext.cs" />
-    <Compile Include="Models\IdentityModels\ManageViewModels.cs" />
+    <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\NekretninaOglasModels\NekretninaOglas.cs" />
     <Compile Include="Models\NekretninaOglasModels\TipNekretnine.cs" />
     <Compile Include="Models\Oglas.cs" />
@@ -290,6 +333,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904061755251_DodaniOstaliModeli.resx">
       <DependentUpon>201904061755251_DodaniOstaliModeli.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061759223_SeedTabelaStanja.resx">
+      <DependentUpon>201904061759223_SeedTabelaStanja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061810317_SeedTabelaGradovi.resx">
+      <DependentUpon>201904061810317_SeedTabelaGradovi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061817413_SeedTabelaMarkeAuta.resx">
+      <DependentUpon>201904061817413_SeedTabelaMarkeAuta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061831238_IzbrisanModelAutaTabela.resx">
+      <DependentUpon>201904061831238_IzbrisanModelAutaTabela.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061838375_DodanaPoljaZaOglasNekretnine.resx">
+      <DependentUpon>201904061838375_DodanaPoljaZaOglasNekretnine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061840169_SeedTabelaTipNekretnine.resx">
+      <DependentUpon>201904061840169_SeedTabelaTipNekretnine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061844132_SeedTabelaGrafickeKarte.resx">
+      <DependentUpon>201904061844132_SeedTabelaGrafickeKarte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061847359_SeedTabelaMarkeRacunara.resx">
+      <DependentUpon>201904061847359_SeedTabelaMarkeRacunara.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061854146_SeedTabelaTipoviRacunara.resx">
+      <DependentUpon>201904061854146_SeedTabelaTipoviRacunara.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061920091_DodateKoloneUAutoOglas.resx">
+      <DependentUpon>201904061920091_DodateKoloneUAutoOglas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904061945063_CreateAdminUser.resx">
+      <DependentUpon>201904061945063_CreateAdminUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

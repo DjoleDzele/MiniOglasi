@@ -31,6 +31,7 @@ namespace MiniOglasi.Models
         [Required]
         [Display(Name = "Code")]
         public string Code { get; set; }
+
         public string ReturnUrl { get; set; }
 
         [Display(Name = "Remember this browser?")]
@@ -64,6 +65,21 @@ namespace MiniOglasi.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Kontakt telefon")]
+        [RegularExpression(
+            @"0\d{2}-\d{3}-\d{3,4}",
+            ErrorMessage = "Pogresan format telefona, unesite 0XX-XXX-XXX(X) ")]
+        public string KontaktTelefon { get; set; }
+
+        [Required]
+        [Display(Name = "Izaberite vas grad")]
+        public int GradId { get; set; }
+
+        public ICollection<Grad> Gradovi { get; set; }
+
+        //MOJE DODATO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

@@ -19,7 +19,6 @@ namespace MiniOglasi.Models
         public DbSet<Slika> Slike { get; set; }
         public DbSet<Stanje> Stanja { get; set; }
         public DbSet<MarkaAuta> MarkeAuta { get; set; }
-        public DbSet<ModelAuta> ModeliAuta { get; set; }
         public DbSet<TipNekretnine> TipoviNekretnina { get; set; }
         public DbSet<GrafickaKartaMarka> GrafickeKarte { get; set; }
         public DbSet<MarkaRacunara> MarkeRacunara { get; set; }
@@ -77,12 +76,6 @@ namespace MiniOglasi.Models
                 .WithMany(m => m.OglasiAuto)
                 .HasForeignKey(a => a.MarkaAutaId)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<MarkaAuta>()
-                .HasMany(mar => mar.ModeliAuta)
-                .WithRequired(mod => mod.Marka)
-                .HasForeignKey(mod => mod.MarkaAutaId)
-                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<RacunarOglas>()
                 .HasOptional(r => r.MarkaRacunara)
