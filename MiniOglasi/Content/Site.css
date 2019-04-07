@@ -1,24 +1,85 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-size: 62.5%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+    body > * {
+        font-size: 1.5rem;
+    }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    min-height: 95vh;
+    margin-top: 8rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
+/* Override the default bootstrap behavior where horizontal description lists
+   will truncate terms that are too long to fit in the left column
 */
+
 .dl-horizontal dt {
     white-space: normal;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
+/* Set width on the form input elrements since they're 100% wide by default */
 input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.izbor-kategorije-oglasa {
+    width: 50%;
+    margin: auto;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: minmax(20rem, 1fr) minmax(20rem, 1fr);
+    grid-template-rows: minmax(15rem, 1fr) minmax(15rem, 1fr);
+    grid-column-gap: 10rem;
+    grid-row-gap: 2rem;
+}
+
+a:hover div {
+    text-decoration: none;
+}
+
+.naslovna-kategorija {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25rem;
+    height: 15rem;
+    border: 2px solid #7777ea;
+    border-radius: 10px;
+    color: white;
+    font-size: 3rem;
+    margin: 2rem;
+    transition: all 0.5s;
+}
+
+    .naslovna-kategorija:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+    }
+
+.naslovna-kategorija-auti {
+    background-color: cornflowerblue;
+}
+
+.naslovna-kategorija-racunari {
+    background-color: lightgreen;
+}
+
+.naslovna-kategorija-nekretnine {
+    background-color: mediumpurple;
+}
+
+.naslovna-kategorija-svi {
+    background-color: orangered;
 }
