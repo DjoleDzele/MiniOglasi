@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MiniOglasi.Models
 {
@@ -7,12 +6,8 @@ namespace MiniOglasi.Models
     public class Slika
     {
         public int Id { get; set; }
+        public string PathDoSlike { get; set; }
 
-        public byte[] ImageData { get; set; }
-
-        public string ImageMimeType { get; set; }
-
-        [Required]
         [ForeignKey("Oglas")]
         public int OglasId { get; set; }
 

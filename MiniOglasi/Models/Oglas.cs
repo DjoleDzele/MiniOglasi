@@ -18,6 +18,12 @@ namespace MiniOglasi.Models
         public ApplicationUser UserAutorOglasa { get; set; }
 
         [Required]
+        [ForeignKey("Stanje")]
+        public int StanjeId { get; set; }
+
+        public Stanje Stanje { get; set; }
+
+        [Required]
         [Display(Name = "Naslov oglasa")]
         [StringLength(255)]
         public string NaslovOglasa { get; set; }
@@ -35,11 +41,5 @@ namespace MiniOglasi.Models
         [StringLength(2000)]
         [Display(Name = "Opis oglasa")]
         public string OpisOglasa { get; set; }
-
-        [Required]
-        [ForeignKey("Stanje")]
-        public int StanjeId { get; set; }
-
-        public Stanje Stanje { get; set; }
     }
 }

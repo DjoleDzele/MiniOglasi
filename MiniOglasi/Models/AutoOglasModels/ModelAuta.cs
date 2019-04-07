@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MiniOglasi.Models.AutoOglasModels
@@ -15,5 +16,7 @@ namespace MiniOglasi.Models.AutoOglasModels
         public int MarkaAutaId { get; set; }
 
         public MarkaAuta MarkaAuta { get; set; }
+
+        public ICollection<AutoOglas> OglasiAuto { get; set; }
     }
 }

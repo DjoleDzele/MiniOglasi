@@ -1,7 +1,11 @@
-﻿using MiniOglasi.Models;
+﻿using Microsoft.AspNet.Identity;
+using MiniOglasi.Models;
 using MiniOglasi.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -21,7 +25,9 @@ namespace MiniOglasi.Controllers
         {
             var autoOglasi = dbContext.Oglasi
                 .OfType<AutoOglas>()
-                .Include(o => o.MarkaAuta);
+                .Include(o => o.MarkaAuta)
+                .Include(o => o.ModelAuta)
+                .Include(o => o.Slike);
 
             return View(autoOglasi);
         }
@@ -46,6 +52,14 @@ namespace MiniOglasi.Controllers
         [HttpPost]
         public ActionResult CreateAutoOglas(AutoOglasViewModel newAutoOglasViewModel, List<HttpPostedFileBase> uploadedImages = null)
         {
+            var markeAuta = dbContext.MarkeAuta.ToList();
+            var modeliAuta = dbContext.ModeliAuta.ToList();
+            var stanja = dbContext.Stanja.ToList();
+
+            newAutoOglasViewModel.MarkeAuta = markeAuta;
+            newAutoOglasViewModel.ModeliAuta = modeliAuta;
+            newAutoOglasViewModel.Stanja = stanja;
+
             if (uploadedImages.Any(x => x != null))
             {
                 if (uploadedImages.Count > 5)
@@ -56,7 +70,7 @@ namespace MiniOglasi.Controllers
                 }
                 foreach (HttpPostedFileBase slika in uploadedImages)
                 {
-                    if (PomocnaKlasa.JeLiFormatFajlaSlika(slika))
+                    if (!PomocnaKlasa.JeLiTacanFormatFajla(slika))
                     {
                         ViewBag.Greska = "Izaberite samo slike!";
 
@@ -71,37 +85,46 @@ namespace MiniOglasi.Controllers
                     }
                 }
             }
-            if (!ModelState.IsValid)
+
+            AutoOglas newAutoOglas = new AutoOglas()
             {
-                return View(newAutoOglasViewModel);
-            }
-            else
+                Cena = newAutoOglasViewModel.AutoOglas.Cena,
+                DatumPostavljanja = DateTime.Now,
+                Godiste = newAutoOglasViewModel.AutoOglas.Godiste,
+                Kilometraza = newAutoOglasViewModel.AutoOglas.Kilometraza,
+                KonjskeSnage = newAutoOglasViewModel.AutoOglas.KonjskeSnage,
+                Kubikaza = newAutoOglasViewModel.AutoOglas.Kubikaza,
+                MarkaAutaId = newAutoOglasViewModel.AutoOglas.MarkaAutaId,
+                ModelAutaId = newAutoOglasViewModel.AutoOglas.ModelAutaId,
+                NaslovOglasa = newAutoOglasViewModel.AutoOglas.NaslovOglasa,
+                OpisOglasa = newAutoOglasViewModel.AutoOglas.OpisOglasa,
+                StanjeId = newAutoOglasViewModel.AutoOglas.StanjeId,
+                UserAutorOglasaId = User.Identity.GetUserId(),
+                Slike = new Collection<Slika>()
+            };
+
+            dbContext.Oglasi.Add(newAutoOglas);
+            dbContext.SaveChanges();
+
+            string userId = User.Identity.GetUserId();
+            string oglasId = newAutoOglas.Id.ToString();
+            string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(Server.MapPath(PomocnaKlasa.ImagesFolder), userId, oglasId);
+
+            Directory.CreateDirectory(punaPutanjaFolderaZaSlikeOglasa);
+
+            if (uploadedImages.Any(x => x != null))
             {
-                AutoOglas newAutoOglas = new AutoOglas()
+                foreach (HttpPostedFileBase slika in uploadedImages)
                 {
-                };
+                    Slika novaSlikaZaBazu = PomocnaKlasa.SacuvajSlikuIDodajPutanju(slika, userId, oglasId, punaPutanjaFolderaZaSlikeOglasa);
 
-                if (uploadedImages.Any(x => x != null))
-                {
-                    foreach (HttpPostedFileBase slika in uploadedImages)
-                    {
-                        Slika novaSlika = new Slika()
-                        {
-                            ImageMimeType = slika.ContentType,
-                            ImageData = new byte[slika.ContentLength]
-                        };
-
-                        slika.InputStream.Read(novaSlika.ImageData, 0, slika.ContentLength);
-
-                        newAutoOglas.Slike.Add(novaSlika);
-                    }
+                    newAutoOglas.Slike.Add(novaSlikaZaBazu);
                 }
-
-                dbContext.Oglasi.Add(newAutoOglas);
-                dbContext.SaveChanges();
-
-                return RedirectToAction("Index");
             }
+
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

@@ -247,6 +247,14 @@
     <Compile Include="Migrations\201904071521343_DodataMarkaAutaUAutoOglas.Designer.cs">
       <DependentUpon>201904071521343_DodataMarkaAutaUAutoOglas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904071607245_IzbrisanoOglasIdPoljeIzSlike.cs" />
+    <Compile Include="Migrations\201904071607245_IzbrisanoOglasIdPoljeIzSlike.Designer.cs">
+      <DependentUpon>201904071607245_IzbrisanoOglasIdPoljeIzSlike.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904072256418_PromenjenModelSlike.cs" />
+    <Compile Include="Migrations\201904072256418_PromenjenModelSlike.Designer.cs">
+      <DependentUpon>201904072256418_PromenjenModelSlike.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
     <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
@@ -280,6 +288,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\placeholder-image.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -328,8 +337,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
-    <Content Include="Views\AutoOglasi\Index.cshtml" />
     <Content Include="Views\AutoOglasi\CreateAutoOglas.cshtml" />
+    <Content Include="Views\AutoOglasi\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -398,6 +407,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904071521343_DodataMarkaAutaUAutoOglas.resx">
       <DependentUpon>201904071521343_DodataMarkaAutaUAutoOglas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904071607245_IzbrisanoOglasIdPoljeIzSlike.resx">
+      <DependentUpon>201904071607245_IzbrisanoOglasIdPoljeIzSlike.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904072256418_PromenjenModelSlike.resx">
+      <DependentUpon>201904072256418_PromenjenModelSlike.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

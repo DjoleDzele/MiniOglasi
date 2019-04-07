@@ -2,12 +2,11 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-size: 62.5%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
     body > * {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
 /* Set padding to keep content from hitting the edges */
@@ -58,7 +57,7 @@ a:hover div {
     border: 2px solid #7777ea;
     border-radius: 10px;
     color: white;
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin: 2rem;
     transition: all 0.5s;
 }
@@ -83,3 +82,36 @@ a:hover div {
 .naslovna-kategorija-svi {
     background-color: orangered;
 }
+
+/*================ ZA OGLASE LISTU ================*/
+
+.oglas-list-item {
+    width: 45rem;
+    height: 20rem;
+    border: 1px solid gray;
+    box-shadow: 5px 5px 10px #444444;
+    border-radius: 4px;
+    margin: 1rem auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slika-oglasa {
+    width: 45%;
+    padding-right: 1rem;
+    border-right: 1px solid black;
+}
+
+    .slika-oglasa img {
+        max-width: 100%;
+        border-radius: 0.5rem;
+    }
+
+.main-info-oglasa {
+    width: 55%;
+    margin: 0.5rem;
+    padding: 2rem;
+}
+
+/*================ ZA OGLASE LISTU ================*/

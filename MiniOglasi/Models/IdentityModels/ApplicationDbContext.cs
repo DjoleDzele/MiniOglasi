@@ -64,6 +64,7 @@ namespace MiniOglasi.Models
             modelBuilder.Entity<Oglas>()
                 .HasMany(o => o.Slike)
                 .WithRequired(s => s.Oglas)
+                .HasForeignKey(s => s.OglasId)
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Oglas>()
@@ -80,7 +81,7 @@ namespace MiniOglasi.Models
 
             modelBuilder.Entity<AutoOglas>()
                 .HasRequired(a => a.ModelAuta)
-                .WithMany()
+                .WithMany(m => m.OglasiAuto)
                 .HasForeignKey(a => a.ModelAutaId)
                 .WillCascadeOnDelete(false);
 
