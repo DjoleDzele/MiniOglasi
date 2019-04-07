@@ -236,6 +236,10 @@
     <Compile Include="Migrations\201904070952126_VracenaTabelaModeliAuta.Designer.cs">
       <DependentUpon>201904070952126_VracenaTabelaModeliAuta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904071019490_SeedTabelaModeliAuta.cs" />
+    <Compile Include="Migrations\201904071019490_SeedTabelaModeliAuta.Designer.cs">
+      <DependentUpon>201904071019490_SeedTabelaModeliAuta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
     <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
@@ -374,6 +378,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904070952126_VracenaTabelaModeliAuta.resx">
       <DependentUpon>201904070952126_VracenaTabelaModeliAuta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904071019490_SeedTabelaModeliAuta.resx">
+      <DependentUpon>201904071019490_SeedTabelaModeliAuta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
