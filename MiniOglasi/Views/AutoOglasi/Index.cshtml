@@ -1,0 +1,99 @@
+﻿@model IEnumerable<MiniOglasi.Models.AutoOglas>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Stanje.StanjePredmetaOglasa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserAutorOglasa.KontaktTelefon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NaslovOglasa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatumPostavljanja)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cena)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OpisOglasa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kilometraza)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KonjskeSnage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kubikaza)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Godiste)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MarkaAuta.Marka)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ModelAuta.AutoModel)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stanje.StanjePredmetaOglasa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserAutorOglasa.KontaktTelefon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NaslovOglasa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumPostavljanja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OpisOglasa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kilometraza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KonjskeSnage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kubikaza)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Godiste)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarkaAuta.Marka)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModelAuta.AutoModel)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>

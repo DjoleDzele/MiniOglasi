@@ -78,6 +78,12 @@ namespace MiniOglasi.Models
                 .HasForeignKey(a => a.MarkaAutaId)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<AutoOglas>()
+                .HasRequired(a => a.ModelAuta)
+                .WithMany()
+                .HasForeignKey(a => a.ModelAutaId)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<MarkaAuta>()
                 .HasMany(mar => mar.ModeliAuta)
                 .WithRequired(mod => mod.MarkaAuta)

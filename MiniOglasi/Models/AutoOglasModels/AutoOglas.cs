@@ -14,6 +14,12 @@ namespace MiniOglasi.Models
 
         public MarkaAuta MarkaAuta { get; set; }
 
+        [Required]
+        [ForeignKey("ModelAuta")]
+        public int ModelAutaId { get; set; }
+
+        public ModelAuta ModelAuta { get; set; }
+
         [Range(0, 1000000)]
         public int Kilometraza { get; set; }
 
