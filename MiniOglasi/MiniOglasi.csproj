@@ -232,8 +232,13 @@
     <Compile Include="Migrations\201904061945063_CreateAdminUser.Designer.cs">
       <DependentUpon>201904061945063_CreateAdminUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904070952126_VracenaTabelaModeliAuta.cs" />
+    <Compile Include="Migrations\201904070952126_VracenaTabelaModeliAuta.Designer.cs">
+      <DependentUpon>201904070952126_VracenaTabelaModeliAuta.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
+    <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
     <Compile Include="Models\OmiljeniOglasiByUser.cs" />
     <Compile Include="Models\RacunarOglasModels\GrafickaKartaMarka.cs" />
     <Compile Include="Models\RacunarOglasModels\MarkaRacunara.cs" />
@@ -367,6 +372,12 @@
     <EmbeddedResource Include="Migrations\201904061945063_CreateAdminUser.resx">
       <DependentUpon>201904061945063_CreateAdminUser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904070952126_VracenaTabelaModeliAuta.resx">
+      <DependentUpon>201904070952126_VracenaTabelaModeliAuta.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
