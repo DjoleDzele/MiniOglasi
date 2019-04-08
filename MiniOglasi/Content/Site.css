@@ -1,18 +1,11 @@
 ﻿body {
     box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    margin-top: 3.5rem;
 }
-
-    body > * {
-        font-size: 1.4rem;
-    }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    min-height: 95vh;
-    margin-top: 8rem;
     padding-left: 1rem;
     padding-right: 1rem;
 }
@@ -32,9 +25,11 @@ textarea {
     max-width: 280px;
 }
 
+/*MOJA DODAVANJA*/
+
 .izbor-kategorije-oglasa {
     width: 50%;
-    margin: auto;
+    margin: 5.5rem auto;
     display: grid;
     justify-items: center;
     align-items: center;
@@ -42,10 +37,6 @@ textarea {
     grid-template-rows: minmax(15rem, 1fr) minmax(15rem, 1fr);
     grid-column-gap: 10rem;
     grid-row-gap: 2rem;
-}
-
-a:hover div {
-    text-decoration: none;
 }
 
 .naslovna-kategorija {
@@ -56,7 +47,6 @@ a:hover div {
     height: 15rem;
     border: 2px solid #7777ea;
     border-radius: 10px;
-    color: white;
     font-size: 2.5rem;
     margin: 2rem;
     transition: all 0.5s;
@@ -85,33 +75,78 @@ a:hover div {
 
 /*================ ZA OGLASE LISTU ================*/
 
-.oglas-list-item {
-    width: 45rem;
-    height: 20rem;
-    border: 1px solid gray;
-    box-shadow: 5px 5px 10px #444444;
-    border-radius: 4px;
+.oglas-okvir {
+    width: 48rem;
+    height: 17rem;
     margin: 1rem auto;
+}
+
+div.oglas-list-item {
+    max-width: 100%;
+    height: 100%;
+    border: 5px solid gray;
+    border-radius: 2px;
+    margin: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.oglas-list-item:hover {
+    border: 5px solid #8c3efe;
+    box-shadow: 0 0 20px #7250ff;
+    border-radius: 1rem;
+}
+
+.slika-oglasa {
+    width: 45%;
+    height: 100%;
+    border-right: 3px solid gray;
+    background-position: center;
+    background-size: 150%;
+    background-repeat: no-repeat;
+    transition: all 0.3s;
+}
+
+.oglas-list-item:hover > .slika-oglasa {
+    background-size: 120%;
+}
+
+.main-info-oglasa {
+    width: 55%;
+    padding: 1rem;
+}
+
+/*================ ZA OGLASE LISTU ================*/
+
+/*=============== ZA DETALJE OGLASA ===============*/
+
+.detalji-oglasa {
+    width: 80%;
+    height: 60vh;
+    margin: 2rem auto;
+    padding: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.slika-oglasa {
-    width: 45%;
-    padding-right: 1rem;
-    border-right: 1px solid black;
-}
-
-    .slika-oglasa img {
-        max-width: 100%;
-        border-radius: 0.5rem;
+    .detalji-oglasa .fotorama {
+        width: 50%;
     }
 
-.main-info-oglasa {
-    width: 55%;
-    margin: 0.5rem;
-    padding: 2rem;
+.slike img {
+    width: 100%;
+    height: 100%;
 }
 
-/*================ ZA OGLASE LISTU ================*/
+.detalji-oglasa .detalji-oglasa-info {
+    width: 40%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+/*=============== ZA DETALJE OGLASA ===============*/

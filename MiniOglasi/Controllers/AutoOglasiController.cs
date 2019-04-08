@@ -126,5 +126,36 @@ namespace MiniOglasi.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult Details(int id)
+        {
+            var autoOglas = dbContext.Oglasi
+                .OfType<AutoOglas>()
+                .Include(o => o.MarkaAuta)
+                .Include(o => o.ModelAuta)
+                .Include(o => o.Slike)
+                .Include(o => o.Stanje)
+                .Include(o => o.UserAutorOglasa)
+                .SingleOrDefault(o => o.Id == id);
+
+            return View(autoOglas);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var autoOglasZaBrisanje = dbContext.Oglasi.Find(id);
+            if (autoOglasZaBrisanje == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                dbContext.Oglasi.Remove(autoOglasZaBrisanje);
+                dbContext.SaveChanges();
+
+                Directory.Delete(Server.MapPath(Path.Combine(PomocnaKlasa.ImagesFolder, User.Identity.GetUserId(), id.ToString())), true);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

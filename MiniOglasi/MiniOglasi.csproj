@@ -280,10 +280,15 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\fotorama%402x.png" />
+    <Content Include="Content\fotorama.css" />
+    <Content Include="Content\fotorama.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -292,6 +297,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\fotorama.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -339,9 +345,11 @@
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\AutoOglasi\CreateAutoOglas.cshtml" />
     <Content Include="Views\AutoOglasi\Index.cshtml" />
+    <Content Include="Views\AutoOglasi\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\api\" />
     <Folder Include="Views\NekretnineOglasi\" />
     <Folder Include="Views\Oglasi\" />
     <Folder Include="Views\RacunariOglasi\" />

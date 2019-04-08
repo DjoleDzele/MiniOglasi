@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<MiniOglasi.Models.AutoOglas>
 
+@using MiniOglasi.Models
+
 @{
     ViewBag.Title = "Index";
 }
@@ -12,33 +14,45 @@
 
 @foreach (var item in Model)
 {
+    string pathDoSlike = "";
 
-    <div class="oglas-list-item">
-        <div class="slika-oglasa" style="background-image: url(@Url.Content(item.Slike.ElementAt(0).PathDoSlike)">
-            @*<img src="data:@item.Slike.ElementAt(0).ImageMimeType;base64,@(Convert.ToBase64String(item.Slike.ElementAt(0).ImageData))"
-                alt="slika oglasa" width="140" height="140" />*@
-        </div>
-        <div class="main-info-oglasa">
-            <p>
-                <strong>@Html.DisplayNameFor(oglas => oglas.NaslovOglasa): </strong>
-                <span>@Html.DisplayFor(oglas => item.NaslovOglasa)</span>
-            </p>
-            <p>
-                <strong>@Html.DisplayNameFor(oglas => oglas.Cena): </strong>
-                <span>@Html.DisplayFor(oglas => item.Cena)</span>
-            </p>
-            <p>
-                <strong>@Html.DisplayNameFor(oglas => oglas.DatumPostavljanja): </strong>
-                <span>@item.DatumPostavljanja.ToShortDateString()</span>
-            </p>
-            <p>
-                <strong>@Html.DisplayNameFor(oglas => oglas.MarkaAuta): </strong>
-                <span>@Html.DisplayFor(oglas => item.MarkaAuta.Marka)</span>
-            </p>
-            <p>
-                <strong>@Html.DisplayNameFor(oglas => oglas.ModelAuta): </strong>
-                <span>@Html.DisplayFor(oglas => item.ModelAuta.AutoModel)</span>
-            </p>
-        </div>
+    if (item.Slike != null && item.Slike.Any())
+    {
+        pathDoSlike = Url.Content(item.Slike.ElementAt(0).PathDoSlike);
+    }
+    else
+    {
+        pathDoSlike = Url.Content(PomocnaKlasa.PlaceholderSlika);
+    }
+
+    <div class="oglas-okvir">
+        <a href="/AutoOglasi/Details/@item.Id" style="text-decoration:none;">
+            <div class="oglas-list-item">
+                <div class="slika-oglasa" style="background-image: url(@pathDoSlike);">
+                </div>
+                <div class="main-info-oglasa">
+                    <p>
+                        <strong>@Html.DisplayNameFor(oglas => oglas.NaslovOglasa): </strong>
+                        <span>@Html.DisplayFor(oglas => item.NaslovOglasa)</span>
+                    </p>
+                    <p>
+                        <strong>@Html.DisplayNameFor(oglas => oglas.Cena): </strong>
+                        <span>@Html.DisplayFor(oglas => item.Cena)</span>
+                    </p>
+                    <p>
+                        <strong>@Html.DisplayNameFor(oglas => oglas.DatumPostavljanja): </strong>
+                        <span>@item.DatumPostavljanja.ToShortDateString()</span>
+                    </p>
+                    <p>
+                        <strong>@Html.DisplayNameFor(oglas => oglas.MarkaAuta): </strong>
+                        <span>@Html.DisplayFor(oglas => item.MarkaAuta.Marka)</span>
+                    </p>
+                    <p>
+                        <strong>@Html.DisplayNameFor(oglas => oglas.ModelAuta): </strong>
+                        <span>@Html.DisplayFor(oglas => item.ModelAuta.AutoModel)</span>
+                    </p>
+                </div>
+            </div>
+        </a>
     </div>
 }
