@@ -32,99 +32,121 @@ namespace MiniOglasi.Controllers
             return View(autoOglasi);
         }
 
-        public ActionResult CreateAutoOglas()
+        public ActionResult Create()
         {
-            var markeAuta = dbContext.MarkeAuta.ToList();
-            var modeliAuta = dbContext.ModeliAuta.ToList();
-            var stanja = dbContext.Stanja.ToList();
+            var markeAuta = dbContext.MarkeAuta;
+            var modeliAuta = dbContext.ModeliAuta;
+            var stanja = dbContext.Stanja;
 
             AutoOglasViewModel autoOglasViewModel = new AutoOglasViewModel()
             {
                 AutoOglas = new AutoOglas(),
-                MarkeAuta = markeAuta,
-                ModeliAuta = modeliAuta,
-                Stanja = stanja
+                MarkeAuta = markeAuta.ToList(),
+                ModeliAuta = modeliAuta.ToList(),
+                Stanja = stanja.ToList()
             };
 
-            return View(autoOglasViewModel);
+            return View("AutoOglasForm", autoOglasViewModel);
         }
 
         [HttpPost]
-        public ActionResult CreateAutoOglas(AutoOglasViewModel newAutoOglasViewModel, List<HttpPostedFileBase> uploadedImages = null)
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveAutoOglas(AutoOglasViewModel newAutoOglasViewModel, List<HttpPostedFileBase> uploadedImages = null)
         {
-            var markeAuta = dbContext.MarkeAuta.ToList();
-            var modeliAuta = dbContext.ModeliAuta.ToList();
-            var stanja = dbContext.Stanja.ToList();
+            //Za slucaj da mora da se vrati na formu zbog modelstate not valid
+            var markeAuta = dbContext.MarkeAuta;
+            var modeliAuta = dbContext.ModeliAuta;
+            var stanja = dbContext.Stanja;
 
-            newAutoOglasViewModel.MarkeAuta = markeAuta;
-            newAutoOglasViewModel.ModeliAuta = modeliAuta;
-            newAutoOglasViewModel.Stanja = stanja;
+            newAutoOglasViewModel.MarkeAuta = markeAuta.ToList();
+            newAutoOglasViewModel.ModeliAuta = modeliAuta.ToList();
+            newAutoOglasViewModel.Stanja = stanja.ToList();
+            //Za slucaj da mora da se vrati na formu zbog modelstate not valid
 
             if (uploadedImages.Any(x => x != null))
             {
-                if (uploadedImages.Count > 5)
+                if (uploadedImages.Count > 5 || (newAutoOglasViewModel.AutoOglas.Slike?.Count + uploadedImages.Count > 5))
                 {
                     ViewBag.Greska = "Maksimalno 5 slika po osobi!";
 
-                    return View("CreateAutoOglas", newAutoOglasViewModel);
+                    return View("AutoOglasForm", newAutoOglasViewModel);
                 }
+
                 foreach (HttpPostedFileBase slika in uploadedImages)
                 {
                     if (!PomocnaKlasa.JeLiTacanFormatFajla(slika))
                     {
                         ViewBag.Greska = "Izaberite samo slike!";
 
-                        return View("CreateAutoOglas", newAutoOglasViewModel);
+                        return View("AutoOglasForm", newAutoOglasViewModel);
                     }
 
                     if (slika.ContentLength > 500 * 1024)
                     {
                         ViewBag.Greska = "Svaki fajl mora biti manji od 500kb!";
 
-                        return View("CreateAutoOglas", newAutoOglasViewModel);
+                        return View("AutoOglasForm", newAutoOglasViewModel);
                     }
                 }
             }
 
-            AutoOglas newAutoOglas = new AutoOglas()
+            if (!ModelState.IsValid)
             {
-                Cena = newAutoOglasViewModel.AutoOglas.Cena,
-                DatumPostavljanja = DateTime.Now,
-                Godiste = newAutoOglasViewModel.AutoOglas.Godiste,
-                Kilometraza = newAutoOglasViewModel.AutoOglas.Kilometraza,
-                KonjskeSnage = newAutoOglasViewModel.AutoOglas.KonjskeSnage,
-                Kubikaza = newAutoOglasViewModel.AutoOglas.Kubikaza,
-                MarkaAutaId = newAutoOglasViewModel.AutoOglas.MarkaAutaId,
-                ModelAutaId = newAutoOglasViewModel.AutoOglas.ModelAutaId,
-                NaslovOglasa = newAutoOglasViewModel.AutoOglas.NaslovOglasa,
-                OpisOglasa = newAutoOglasViewModel.AutoOglas.OpisOglasa,
-                StanjeId = newAutoOglasViewModel.AutoOglas.StanjeId,
-                UserAutorOglasaId = User.Identity.GetUserId(),
-                Slike = new Collection<Slika>()
-            };
+                ViewBag.Greska = "Proverite unesene podatke";
 
-            dbContext.Oglasi.Add(newAutoOglas);
-            dbContext.SaveChanges();
-
-            string userId = User.Identity.GetUserId();
-            string oglasId = newAutoOglas.Id.ToString();
-            string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(Server.MapPath(PomocnaKlasa.ImagesFolder), userId, oglasId);
-
-            Directory.CreateDirectory(punaPutanjaFolderaZaSlikeOglasa);
-
-            if (uploadedImages.Any(x => x != null))
-            {
-                foreach (HttpPostedFileBase slika in uploadedImages)
-                {
-                    Slika novaSlikaZaBazu = PomocnaKlasa.SacuvajSlikuIDodajPutanju(slika, userId, oglasId, punaPutanjaFolderaZaSlikeOglasa);
-
-                    newAutoOglas.Slike.Add(novaSlikaZaBazu);
-                }
+                return View("AutoOglasForm", newAutoOglasViewModel);
             }
+            else
+            {
+                if (newAutoOglasViewModel.AutoOglas.Id != 0)
+                {
+                    AutoOglas autoOglasUBazi = dbContext.Oglasi
+                                                .OfType<AutoOglas>()
+                                                .SingleOrDefault(o => o.Id == newAutoOglasViewModel.AutoOglas.Id);
 
-            dbContext.SaveChanges();
+                    PopuniAutoOglas(newAutoOglasViewModel, autoOglasUBazi);
 
-            return RedirectToAction("Index");
+                    string userId = User.Identity.GetUserId();
+                    string oglasId = autoOglasUBazi.Id.ToString();
+                    string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(Server.MapPath(PomocnaKlasa.ImagesFolder), userId, oglasId);
+
+                    if (uploadedImages.Any(x => x != null))
+                    {
+                        foreach (var slika in uploadedImages)
+                        {
+                            Slika novaSlikaZaBazu = PomocnaKlasa.SacuvajSlikuIDodajPutanju(slika, userId, oglasId, punaPutanjaFolderaZaSlikeOglasa);
+                            autoOglasUBazi.Slike.Add(novaSlikaZaBazu);
+                        }
+                    }
+                }
+                else
+                {
+                    AutoOglas newAutoOglas = PopuniAutoOglas(newAutoOglasViewModel);
+
+                    dbContext.Oglasi.Add(newAutoOglas);
+                    dbContext.SaveChanges();
+
+                    string userId = User.Identity.GetUserId();
+                    string oglasId = newAutoOglas.Id.ToString();
+                    string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(Server.MapPath(PomocnaKlasa.ImagesFolder), userId, oglasId);
+
+                    Directory.CreateDirectory(punaPutanjaFolderaZaSlikeOglasa);
+
+                    if (uploadedImages.Any(x => x != null))
+                    {
+                        foreach (HttpPostedFileBase slika in uploadedImages)
+                        {
+                            Slika novaSlikaZaBazu = PomocnaKlasa.SacuvajSlikuIDodajPutanju(slika, userId, oglasId, punaPutanjaFolderaZaSlikeOglasa);
+
+                            newAutoOglas.Slike.Add(novaSlikaZaBazu);
+                        }
+                    }
+                }
+
+                dbContext.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult Details(int id)
@@ -156,6 +178,66 @@ namespace MiniOglasi.Controllers
                 Directory.Delete(Server.MapPath(Path.Combine(PomocnaKlasa.ImagesFolder, User.Identity.GetUserId(), id.ToString())), true);
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var stariAutoOglas = dbContext.Oglasi.
+                                    OfType<AutoOglas>().
+                                    Include(o => o.Slike).
+                                    SingleOrDefault(o => o.Id == id);
+            if (stariAutoOglas == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                var markeAuta = dbContext.MarkeAuta;
+                var modeliAuta = dbContext.ModeliAuta;
+                var stanja = dbContext.Stanja;
+
+                AutoOglasViewModel autoOglasViewModel = new AutoOglasViewModel()
+                {
+                    AutoOglas = stariAutoOglas,
+                    MarkeAuta = markeAuta.ToList(),
+                    ModeliAuta = modeliAuta.ToList(),
+                    Stanja = stanja.ToList()
+                };
+
+                return View("AutoOglasForm", autoOglasViewModel);
+            }
+        }
+
+        //**********************************************************************************
+
+        [NonAction]
+        public AutoOglas PopuniAutoOglas(AutoOglasViewModel autoOglasViewModel, AutoOglas autoOglasZaIzmenu = null)
+        {
+            if (autoOglasZaIzmenu == null)
+            {
+                autoOglasZaIzmenu = new AutoOglas();
+            }
+
+            autoOglasZaIzmenu.Cena = autoOglasViewModel.AutoOglas.Cena;
+            autoOglasZaIzmenu.Godiste = autoOglasViewModel.AutoOglas.Godiste;
+            autoOglasZaIzmenu.Kilometraza = autoOglasViewModel.AutoOglas.Kilometraza;
+            autoOglasZaIzmenu.KonjskeSnage = autoOglasViewModel.AutoOglas.KonjskeSnage;
+            autoOglasZaIzmenu.Kubikaza = autoOglasViewModel.AutoOglas.Kubikaza;
+            autoOglasZaIzmenu.MarkaAutaId = autoOglasViewModel.AutoOglas.MarkaAutaId;
+            autoOglasZaIzmenu.ModelAutaId = autoOglasViewModel.AutoOglas.ModelAutaId;
+            autoOglasZaIzmenu.NaslovOglasa = autoOglasViewModel.AutoOglas.NaslovOglasa;
+            autoOglasZaIzmenu.OpisOglasa = autoOglasViewModel.AutoOglas.OpisOglasa;
+            autoOglasZaIzmenu.StanjeId = autoOglasViewModel.AutoOglas.StanjeId;
+
+            autoOglasZaIzmenu.DatumPostavljanja = autoOglasViewModel.AutoOglas.DatumPostavljanja == default(DateTime)
+                ? DateTime.Now
+                : autoOglasViewModel.AutoOglas.DatumPostavljanja;
+
+            autoOglasZaIzmenu.Slike = autoOglasViewModel.AutoOglas.Slike ?? new Collection<Slika>();
+
+            autoOglasZaIzmenu.UserAutorOglasaId = autoOglasViewModel.AutoOglas.UserAutorOglasaId ?? User.Identity.GetUserId();
+
+            return autoOglasZaIzmenu;
         }
     }
 }

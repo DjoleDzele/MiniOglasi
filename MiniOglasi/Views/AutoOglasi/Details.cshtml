@@ -84,7 +84,7 @@
     @Scripts.Render("~/bundles/jquery")
 
     <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
 
             $(".dugme-delete").on("click", function () {
                 bootbox.confirm({
@@ -99,10 +99,32 @@
                         }
                     },
                     className: "pulse animated",
-
+                    size: "small",
                     callback: function (result) {
                         if (result) {
                             window.location.href = "/AutoOglasi/Delete/@Model.Id";
+                        }
+                    }
+                });
+            })
+
+            $(".dugme-edit").on("click", function () {
+                bootbox.confirm({
+                    message: "Izmeni oglas?",
+                    buttons: {
+                        cancel: {
+                            label: 'Ne',
+                        },
+                        confirm: {
+                            label: 'Da',
+                            className: 'btn-danger'
+                        }
+                    },
+                    className: "pulse animated",
+                    size: "small",
+                    callback: function (result) {
+                        if (result) {
+                            window.location.href = "/AutoOglasi/Edit/@Model.Id";
                         }
                     }
                 });

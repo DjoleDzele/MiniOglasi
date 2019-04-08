@@ -11,7 +11,6 @@ namespace MiniOglasi.Models
     {
         public int Id { get; set; }
 
-        [Required]
         [ForeignKey("UserAutorOglasa")]
         public string UserAutorOglasaId { get; set; }
 
