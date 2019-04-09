@@ -13,5 +13,7 @@ namespace MiniOglasi.ViewModels
         public ICollection<ModelAuta> ModeliAuta { get; set; }
 
         public ICollection<Stanje> Stanja { get; set; }
+
+        public ICollection<Valuta> Valute { get; set; }
     }
 }

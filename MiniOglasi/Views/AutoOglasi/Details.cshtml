@@ -42,7 +42,7 @@
             <span>@Html.DisplayFor(oglas => oglas.OpisOglasa)</span>
         </p>
         <p>
-            <span>Cena: @Html.DisplayFor(oglas => oglas.Cena)</span>
+            <span>Cena: @Html.DisplayFor(oglas => oglas.Cena) @Model.Valuta.ImeValute</span>
         </p>
         <p>
             <button class="btn btn-info dugme-edit">Edit</button>

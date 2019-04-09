@@ -27,6 +27,7 @@ namespace MiniOglasi.Controllers
                 .OfType<AutoOglas>()
                 .Include(o => o.MarkaAuta)
                 .Include(o => o.ModelAuta)
+                .Include(o => o.Valuta)
                 .Include(o => o.Slike);
 
             return View(autoOglasi);
@@ -37,13 +38,15 @@ namespace MiniOglasi.Controllers
             var markeAuta = dbContext.MarkeAuta;
             var modeliAuta = dbContext.ModeliAuta;
             var stanja = dbContext.Stanja;
+            var valute = dbContext.Valute;
 
             AutoOglasViewModel autoOglasViewModel = new AutoOglasViewModel()
             {
                 AutoOglas = new AutoOglas(),
                 MarkeAuta = markeAuta.ToList(),
                 ModeliAuta = modeliAuta.ToList(),
-                Stanja = stanja.ToList()
+                Stanja = stanja.ToList(),
+                Valute = valute.ToList()
             };
 
             return View("AutoOglasForm", autoOglasViewModel);
@@ -57,10 +60,12 @@ namespace MiniOglasi.Controllers
             var markeAuta = dbContext.MarkeAuta;
             var modeliAuta = dbContext.ModeliAuta;
             var stanja = dbContext.Stanja;
+            var valute = dbContext.Valute;
 
             newAutoOglasViewModel.MarkeAuta = markeAuta.ToList();
             newAutoOglasViewModel.ModeliAuta = modeliAuta.ToList();
             newAutoOglasViewModel.Stanja = stanja.ToList();
+            newAutoOglasViewModel.Valute = valute.ToList();
             //Za slucaj da mora da se vrati na formu zbog modelstate not valid
 
             if (uploadedImages.Any(x => x != null))
@@ -157,6 +162,7 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.ModelAuta)
                 .Include(o => o.Slike)
                 .Include(o => o.Stanje)
+                .Include(o => o.Valuta)
                 .Include(o => o.UserAutorOglasa)
                 .SingleOrDefault(o => o.Id == id);
 
@@ -195,13 +201,15 @@ namespace MiniOglasi.Controllers
                 var markeAuta = dbContext.MarkeAuta;
                 var modeliAuta = dbContext.ModeliAuta;
                 var stanja = dbContext.Stanja;
+                var valute = dbContext.Valute;
 
                 AutoOglasViewModel autoOglasViewModel = new AutoOglasViewModel()
                 {
                     AutoOglas = stariAutoOglas,
                     MarkeAuta = markeAuta.ToList(),
                     ModeliAuta = modeliAuta.ToList(),
-                    Stanja = stanja.ToList()
+                    Stanja = stanja.ToList(),
+                    Valute = valute.ToList()
                 };
 
                 return View("AutoOglasForm", autoOglasViewModel);
@@ -228,6 +236,7 @@ namespace MiniOglasi.Controllers
             autoOglasZaIzmenu.NaslovOglasa = autoOglasViewModel.AutoOglas.NaslovOglasa;
             autoOglasZaIzmenu.OpisOglasa = autoOglasViewModel.AutoOglas.OpisOglasa;
             autoOglasZaIzmenu.StanjeId = autoOglasViewModel.AutoOglas.StanjeId;
+            autoOglasZaIzmenu.ValutaId = autoOglasViewModel.AutoOglas.ValutaId;
 
             autoOglasZaIzmenu.DatumPostavljanja = autoOglasViewModel.AutoOglas.DatumPostavljanja == default(DateTime)
                 ? DateTime.Now
