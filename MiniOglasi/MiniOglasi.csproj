@@ -274,6 +274,14 @@
     <Compile Include="Migrations\201904091120183_SeedTabelaValute.Designer.cs">
       <DependentUpon>201904091120183_SeedTabelaValute.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904091124126_AddValuteToOglas.cs" />
+    <Compile Include="Migrations\201904091124126_AddValuteToOglas.Designer.cs">
+      <DependentUpon>201904091124126_AddValuteToOglas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904091129587_MakeValueInOglasNotNullable.cs" />
+    <Compile Include="Migrations\201904091129587_MakeValueInOglasNotNullable.Designer.cs">
+      <DependentUpon>201904091129587_MakeValueInOglasNotNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
     <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
@@ -446,6 +454,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904091120183_SeedTabelaValute.resx">
       <DependentUpon>201904091120183_SeedTabelaValute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091124126_AddValuteToOglas.resx">
+      <DependentUpon>201904091124126_AddValuteToOglas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091129587_MakeValueInOglasNotNullable.resx">
+      <DependentUpon>201904091129587_MakeValueInOglasNotNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
