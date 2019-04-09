@@ -15,6 +15,7 @@ namespace MiniOglasi.Models
 
         public DbSet<Grad> Gradovi { get; set; }
         public DbSet<Oglas> Oglasi { get; set; }
+        public DbSet<Valuta> Valute { get; set; }
         public DbSet<OmiljeniOglasiPoKorisniku> OmiljeniOglasiPoKorisniku { get; set; }
         public DbSet<Slika> Slike { get; set; }
         public DbSet<Stanje> Stanja { get; set; }

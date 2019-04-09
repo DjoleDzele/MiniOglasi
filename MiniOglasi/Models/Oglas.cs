@@ -36,6 +36,11 @@ namespace MiniOglasi.Models
         [Range(0, 99999)]
         public int Cena { get; set; }
 
+        //[ForeignKey("Valuta")]
+        //public int ValutaId { get; set; }
+
+        //public Valuta Valuta { get; set; }
+
         [Required]
         [StringLength(2000)]
         [Display(Name = "Opis oglasa")]

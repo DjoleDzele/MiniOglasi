@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201904072256418_PromenjenModelSlike.Designer.cs">
       <DependentUpon>201904072256418_PromenjenModelSlike.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904091116321_DodataTabelaValute.cs" />
+    <Compile Include="Migrations\201904091116321_DodataTabelaValute.Designer.cs">
+      <DependentUpon>201904091116321_DodataTabelaValute.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
     <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
@@ -274,6 +278,7 @@
     <Compile Include="Models\RacunarOglasModels\GrafickaKartaMarka.cs" />
     <Compile Include="Models\RacunarOglasModels\MarkaRacunara.cs" />
     <Compile Include="Models\Stanje.cs" />
+    <Compile Include="Models\Valuta.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\AutoOglasModels\AutoOglas.cs" />
     <Compile Include="Models\Grad.cs" />
@@ -431,6 +436,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904072256418_PromenjenModelSlike.resx">
       <DependentUpon>201904072256418_PromenjenModelSlike.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091116321_DodataTabelaValute.resx">
+      <DependentUpon>201904091116321_DodataTabelaValute.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
