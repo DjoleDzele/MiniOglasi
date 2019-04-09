@@ -57,6 +57,10 @@ namespace MiniOglasi.Controllers
         public ActionResult SaveAutoOglas(AutoOglasViewModel newAutoOglasViewModel, List<HttpPostedFileBase> uploadedImages = null)
         {
             //Za slucaj da mora da se vrati na formu zbog modelstate not valid
+            AutoOglas autoOglasUBazi = dbContext.Oglasi
+                                                .OfType<AutoOglas>()
+                                                .Include(o => o.Slike)
+                                                .SingleOrDefault(o => o.Id == newAutoOglasViewModel.AutoOglas.Id);
             var markeAuta = dbContext.MarkeAuta;
             var modeliAuta = dbContext.ModeliAuta;
             var stanja = dbContext.Stanja;
@@ -66,13 +70,14 @@ namespace MiniOglasi.Controllers
             newAutoOglasViewModel.ModeliAuta = modeliAuta.ToList();
             newAutoOglasViewModel.Stanja = stanja.ToList();
             newAutoOglasViewModel.Valute = valute.ToList();
+            newAutoOglasViewModel.AutoOglas = autoOglasUBazi ?? newAutoOglasViewModel.AutoOglas;
             //Za slucaj da mora da se vrati na formu zbog modelstate not valid
 
-            if (uploadedImages.Any(x => x != null))
+            if (uploadedImages?.Any(x => x != null) == true)
             {
-                if (uploadedImages.Count > 5 || (newAutoOglasViewModel.AutoOglas.Slike?.Count + uploadedImages.Count > 5))
+                if (uploadedImages.Count > 5)
                 {
-                    ViewBag.Greska = "Maksimalno 5 slika po osobi!";
+                    ViewBag.Greska = "Maksimalno 5 slika po oglasu!";
 
                     return View("AutoOglasForm", newAutoOglasViewModel);
                 }
@@ -105,18 +110,21 @@ namespace MiniOglasi.Controllers
             {
                 if (newAutoOglasViewModel.AutoOglas.Id != 0)
                 {
-                    AutoOglas autoOglasUBazi = dbContext.Oglasi
-                                                .OfType<AutoOglas>()
-                                                .SingleOrDefault(o => o.Id == newAutoOglasViewModel.AutoOglas.Id);
-
                     PopuniAutoOglas(newAutoOglasViewModel, autoOglasUBazi);
 
                     string userId = User.Identity.GetUserId();
                     string oglasId = autoOglasUBazi.Id.ToString();
                     string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(Server.MapPath(PomocnaKlasa.ImagesFolder), userId, oglasId);
 
-                    if (uploadedImages.Any(x => x != null))
+                    if (uploadedImages?.Any(x => x != null) == true)
                     {
+                        if (uploadedImages.Count > 5 || (autoOglasUBazi.Slike?.Count + uploadedImages.Count > 5))
+                        {
+                            ViewBag.Greska = "Maksimalno 5 slika po oglasu!";
+
+                            return View("AutoOglasForm", newAutoOglasViewModel);
+                        }
+
                         foreach (var slika in uploadedImages)
                         {
                             Slika novaSlikaZaBazu = PomocnaKlasa.SacuvajSlikuIDodajPutanju(slika, userId, oglasId, punaPutanjaFolderaZaSlikeOglasa);
@@ -137,7 +145,7 @@ namespace MiniOglasi.Controllers
 
                     Directory.CreateDirectory(punaPutanjaFolderaZaSlikeOglasa);
 
-                    if (uploadedImages.Any(x => x != null))
+                    if (uploadedImages?.Any(x => x != null) == true)
                     {
                         foreach (HttpPostedFileBase slika in uploadedImages)
                         {
@@ -242,7 +250,10 @@ namespace MiniOglasi.Controllers
                 ? DateTime.Now
                 : autoOglasViewModel.AutoOglas.DatumPostavljanja;
 
-            autoOglasZaIzmenu.Slike = autoOglasViewModel.AutoOglas.Slike ?? new Collection<Slika>();
+            if (autoOglasZaIzmenu.Slike == null)
+            {
+                autoOglasZaIzmenu.Slike = new Collection<Slika>();
+            }
 
             autoOglasZaIzmenu.UserAutorOglasaId = autoOglasViewModel.AutoOglas.UserAutorOglasaId ?? User.Identity.GetUserId();
 
