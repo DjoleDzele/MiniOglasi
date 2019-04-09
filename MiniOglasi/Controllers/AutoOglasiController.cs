@@ -70,7 +70,10 @@ namespace MiniOglasi.Controllers
             //newAutoOglasViewModel.ModeliAuta = modeliAuta.ToList();
             newAutoOglasViewModel.Stanja = stanja.ToList();
             newAutoOglasViewModel.Valute = valute.ToList();
-            newAutoOglasViewModel.AutoOglas.Slike = autoOglasUBazi.Slike ?? newAutoOglasViewModel.AutoOglas.Slike;
+            if (newAutoOglasViewModel.AutoOglas.Id != 0)
+            {
+                newAutoOglasViewModel.AutoOglas.Slike = autoOglasUBazi.Slike;
+            }
             //Za slucaj da mora da se vrati na formu zbog modelstate not valid
 
             if (uploadedImages?.Any(x => x != null) == true)
