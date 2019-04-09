@@ -188,6 +188,7 @@
     <Compile Include="Controllers\api\SlikeController.cs" />
     <Compile Include="Controllers\AutoOglasiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KorisnikController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NekretnineOglasiController.cs" />
     <Compile Include="Controllers\OglasiController.cs" />
@@ -380,6 +381,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Korisnik\" />
     <Folder Include="Views\NekretnineOglasi\" />
     <Folder Include="Views\Oglasi\" />
     <Folder Include="Views\RacunariOglasi\" />

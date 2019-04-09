@@ -1,9 +1,11 @@
 ﻿@model MiniOglasi.Models.AutoOglas
+@using Microsoft.AspNet.Identity
 
 @using MiniOglasi.Models
 
 @{
     ViewBag.Title = "Details";
+    bool mozeDaMenjaOglas = Request.IsAuthenticated && User.Identity.GetUserId() == Model.UserAutorOglasa.Id;
 }
 
 <h2>@Model.NaslovOglasa</h2>
@@ -44,12 +46,13 @@
         <p>
             <span>Cena: @Html.DisplayFor(oglas => oglas.Cena) @Model.Valuta.ImeValute</span>
         </p>
-        <p>
-            <button class="btn btn-info dugme-edit">Edit</button>
-            <button class="btn btn-danger dugme-delete">Delete</button>
-            @*@Html.ActionLink("Delete", "Delete", "AutoOglasi", new { id = Model.Id }, new { @class = "btn btn-danger" })
-                @Html.ActionLink("Edit", "Edit", "AutoOglasi", new { id = Model.Id }, new { @class = "btn btn-success" })*@
-        </p>
+        @if (mozeDaMenjaOglas)
+        {
+            <p>
+                <button class="btn btn-info dugme-edit">Edit</button>
+                <button class="btn btn-danger dugme-delete">Delete</button>
+            </p>
+        }
     </div>
 </div>
 <table>
@@ -86,6 +89,7 @@
     <script>
     $(document).ready(function () {
 
+        if ("@mozeDaMenjaOglas") {
             $(".dugme-delete").on("click", function () {
                 bootbox.confirm({
                     message: "Izbrisi oglas?",
@@ -129,6 +133,8 @@
                     }
                 });
             })
+        }
+
         })
     </script>
 }
