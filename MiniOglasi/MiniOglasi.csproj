@@ -282,6 +282,10 @@
     <Compile Include="Migrations\201904091129587_MakeValueInOglasNotNullable.Designer.cs">
       <DependentUpon>201904091129587_MakeValueInOglasNotNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904091141296_ValutaDisableCascadeDelete.cs" />
+    <Compile Include="Migrations\201904091141296_ValutaDisableCascadeDelete.Designer.cs">
+      <DependentUpon>201904091141296_ValutaDisableCascadeDelete.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
     <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
@@ -460,6 +464,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904091129587_MakeValueInOglasNotNullable.resx">
       <DependentUpon>201904091129587_MakeValueInOglasNotNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091141296_ValutaDisableCascadeDelete.resx">
+      <DependentUpon>201904091141296_ValutaDisableCascadeDelete.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

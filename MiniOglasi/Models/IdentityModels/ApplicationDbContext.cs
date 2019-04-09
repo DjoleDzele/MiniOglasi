@@ -74,6 +74,12 @@ namespace MiniOglasi.Models
                 .HasForeignKey(o => o.StanjeId)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<Oglas>()
+                .HasRequired(o => o.Valuta)
+                .WithMany()
+                .HasForeignKey(o => o.ValutaId)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<AutoOglas>()
                 .HasRequired(a => a.MarkaAuta)
                 .WithMany(m => m.OglasiAuto)
