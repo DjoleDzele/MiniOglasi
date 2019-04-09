@@ -36,7 +36,7 @@ namespace MiniOglasi.Controllers
         public ActionResult Create()
         {
             var markeAuta = dbContext.MarkeAuta;
-            var modeliAuta = dbContext.ModeliAuta;
+            //var modeliAuta = dbContext.ModeliAuta;
             var stanja = dbContext.Stanja;
             var valute = dbContext.Valute;
 
@@ -44,7 +44,7 @@ namespace MiniOglasi.Controllers
             {
                 AutoOglas = new AutoOglas(),
                 MarkeAuta = markeAuta.ToList(),
-                ModeliAuta = modeliAuta.ToList(),
+                //ModeliAuta = modeliAuta.ToList(),
                 Stanja = stanja.ToList(),
                 Valute = valute.ToList()
             };
@@ -62,15 +62,15 @@ namespace MiniOglasi.Controllers
                                                 .Include(o => o.Slike)
                                                 .SingleOrDefault(o => o.Id == newAutoOglasViewModel.AutoOglas.Id);
             var markeAuta = dbContext.MarkeAuta;
-            var modeliAuta = dbContext.ModeliAuta;
+            //var modeliAuta = dbContext.ModeliAuta;
             var stanja = dbContext.Stanja;
             var valute = dbContext.Valute;
 
             newAutoOglasViewModel.MarkeAuta = markeAuta.ToList();
-            newAutoOglasViewModel.ModeliAuta = modeliAuta.ToList();
+            //newAutoOglasViewModel.ModeliAuta = modeliAuta.ToList();
             newAutoOglasViewModel.Stanja = stanja.ToList();
             newAutoOglasViewModel.Valute = valute.ToList();
-            newAutoOglasViewModel.AutoOglas = autoOglasUBazi ?? newAutoOglasViewModel.AutoOglas;
+            newAutoOglasViewModel.AutoOglas.Slike = autoOglasUBazi.Slike ?? newAutoOglasViewModel.AutoOglas.Slike;
             //Za slucaj da mora da se vrati na formu zbog modelstate not valid
 
             if (uploadedImages?.Any(x => x != null) == true)
@@ -207,7 +207,7 @@ namespace MiniOglasi.Controllers
             else
             {
                 var markeAuta = dbContext.MarkeAuta;
-                var modeliAuta = dbContext.ModeliAuta;
+                //var modeliAuta = dbContext.ModeliAuta;
                 var stanja = dbContext.Stanja;
                 var valute = dbContext.Valute;
 
@@ -215,7 +215,7 @@ namespace MiniOglasi.Controllers
                 {
                     AutoOglas = stariAutoOglas,
                     MarkeAuta = markeAuta.ToList(),
-                    ModeliAuta = modeliAuta.ToList(),
+                    //ModeliAuta = modeliAuta.ToList(),
                     Stanja = stanja.ToList(),
                     Valute = valute.ToList()
                 };

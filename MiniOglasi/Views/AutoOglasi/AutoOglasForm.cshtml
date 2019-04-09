@@ -86,7 +86,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AutoOglas.MarkaAutaId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.AutoOglas.MarkaAutaId, new SelectList(Model.MarkeAuta, "Id", "Marka"), "", new { htmlAttributes = new { @class = "form -control" } })
+                @*@Html.DropDownListFor(model => model.AutoOglas.MarkaAutaId, new SelectList(Model.MarkeAuta, "Id", "Marka"), "", new { htmlAttributes = new { @class = "form -control" } })*@
+                <select id="AutoOglas_MarkaAutaId" name="AutoOglas.MarkaAutaId">
+                    @foreach (var markaAuta in Model.MarkeAuta)
+                    {
+                        string selected = markaAuta.Id == Model.AutoOglas.MarkaAutaId ? "selected" : "";
+
+                        <option @selected value="@markaAuta.Id">@markaAuta.Marka</option>
+                    }
+                </select>
                 @Html.ValidationMessageFor(model => model.AutoOglas.MarkaAutaId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -94,10 +102,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AutoOglas.ModelAutaId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.AutoOglas.ModelAutaId, new SelectList(Model.ModeliAuta, "Id", "AutoModel"), "", new { htmlAttributes = new { @class = "form -control" } })
-                @Html.ValidationMessageFor(model => model.AutoOglas.ModelAutaId, "", new { @class = "text-danger" })
+                <select id="AutoOglas_ModelAutaId" name="AutoOglas.ModelAutaId" style="min-width:100px"></select>
             </div>
         </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.AutoOglas.ModelAutaId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.AutoOglas.ModelAutaId, new SelectList(Model.ModeliAuta, "Id", "AutoModel"), "", new { htmlAttributes = new { @class = "form -control" } })
+                    @Html.ValidationMessageFor(model => model.AutoOglas.ModelAutaId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.AutoOglas.StanjeId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -149,6 +164,43 @@
     <script>
         $(document).ready(function () {
 
+            var izborAutoMarkeDropdown = document.querySelector("#AutoOglas_MarkaAutaId");  // $("#marke-auta-dropdownlist");
+            var izborAutoModelaDropdown = document.querySelector("#AutoOglas_ModelAutaId"); // $("#modeli-auta-dropdownlist");
+
+            popuniTabeluAutoModela(izborAutoMarkeDropdown.value);
+
+            function popuniTabeluAutoModela(autoMarkaId) {
+                $.ajax({
+                    url: "/api/auto-modeli/" + autoMarkaId,
+                    method: "GET",
+                    success: function (data) {
+
+                        izborAutoModelaDropdown.innerHTML = "";
+
+                        data.forEach(function (x) {
+                            //var opcijaZaModel = document.createElement("option");
+                            //opcijaZaModel.value = x.Id;
+                            //opcijaZaModel.text = x.AutoModel;
+
+                            var opcijaZaModel =
+                                `<option ${x.Id == @Model.AutoOglas.ModelAutaId ? selected="selected" : ""} value="${x.Id}">${x.AutoModel}</option>`
+                            izborAutoModelaDropdown.innerHTML += opcijaZaModel;
+
+                            //izborAutoModelaDropdown.append(opcijaZaModel);
+                        })
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                })
+            }
+
+            izborAutoMarkeDropdown.addEventListener("change", function (e) {
+                var izabranaMarkaAuta = e.target.value;
+
+                popuniTabeluAutoModela(izabranaMarkaAuta);
+            });
+
             $("#slikeZaBrisanjeDiv").on("click", function (e) {
 
                 var kliknutaSlika = e.target;
@@ -157,8 +209,6 @@
                 if (kliknutaSlika.classList.contains("js-delete-img")) {
 
                     slikaId = kliknutaSlika.dataset["slikaid"];
-                    console.log(kliknutaSlika);
-                    console.log(slikaId);
 
                     $.ajax({
                         url: `/api/slike/${slikaId}`,
