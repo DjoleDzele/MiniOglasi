@@ -270,6 +270,10 @@
     <Compile Include="Migrations\201904091116321_DodataTabelaValute.Designer.cs">
       <DependentUpon>201904091116321_DodataTabelaValute.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904091120183_SeedTabelaValute.cs" />
+    <Compile Include="Migrations\201904091120183_SeedTabelaValute.Designer.cs">
+      <DependentUpon>201904091120183_SeedTabelaValute.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
     <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
@@ -439,6 +443,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904091116321_DodataTabelaValute.resx">
       <DependentUpon>201904091116321_DodataTabelaValute.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091120183_SeedTabelaValute.resx">
+      <DependentUpon>201904091120183_SeedTabelaValute.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
