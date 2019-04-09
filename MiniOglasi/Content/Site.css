@@ -27,6 +27,24 @@ textarea {
 
 /*MOJA DODAVANJA*/
 
+span.glyphicon {
+    font-size: 5rem;
+    transition: all 0.3s;
+}
+
+    span.glyphicon:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+    }
+
+    span.glyphicon.glyphicon-star-empty {
+        color: dimgray;
+    }
+
+    span.glyphicon.glyphicon-star {
+        color: orange;
+    }
+
 .izbor-kategorije-oglasa {
     width: 50%;
     margin: 5.5rem auto;

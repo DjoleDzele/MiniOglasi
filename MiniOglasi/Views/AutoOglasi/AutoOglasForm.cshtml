@@ -171,7 +171,7 @@
 
             function popuniTabeluAutoModela(autoMarkaId) {
                 $.ajax({
-                    url: "/api/auto-modeli/" + autoMarkaId,
+                    url: `/api/auto-modeli/${autoMarkaId}`,
                     method: "GET",
                     success: function (data) {
 

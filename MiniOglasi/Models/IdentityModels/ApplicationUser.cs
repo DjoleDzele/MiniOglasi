@@ -15,6 +15,8 @@ namespace MiniOglasi.Models
 
         public ICollection<Oglas> MojiOglasi { get; set; }
 
+        public ICollection<OmiljeniOglasiPoKorisniku> OmiljeniOglasi { get; set; }
+
         [Required]
         [RegularExpression(
             @"0\d{2}-\d{3}-\d{3,4}",

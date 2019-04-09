@@ -5,7 +5,7 @@
 
 @{
     ViewBag.Title = "Details";
-    bool mozeDaMenjaOglas = Request.IsAuthenticated && User.Identity.GetUserId() == Model.UserAutorOglasa.Id;
+
 }
 
 <h2>@Model.NaslovOglasa</h2>
@@ -46,12 +46,28 @@
         <p>
             <span>Cena: @Html.DisplayFor(oglas => oglas.Cena) @Model.Valuta.ImeValute</span>
         </p>
-        @if (mozeDaMenjaOglas)
+        @if (Request.IsAuthenticated)
         {
-            <p>
-                <button class="btn btn-info dugme-edit">Edit</button>
-                <button class="btn btn-danger dugme-delete">Delete</button>
-            </p>
+            if (User.Identity.GetUserId() == Model.UserAutorOglasa.Id)
+            {
+                <p>
+                    <button class="btn btn-info dugme-edit">Edit</button>
+                    <button class="btn btn-danger dugme-delete">Delete</button>
+                </p>
+            }
+            else
+            {
+                <p>
+                    @if (Html.Action("DaLiJeOmiljeniOglas", "Korisnik", new { idOglasa = Model.Id }).ToString() == "True")
+                    {
+                        <span id="zvezda-dugme" class="glyphicon glyphicon-star"></span>
+                    }
+                    else
+                    {
+                        <span id="zvezda-dugme" class="glyphicon glyphicon-star-empty"></span>
+                    }
+                </p>
+            }
         }
     </div>
 </div>
@@ -87,54 +103,99 @@
     @Scripts.Render("~/bundles/jquery")
 
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        if ("@mozeDaMenjaOglas") {
-            $(".dugme-delete").on("click", function () {
-                bootbox.confirm({
-                    message: "Izbrisi oglas?",
-                    buttons: {
-                        cancel: {
-                            label: 'Ne',
+            if ("@(Request.IsAuthenticated)") {
+
+                var zvezdaDugme = $("#zvezda-dugme")
+                var mozeDaKlikneZvezdu = true
+
+                if (mozeDaKlikneZvezdu) {
+                    zvezdaDugme.on("click", function (e) {
+                        mozeDaKlikneZvezdu = false
+                        var zvezda = e.target
+                        if (zvezda.classList == "glyphicon glyphicon-star") {
+
+                            $.ajax({
+                                url: `/api/omiljeni-oglas/${@Model.Id}`,
+                                method: "DELETE",
+                                success: function () {
+                                    zvezda.classList = "glyphicon glyphicon-star-empty"
+                                },
+                                error: function (err) {
+                                    console.log(err)
+                                },
+                                complete: function () {
+                                    mozeDaKlikneZvezdu = true
+                                }
+                            });
+                        }
+                        else {
+
+                            $.ajax({
+                                url: `/api/omiljeni-oglas/${@Model.Id}`,
+                                method: "POST",
+                                success: function () {
+                                    zvezda.classList = "glyphicon glyphicon-star"
+                                },
+                                error: function (err) {
+                                    console.log(err)
+                                },
+                                complete: function () {
+                                    mozeDaKlikneZvezdu = true
+                                }
+                            });
+                        }
+                    })
+                }
+
+                if ("@(User.Identity.GetUserId() == Model.UserAutorOglasa.Id)") {
+
+                    $(".dugme-delete").on("click", function () {
+                    bootbox.confirm({
+                        message: "Izbrisi oglas?",
+                        buttons: {
+                            cancel: {
+                                label: 'Ne',
+                            },
+                            confirm: {
+                                label: 'Da',
+                                className: 'btn-danger'
+                            }
                         },
-                        confirm: {
-                            label: 'Da',
-                            className: 'btn-danger'
+                        className: "pulse animated",
+                        size: "small",
+                        callback: function (result) {
+                            if (result) {
+                                window.location.href = "/AutoOglasi/Delete/@Model.Id"
+                            }
                         }
-                    },
-                    className: "pulse animated",
-                    size: "small",
-                    callback: function (result) {
-                        if (result) {
-                            window.location.href = "/AutoOglasi/Delete/@Model.Id";
-                        }
-                    }
-                });
-            })
+                    });
+                })
 
-            $(".dugme-edit").on("click", function () {
-                bootbox.confirm({
-                    message: "Izmeni oglas?",
-                    buttons: {
-                        cancel: {
-                            label: 'Ne',
+                $(".dugme-edit").on("click", function () {
+                    bootbox.confirm({
+                        message: "Izmeni oglas?",
+                        buttons: {
+                            cancel: {
+                                label: 'Ne',
+                            },
+                            confirm: {
+                                label: 'Da',
+                                className: 'btn-danger'
+                            }
                         },
-                        confirm: {
-                            label: 'Da',
-                            className: 'btn-danger'
+                        className: "pulse animated",
+                        size: "small",
+                        callback: function (result) {
+                            if (result) {
+                                window.location.href = "/AutoOglasi/Edit/@Model.Id"
+                            }
                         }
-                    },
-                    className: "pulse animated",
-                    size: "small",
-                    callback: function (result) {
-                        if (result) {
-                            window.location.href = "/AutoOglasi/Edit/@Model.Id";
-                        }
-                    }
-                });
-            })
-        }
-
+                    });
+                })
+                }
+            }
         })
     </script>
 }
