@@ -29,7 +29,7 @@ namespace MiniOglasi.Controllers
             string userId = User.Identity.GetUserId();
             bool omiljeniOglas = dbContext.OmiljeniOglasiPoKorisniku
                                     .Any(og => og.OmiljeniOglasId == idOglasa
-                                            && og.KorisnikKomeJeOglasOmiljenId == userId);
+                                    && og.KorisnikKomeJeOglasOmiljenId == userId);
 
             return Content(omiljeniOglas.ToString());
         }
