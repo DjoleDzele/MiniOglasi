@@ -22,9 +22,20 @@
                     <li>
                         @Html.ActionLink("Edit profile", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
                     </li>
-                    <li><a href="#">Moji oglasi</a></li>
-                    <li><a href="#">Omiljeni oglasi</a></li>
+                    <li>
+                        @Html.ActionLink("Moji oglasi", "MojiOglasi", "Korisnik", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Omiljeni oglasi", "OmiljeniOglasi", "Korisnik", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
                     <li role="separator" class="divider"></li>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>
+                            @Html.ActionLink("ADMIN", "RegulisiKorisnike", "Korisnik", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        </li>
+                        <li role="separator" class="divider"></li>
+                    }
                     <li>
                         <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                     </li>

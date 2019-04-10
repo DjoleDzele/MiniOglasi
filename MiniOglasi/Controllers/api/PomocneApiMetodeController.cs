@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using MiniOglasi.Models;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,54 @@ namespace MiniOglasi.Controllers.api
         public PomocneApiMetodeController()
         {
             dbContext = new ApplicationDbContext();
+        }
+
+        [HttpDelete]
+        [Route("api/delete-user/{korisnikId}")]
+        public IHttpActionResult DeleteUser(string korisnikId)
+        {
+            UserStore<ApplicationUser> userStore = new UserStore<ApplicationUser>(dbContext);
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(userStore);
+
+            var userZaBrisanje = userManager.FindById(korisnikId);
+
+            if (userZaBrisanje == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var logins = userZaBrisanje.Logins;
+                var rolesForUser = userManager.GetRoles(korisnikId);
+
+                foreach (var login in logins)
+                {
+                    userManager.RemoveLogin(korisnikId, new UserLoginInfo(login.LoginProvider, login.ProviderKey));
+                }
+
+                if (rolesForUser.Count > 0)
+                {
+                    foreach (var item in rolesForUser.ToList())
+                    {
+                        userManager.RemoveFromRole(korisnikId, item);
+                    }
+                }
+
+                var omiljeniOglasiZaBrisanje = dbContext.OmiljeniOglasiPoKorisniku.Where(x => x.KorisnikKomeJeOglasOmiljenId == korisnikId || x.OmiljeniOglas.UserAutorOglasaId == korisnikId);
+                dbContext.OmiljeniOglasiPoKorisniku.RemoveRange(omiljeniOglasiZaBrisanje);
+
+                dbContext.SaveChanges();
+
+                string putanjaZaBrisanjeSlikaFolderKorisnika = HttpContext.Current.Server.MapPath(Path.Combine(PomocnaKlasa.ImagesFolder, korisnikId));
+
+                if (Directory.Exists(putanjaZaBrisanjeSlikaFolderKorisnika))
+                {
+                    Directory.Delete(HttpContext.Current.Server.MapPath(Path.Combine(PomocnaKlasa.ImagesFolder, korisnikId)), true);
+                }
+
+                userManager.Delete(userZaBrisanje);
+                return Ok();
+            }
         }
 
         [HttpPost]
@@ -35,6 +84,7 @@ namespace MiniOglasi.Controllers.api
                 dbContext.OmiljeniOglasiPoKorisniku.Add(omiljeniOglasNovi);
                 dbContext.SaveChanges();
             }
+
             return Ok();
         }
 

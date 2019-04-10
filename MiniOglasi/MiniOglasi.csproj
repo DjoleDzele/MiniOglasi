@@ -183,12 +183,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Ostali\AccountController.cs" />
     <Compile Include="Controllers\api\PomocneApiMetodeController.cs" />
     <Compile Include="Controllers\AutoOglasiController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Ostali\HomeController.cs" />
     <Compile Include="Controllers\KorisnikController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\Ostali\ManageController.cs" />
     <Compile Include="Controllers\NekretnineOglasiController.cs" />
     <Compile Include="Controllers\OglasiController.cs" />
     <Compile Include="Controllers\RacunariOglasiController.cs" />
@@ -377,10 +377,11 @@
     <Content Include="Views\AutoOglasi\AutoOglasForm.cshtml" />
     <Content Include="Views\AutoOglasi\Index.cshtml" />
     <Content Include="Views\AutoOglasi\Details.cshtml" />
+    <Content Include="Views\Korisnik\OmiljeniOglasi.cshtml" />
+    <Content Include="Views\Korisnik\RegulisiKorisnike.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Korisnik\" />
     <Folder Include="Views\NekretnineOglasi\" />
     <Folder Include="Views\Oglasi\" />
     <Folder Include="Views\RacunariOglasi\" />

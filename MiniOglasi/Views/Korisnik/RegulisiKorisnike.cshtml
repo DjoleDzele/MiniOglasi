@@ -1,0 +1,133 @@
+﻿@model IEnumerable<MiniOglasi.Models.ApplicationUser>
+
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "RegulisiKorisnike";
+    string trenutniAdminId = User.Identity.GetUserId();
+}
+
+<h2>RegulisiKorisnike</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.EmailConfirmed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PasswordHash)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecurityStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TwoFactorEnabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LockoutEnabled)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccessFailedCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.KontaktTelefon)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.GradId)
+            </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.Id != trenutniAdminId)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.EmailConfirmed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PasswordHash)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SecurityStamp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LockoutEnabled)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccessFailedCount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.KontaktTelefon)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.GradId)
+                    </td>*@
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+                    <button class="js-delete-user btn btn-danger" data-user-id="@item.Id">Ukloni korisnika</button>
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("table").on("click", function (e) {
+                if (e.target.classList.contains("js-delete-user")) {
+                    var korisnikId = e.target.dataset.userId;
+
+                    $.ajax({
+                        url: `/api/delete-user/${korisnikId}`,
+                        method: "DELETE",
+                        success: function (data) {
+                            console.log(data);
+                            e.target.parentElement.parentElement.remove();
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}

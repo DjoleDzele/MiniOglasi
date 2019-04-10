@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using MiniOglasi.Models;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -21,17 +22,31 @@ namespace MiniOglasi.Controllers
 
         public ActionResult OmiljeniOglasi()
         {
-            return View();
+            string userId = User.Identity.GetUserId();
+            var omiljeniOglasi = dbContext.OmiljeniOglasiPoKorisniku
+                .Where(om => om.KorisnikKomeJeOglasOmiljenId == userId)
+                .Select(om => om.OmiljeniOglas)
+                .Include(om => om.Slike)
+                .ToList();
+
+            return View(omiljeniOglasi);
         }
 
         public ActionResult DaLiJeOmiljeniOglas(int idOglasa)
         {
             string userId = User.Identity.GetUserId();
             bool omiljeniOglas = dbContext.OmiljeniOglasiPoKorisniku
-                                    .Any(og => og.OmiljeniOglasId == idOglasa
-                                    && og.KorisnikKomeJeOglasOmiljenId == userId);
+                .Include(og => og.OmiljeniOglas.Slike)
+                .Any(og => og.OmiljeniOglasId == idOglasa
+                && og.KorisnikKomeJeOglasOmiljenId == userId);
 
             return Content(omiljeniOglas.ToString());
+        }
+
+        public ActionResult RegulisiKorisnike()
+        {
+            var korisniciLista = dbContext.Users.ToList();
+            return View(korisniciLista);
         }
     }
 }

@@ -78,7 +78,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AutoOglas.Godiste, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AutoOglas.Godiste, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.AutoOglas.Godiste, new { htmlAttributes = new { @class = "form-control", placeholder = "1900 - " + DateTime.Now.Year } })
                 @Html.ValidationMessageFor(model => model.AutoOglas.Godiste, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -201,25 +201,35 @@
                 popuniTabeluAutoModela(izabranaMarkaAuta);
             });
 
+            //BRISANJE SLIKA
+
+            var vecKliknutaSlika = false;
+
             $("#slikeZaBrisanjeDiv").on("click", function (e) {
+                if (vecKliknutaSlika == false) {
+                    vecKliknutaSlika = true
 
-                var kliknutaSlika = e.target;
-                var slikaId;
+                    var slikaZaBrisanje = e.target;
+                    var slikaId;
 
-                if (kliknutaSlika.classList.contains("js-delete-img")) {
+                    if (slikaZaBrisanje.classList.contains("js-delete-img")) {
 
-                    slikaId = kliknutaSlika.dataset["slikaid"];
+                        slikaId = slikaZaBrisanje.dataset["slikaid"];
 
-                    $.ajax({
-                        url: `/api/slike/${slikaId}`,
-                        method: "DELETE",
-                        success: function () {
-                            kliknutaSlika.remove();
-                        },
-                        error: function (err) {
-                            console.log(err)
-                        }
-                    });
+                        $.ajax({
+                            url: `/api/slike/${slikaId}`,
+                            method: "DELETE",
+                            success: function () {
+                                slikaZaBrisanje.remove();
+                            },
+                            error: function (err) {
+                                console.log(err)
+                            },
+                            complete: function () {
+                                vecKliknutaSlika = false;
+                            }
+                        });
+                    }
                 }
             })
         })

@@ -183,12 +183,16 @@ namespace MiniOglasi.Controllers
         public ActionResult Delete(int id)
         {
             var autoOglasZaBrisanje = dbContext.Oglasi.Find(id);
+
             if (autoOglasZaBrisanje == null)
             {
                 return HttpNotFound();
             }
             else
             {
+                var omiljeniOglasiZaBrisanje = dbContext.OmiljeniOglasiPoKorisniku.Where(x => x.OmiljeniOglasId == id);
+                dbContext.OmiljeniOglasiPoKorisniku.RemoveRange(omiljeniOglasiZaBrisanje);
+
                 dbContext.Oglasi.Remove(autoOglasZaBrisanje);
                 dbContext.SaveChanges();
 

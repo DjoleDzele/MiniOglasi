@@ -179,7 +179,7 @@ namespace MiniOglasi.Controllers
 
                     //await roleManager.CreateAsync(adminRole);
 
-                    //await UserManager.AddToRoleAsync(user.Id, adminRole.Name);
+                    //await UserManager.AddToRoleAsync(user.Id, "admin");
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
