@@ -119,7 +119,6 @@
                         url: `/api/delete-user/${korisnikId}`,
                         method: "DELETE",
                         success: function (data) {
-                            console.log(data);
                             e.target.parentElement.parentElement.remove();
                         },
                         error: function (err) {
