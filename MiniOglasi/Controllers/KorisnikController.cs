@@ -17,7 +17,13 @@ namespace MiniOglasi.Controllers
 
         public ActionResult MojiOglasi()
         {
-            return View();
+            string userId = User.Identity.GetUserId();
+            var mojiOglasi = dbContext.Oglasi
+                .Where(o => o.UserAutorOglasaId == userId)
+                .Include(o => o.Slike)
+                .ToList();
+
+            return View(mojiOglasi);
         }
 
         public ActionResult OmiljeniOglasi()

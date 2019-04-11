@@ -21,6 +21,7 @@ namespace MiniOglasi.Controllers
             dbContext = new ApplicationDbContext();
         }
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var autoOglasi = dbContext.Oglasi
@@ -165,6 +166,7 @@ namespace MiniOglasi.Controllers
             }
         }
 
+        [AllowAnonymous]
         public ActionResult Details(int id)
         {
             var autoOglas = dbContext.Oglasi
