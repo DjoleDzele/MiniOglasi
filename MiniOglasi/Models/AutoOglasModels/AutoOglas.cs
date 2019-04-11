@@ -9,12 +9,14 @@ namespace MiniOglasi.Models
     public class AutoOglas : Oglas, IValidatableObject
     {
         [Required]
+        [Display(Name = "Marka auta")]
         [ForeignKey("MarkaAuta")]
         public int MarkaAutaId { get; set; }
 
         public MarkaAuta MarkaAuta { get; set; }
 
         [Required]
+        [Display(Name = "Model auta")]
         [ForeignKey("ModelAuta")]
         public int ModelAutaId { get; set; }
 

@@ -17,6 +17,7 @@ namespace MiniOglasi.Models
         public ApplicationUser UserAutorOglasa { get; set; }
 
         [Required]
+        [Display(Name = "Stanje")]
         [ForeignKey("Stanje")]
         public int StanjeId { get; set; }
 

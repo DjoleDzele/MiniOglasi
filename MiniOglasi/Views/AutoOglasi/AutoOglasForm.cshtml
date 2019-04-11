@@ -1,11 +1,17 @@
 ﻿@model MiniOglasi.ViewModels.AutoOglasViewModel
 
 @{
-    ViewBag.Title = Model.AutoOglas.Id == 0 ? "Create Auto Oglas" : "Edit Auto Oglas";
+    ViewBag.Title = Model.AutoOglas.Id == 0 ? "Novi Auto Oglas" : "Izmeni Auto Oglas";
 }
 
-<h2>Create Auto Oglas</h2>
-<h5 style="color:red">@ViewBag.Greska</h5>
+<h3 class="naslov">@ViewBag.Title</h3>
+
+@if (ViewBag.Greska != null)
+{
+    <span class="text-danger field-validation-error">
+        <span>@ViewBag.Greska</span>
+    </span>
+}
 
 @using (Html.BeginForm("SaveAutoOglas",
                        "AutoOglasi",
@@ -15,79 +21,77 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Auto Oglas</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.NaslovOglasa, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.AutoOglas.NaslovOglasa, htmlAttributes: new { @class = "control-label " })
+            <div class="">
                 @Html.EditorFor(model => model.AutoOglas.NaslovOglasa, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AutoOglas.NaslovOglasa, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.Cena, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.AutoOglas.Cena, htmlAttributes: new { @class = "control-label " })
+            <div class="">
                 @Html.EditorFor(model => model.AutoOglas.Cena, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AutoOglas.Cena, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.ValutaId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.AutoOglas.ValutaId, new SelectList(Model.Valute, "Id", "ImeValute"), new { htmlAttributes = new { @class = "form -control" } })
+            @Html.LabelFor(model => model.AutoOglas.ValutaId, htmlAttributes: new { @class = "control-label " })
+            <div class="">
+                @Html.DropDownListFor(model => model.AutoOglas.ValutaId, new SelectList(Model.Valute, "Id", "ImeValute"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AutoOglas.ValutaId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.OpisOglasa, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AutoOglas.OpisOglasa, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.LabelFor(model => model.AutoOglas.OpisOglasa, htmlAttributes: new { @class = "control-label " })
+            <div class="">
+                @Html.TextAreaFor(model => model.AutoOglas.OpisOglasa, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AutoOglas.OpisOglasa, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.Kilometraza, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.AutoOglas.Kilometraza, htmlAttributes: new { @class = "control-label " })
+            <div class="">
                 @Html.EditorFor(model => model.AutoOglas.Kilometraza, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AutoOglas.Kilometraza, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.KonjskeSnage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.AutoOglas.KonjskeSnage, htmlAttributes: new { @class = "control-label " })
+            <div class="">
                 @Html.EditorFor(model => model.AutoOglas.KonjskeSnage, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AutoOglas.KonjskeSnage, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.Kubikaza, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.AutoOglas.Kubikaza, htmlAttributes: new { @class = "control-label " })
+            <div class="">
                 @Html.EditorFor(model => model.AutoOglas.Kubikaza, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AutoOglas.Kubikaza, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.Godiste, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.AutoOglas.Godiste, htmlAttributes: new { @class = "control-label " })
+            <div class="">
                 @Html.EditorFor(model => model.AutoOglas.Godiste, new { htmlAttributes = new { @class = "form-control", placeholder = "1900 - " + DateTime.Now.Year } })
                 @Html.ValidationMessageFor(model => model.AutoOglas.Godiste, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.MarkaAutaId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.AutoOglas.MarkaAutaId, htmlAttributes: new { @class = "control-label " })
+            <div class="">
                 @*@Html.DropDownListFor(model => model.AutoOglas.MarkaAutaId, new SelectList(Model.MarkeAuta, "Id", "Marka"), "", new { htmlAttributes = new { @class = "form -control" } })*@
-                <select id="AutoOglas_MarkaAutaId" name="AutoOglas.MarkaAutaId">
+                <select id="AutoOglas_MarkaAutaId" name="AutoOglas.MarkaAutaId" class="form-control">
                     @foreach (var markaAuta in Model.MarkeAuta)
                     {
                         string selected = markaAuta.Id == Model.AutoOglas.MarkaAutaId ? "selected" : "";
@@ -100,32 +104,32 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.ModelAutaId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select id="AutoOglas_ModelAutaId" name="AutoOglas.ModelAutaId" style="min-width:100px"></select>
+            @Html.LabelFor(model => model.AutoOglas.ModelAutaId, htmlAttributes: new { @class = "control-label " })
+            <div class="">
+                <select id="AutoOglas_ModelAutaId" name="AutoOglas.ModelAutaId" class="form-control"></select>
             </div>
         </div>
 
         @*<div class="form-group">
-                @Html.LabelFor(model => model.AutoOglas.ModelAutaId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
+                @Html.LabelFor(model => model.AutoOglas.ModelAutaId, htmlAttributes: new { @class = "control-label " })
+                <div class="">
                     @Html.DropDownListFor(model => model.AutoOglas.ModelAutaId, new SelectList(Model.ModeliAuta, "Id", "AutoModel"), "", new { htmlAttributes = new { @class = "form -control" } })
                     @Html.ValidationMessageFor(model => model.AutoOglas.ModelAutaId, "", new { @class = "text-danger" })
                 </div>
             </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.AutoOglas.StanjeId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.AutoOglas.StanjeId, new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { htmlAttributes = new { @class = "form -control" } })
+            @Html.LabelFor(model => model.AutoOglas.StanjeId, htmlAttributes: new { @class = "control-label " })
+            <div class="">
+                @Html.DropDownListFor(model => model.AutoOglas.StanjeId, new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.AutoOglas.StanjeId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="uploadedImage">Dodaj sliku</label>
-            <div class="col-md-10">
-                <input type="file" multiple name="uploadedImages" id="uploadedImages" accept=".jpg,.png" value="Izaberite sliku" />
+            <label class="control-label " for="uploadedImage">Dodaj slike</label>
+            <div class="">
+                <input type="file" multiple name="uploadedImages" id="uploadedImages" accept=".jpg,.png" value="Izaberite sliku" class="form-control" style="padding:0" />
             </div>
         </div>
 
@@ -133,9 +137,7 @@
         @Html.HiddenFor(model => model.AutoOglas.UserAutorOglasaId)
         @Html.HiddenFor(model => model.AutoOglas.DatumPostavljanja)
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+            <input type="submit" value="Sacuvaj" class="btn btn-success" />
         </div>
     </div>
 }

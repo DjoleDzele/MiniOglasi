@@ -186,7 +186,7 @@
     <Compile Include="Controllers\Ostali\AccountController.cs" />
     <Compile Include="Controllers\api\PomocneApiMetodeController.cs" />
     <Compile Include="Controllers\AutoOglasiController.cs" />
-    <Compile Include="Controllers\Ostali\HomeController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KorisnikController.cs" />
     <Compile Include="Controllers\Ostali\ManageController.cs" />
     <Compile Include="Controllers\NekretnineOglasiController.cs" />

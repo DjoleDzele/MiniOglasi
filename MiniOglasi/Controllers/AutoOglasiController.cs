@@ -57,7 +57,7 @@ namespace MiniOglasi.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveAutoOglas(AutoOglasViewModel newAutoOglasViewModel, List<HttpPostedFileBase> uploadedImages = null)
         {
-            //Za slucaj da mora da se vrati na formu zbog modelstate not valid
+            //Za slucaj da mora da se vrati na formu zbog modelstate not valid**************************************
             AutoOglas autoOglasUBazi = dbContext.Oglasi
                                                 .OfType<AutoOglas>()
                                                 .Include(o => o.Slike)
@@ -71,11 +71,12 @@ namespace MiniOglasi.Controllers
             //newAutoOglasViewModel.ModeliAuta = modeliAuta.ToList();
             newAutoOglasViewModel.Stanja = stanja.ToList();
             newAutoOglasViewModel.Valute = valute.ToList();
+
             if (newAutoOglasViewModel.AutoOglas.Id != 0)
             {
                 newAutoOglasViewModel.AutoOglas.Slike = autoOglasUBazi.Slike;
             }
-            //Za slucaj da mora da se vrati na formu zbog modelstate not valid
+            //Za slucaj da mora da se vrati na formu zbog modelstate not valid**************************************
 
             if (uploadedImages?.Any(x => x != null) == true)
             {

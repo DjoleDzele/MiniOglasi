@@ -19,7 +19,7 @@ namespace MiniOglasi.Models
         {
             string EkstenzijaSlike = Path.GetExtension(SlikaFajl.FileName);
 
-            string NovoImeZaSliku = $"{Path.GetFileNameWithoutExtension(SlikaFajl.FileName)}_{DateTime.Now.ToString("yymmddssffff")}{EkstenzijaSlike}";
+            string NovoImeZaSliku = $"{Path.GetFileNameWithoutExtension(SlikaFajl.FileName).Replace(" ", "_")}_{DateTime.Now.ToString("yymmddssffff")}{EkstenzijaSlike}";
 
             string PutanjaSlikeZaBazu = $"~/Images/{userId}/{oglasId}/{NovoImeZaSliku}";
 
