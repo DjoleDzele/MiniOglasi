@@ -1,6 +1,7 @@
 ﻿html {
     font-size: 62.5%;
     scroll-behavior: smooth;
+    box-sizing: border-box;
 }
 
     html a:any-link {
@@ -9,7 +10,6 @@
     }
 
 body {
-    box-sizing: border-box;
     font-family: 'Lato', sans-serif;
 }
 
@@ -36,11 +36,11 @@ textarea {
     min-width: 12rem;
 }
 
-/*MOJE BOOTSTRAP IZMENE OSNOVNE*/
+/*MOJE BOOTSTRAP IZMENE OSNOVNE===========================================*/
 
-/*.dropdown-toggle {
-    text-align: center;
-}*/
+.dropdown-toggle {
+    padding-left: 1rem;
+}
 
 .dropdown-menu > li > a:hover {
     background-color: gray;
@@ -62,10 +62,9 @@ textarea {
     border-radius: 4px;
 }
 
-/*MOJA DODAVANJA*/
+/*MOJA DODAVANJA============================================================*/
 
 .naslov {
-    text-align: center;
     padding: 2rem;
 }
 
@@ -80,13 +79,13 @@ input[type="file"] {
 }
 
 .modal-dialog {
+    text-align: center;
     max-width: 50rem;
     min-width: 25rem;
     margin: 40vh auto;
 }
 
 .modal-footer {
-    text-align: center;
     display: flex;
     justify-content: space-around;
 }
@@ -106,10 +105,10 @@ span.glyphicon {
     }
 
     span.glyphicon.glyphicon-star {
-        color: orange;
+        color: #5100ff;
     }
 
-/*POCETNA STRANA*/
+/*POCETNA STRANA========================================================*/
 
 .main-header-pocetna {
     background-color: black;
@@ -119,7 +118,7 @@ span.glyphicon {
 }
 
     .main-header-pocetna a:any-link {
-        color: rgba(255,124,0,1);
+        color: rgba(88, 0, 255, 0.80);
     }
 
 .pozadina-slike {
@@ -141,15 +140,15 @@ span.glyphicon {
     }
 
 #pozadina-1 {
-    background-image: linear-gradient(135deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.6) 53%, rgba(255,155,48,.5) 100%), url('/Images/slika-naslovna-auto.jpg');
+    background-image: linear-gradient(135deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.8) 45%, rgba(88, 0, 255, 0.80) 100%), url('/Images/slika-naslovna-auto.jpg');
 }
 
 #pozadina-2 {
-    background-image: linear-gradient(135deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.6) 53%, rgba(255,155,48,.5) 100%), url('/Images/slika-naslovna-racunar.jpg');
+    background-image: linear-gradient(135deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.8) 45%, rgba(57, 0, 255, 0.80) 100%), url('/Images/slika-naslovna-racunar.jpg');
 }
 
 #pozadina-3 {
-    background-image: linear-gradient(135deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.6) 53%, rgba(255,155,48,.5) 100%), url('/Images/slika-naslovna-stan.jpg');
+    background-image: linear-gradient(135deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.8) 45%, rgba(81, 0, 255, 0.80) 100%), url('/Images/slika-naslovna-stan.jpg');
 }
 
 .header-naslov {
@@ -159,21 +158,23 @@ span.glyphicon {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    text-shadow: 0 0 18px orangered;
+    text-shadow: 0 0 18px rgba(57, 0, 255, 0.80);
 }
 
     .header-naslov h1 {
-        font-size: 7rem;
-        letter-spacing: .5rem;
+        font-size: 8rem;
+        letter-spacing: 1.4rem;
         text-transform: uppercase;
         margin-bottom: 5rem;
+        font-weight: 300;
     }
 
     .header-naslov h3 {
-        font-size: 3.5rem;
+        font-size: 4rem;
         letter-spacing: 1rem;
         margin-bottom: 5rem;
         transition: all 2s;
+        font-weight: 300;
     }
 
 #strelica-header {
@@ -186,7 +187,7 @@ span.glyphicon {
 
 @keyframes strelicaGoreDole {
     0% {
-        color: orangered;
+        color: rgba(112, 37, 255, 0.80);
         transform: translateY(-1rem);
     }
 
@@ -196,7 +197,7 @@ span.glyphicon {
     }
 
     100% {
-        color: orangered;
+        color: #793bff;
         transform: translateY(-1rem);
     }
 }
@@ -205,20 +206,63 @@ span.glyphicon {
     margin-top: -5rem;
 }
 
+/*POCETNA STRANA KATEGORIJE--------------------------------------------*/
+
 #kategorije {
-    width: 90vw;
+    width: 80vw;
+    min-height: 80vh;
     padding: 2rem 3rem;
     margin: 10rem auto 2rem auto;
-    border-top: 2px solid orangered;
-    border-bottom: 2px solid orangered;
+    border-top: 1px solid rgb(88, 0, 255);
+    border-bottom: 1px solid rgb(88, 0, 255);
+    box-shadow: 1rem 1rem 5px gray;
 }
 
+    #kategorije h2 {
+        display: inline-block;
+        padding: 1rem;
+        border-bottom: 2px solid rgba(57, 0, 255, 0.75);
+        font-weight: 300;
+    }
+
 .izbor-kategorije-oglasa {
-    width: 80%;
+    width: 100%;
     margin: 5rem auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+    .izbor-kategorije-oglasa a {
+        width: 25rem;
+        height: 25rem;
+        border: 2px solid #7e7e7e;
+        box-shadow: 4px 4px 0 gray;
+        border-radius: 1rem;
+        font-size: 2.5rem;
+        margin: 2rem;
+    }
+
+@media only screen and (max-width: 850px) {
+    .izbor-kategorije-oglasa {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .izbor-kategorije-oglasa a {
+        max-width: 20rem;
+        max-height: 20rem;
+        font-size: 2rem;
+    }
+
+    .header-naslov h1 {
+        font-size: 5rem;
+    }
+
+    .header-naslov h3 {
+        font-size: 3rem;
+    }
 }
 
 .naslovna-kategorija {
@@ -226,14 +270,9 @@ span.glyphicon {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 20rem;
-    height: 20rem;
-    border: 2px solid #7e7e7e;
-    box-shadow: 4px 4px 4px gray;
-    border-radius: 1rem;
-    font-size: 2.5rem;
-    margin: 2rem;
-    transition: all 0.8s;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s;
 }
 
     .naslovna-kategorija > * {
@@ -242,36 +281,43 @@ span.glyphicon {
 
     .naslovna-kategorija i {
         font-size: 5rem;
-        color: rgb(255,124,0);
+        color: rgba(122, 53, 254, 0.80);
     }
 
     .naslovna-kategorija:hover {
         cursor: pointer;
         color: white;
+        box-shadow: 0 0 20px rgb(57, 0, 255);
         transform: scale(1.1);
-        border: 4px solid rgb(255,124,0);
+        border: 4px solid rgba(88, 0, 255, 0.80);
     }
 
+        .naslovna-kategorija:hover p {
+            text-shadow: 0 0 2rem #fffdce;
+        }
+
 .naslovna-kategorija-auti:hover {
-    background: linear-gradient(45deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.7) 80%, rgba(255,124,0,0.8) 80%, rgba(255,98,0,0.8) 100%), url("../Images/thumbnail-kola.jpg");
+    background: linear-gradient(45deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.7) 80%, rgba(88, 0, 255, 0.80) 80%, rgba(57, 0, 255, 0.80) 100%), url("../Images/thumbnail-kola.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .naslovna-kategorija-racunari:hover {
-    background: linear-gradient(45deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.7) 80%, rgba(255,124,0,0.8) 80%, rgba(255,98,0,0.8) 100%), url("../Images/thumbnail-laptop.jpg");
+    background: linear-gradient(45deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.75) 80%, rgba(88, 0, 255, 0.80) 80%, rgba(57, 0, 255, 0.80) 100%), url("../Images/thumbnail-laptop.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
 .naslovna-kategorija-nekretnine:hover {
-    background: linear-gradient(45deg, rgba(0,0,0,.8) 0%, rgba(0,0,0,.7) 80%, rgba(255,124,0,0.8) 80%, rgba(255,98,0,0.8) 100%), url("../Images/thumbnail-kuca.jpg.jpg");
+    background: linear-gradient(45deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.8) 80%, rgba(88, 0, 255, 0.80) 80%, rgba(57, 0, 255, 0.80) 100%), url("../Images/thumbnail-kuca.jpg.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
+
+/*POCETNA STRANA=====================================*/
 
 /*================ ZA OGLASE LISTU ================*/
 .oglas-okvir {
@@ -294,7 +340,7 @@ div.oglas-list-item {
 }
 
 .oglas-list-item:hover {
-    border: 5px solid rgba(255,124,0,1);
+    border: 5px solid rgba(57, 0, 255, 0.80);
     box-shadow: 0 0 2rem #000000;
     transform: translateX(-5%);
 }
@@ -321,7 +367,7 @@ div.oglas-list-item {
 }
 
 .oglas-list-item:hover .main-info-oglasa {
-    background: linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 80%, rgba(255,124,0,1) 80%, rgba(255,98,0,1) 100%);
+    background: linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 80%, rgba(121, 59, 255, 0.74) 80%, rgba(57, 0, 255, 0.80) 100%);
 }
 
 /*================ ZA OGLASE LISTU ================*/
