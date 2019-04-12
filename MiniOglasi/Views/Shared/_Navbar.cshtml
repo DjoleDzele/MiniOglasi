@@ -1,5 +1,6 @@
 ﻿<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
+        @Html.ActionLink("MiniOglasi", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-bar"></span>
@@ -8,7 +9,17 @@
             </button>
         </div>
         <div class="navbar-collapse collapse">
-            @Html.ActionLink("MiniOglasi", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <a href="#">Auti</a>
+                </li>
+                <li>
+                    <a href="#">Racunari</a>
+                </li>
+                <li>
+                    <a href="#">Nekretnine</a>
+                </li>
+            </ul>
             @Html.Partial("_LoginPartial")
         </div>
     </div>

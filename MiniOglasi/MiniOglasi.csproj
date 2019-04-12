@@ -314,6 +314,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
+    <Content Include="Images\thumbnail-kola.jpg" />
+    <Content Include="Images\thumbnail-kuca.jpg.jpg" />
+    <Content Include="Images\thumbnail-laptop.jpg" />
+    <Content Include="Images\slika-naslovna-auto.jpg" />
+    <Content Include="Images\slika-naslovna-racunar.jpg" />
+    <Content Include="Images\slika-naslovna-stan.jpg" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -329,6 +335,7 @@
     <Content Include="Images\placeholder-image.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\fotorama.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

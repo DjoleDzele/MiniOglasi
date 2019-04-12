@@ -7,6 +7,9 @@ namespace MiniOglasi.Models
     public static class PomocnaKlasa
     {
         public static string PlaceholderSlika = "~/Images/placeholder-image.png";
+        public static string SlikaNaslovnaAuto = "~/Images/slika-naslovna-auto.jpg";
+        public static string SlikaNaslovnaRacunar = "~/Images/slika-naslovna-racunar.jpg";
+        public static string SlikaNaslovnaStan = "~/Images/slika-naslovna-stan.jpg";
         public static string ImagesFolder = "~/Images";
 
         public static bool JeLiTacanFormatFajla(HttpPostedFileBase SlikaFajl)

@@ -2,14 +2,98 @@
     ViewBag.Title = "Dobrodosli na MiniOglase";
 }
 
-<div class="izbor-kategorije-oglasa">
-    <a href="@Url.Action("Index", "AutoOglasi")">
-        <div class="naslovna-kategorija naslovna-kategorija-auti"><span>AUTOMOBILI</span></div>
-    </a>
-    <a href="@Url.Action("About", "Home")">
-        <div class="naslovna-kategorija naslovna-kategorija-racunari"><span>RACUNARI</span></div>
-    </a>
-    <a href="@Url.Action("About", "Home")">
-        <div class="naslovna-kategorija naslovna-kategorija-nekretnine"><span>NEKRETNINE</span></div>
-    </a>
+<div class="main-header-pocetna">
+    <div class="pozadina-slike">
+        <div id="pozadina-3" class="pozadina"></div>
+        <div id="pozadina-2" class="pozadina"></div>
+        <div id="pozadina-1" class="pozadina"></div>
+    </div>
+    <div class="header-naslov">
+        <h1 id="naslov-header" class="animated fadeIn slow">Mini oglasi</h1>
+        <h3 id="podnaslov-header" class="animated fadeIn slow">Najbolja online trgovina</h3>
+        <a id="strelica-header" href="#meta-za-strelicu"><span class="glyphicon glyphicon-chevron-down animated fadeIn slow"></span></a>
+    </div>
 </div>
+
+<div id="meta-za-strelicu"></div>
+
+<div id="kategorije">
+    <h2>Izaberite kategoriju oglasa</h2>
+    <div class="izbor-kategorije-oglasa">
+        <a href="@Url.Action("Index", "AutoOglasi")">
+            <div class="naslovna-kategorija naslovna-kategorija-auti">
+                <i class="fas fa-car"></i>
+                <p>AUTOMOBILI</p>
+            </div>
+        </a>
+        <a href="@Url.Action("Index", "Home")">
+            <div class="naslovna-kategorija naslovna-kategorija-racunari">
+                <i class="fas fa-desktop"></i>
+                <p>RACUNARI</p>
+            </div>
+        </a>
+        <a href="@Url.Action("Index", "Home")">
+            <div class="naslovna-kategorija naslovna-kategorija-nekretnine">
+                <i class="fas fa-home"></i>
+                <p>NEKRETNINE</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            var pozadinaRacunar = $("#pozadina-2");
+            var pozadinaStan = $("#pozadina-3");
+            var pozadinaAuto = $("#pozadina-1");
+
+            var slike = [pozadinaStan, pozadinaRacunar, pozadinaAuto];
+
+            //var naslovHeader = $("#naslov-header");
+            var podnaslovHeader = document.querySelector("#podnaslov-header"); //$("#podnaslov-header");
+            //var strelicaHeader = $("#strelica-header");
+
+            var pozicijaNiza = slike.length - 1;
+
+            function changeMainHeaderPozadinu() {
+
+                slike[pozicijaNiza].fadeOut(2000);
+
+                podnaslovHeader.classList = [];
+
+                if (pozicijaNiza == 0) {
+                    pozicijaNiza = slike.length - 1
+                }
+                else {
+                    pozicijaNiza--
+                }
+
+                slike[pozicijaNiza].fadeIn(2000);
+
+                setTimeout(function () {
+                    switch (pozicijaNiza) {
+                        case 2:
+                            podnaslovHeader.textContent = "Super auti"
+                            break;
+
+                        case 1:
+                            podnaslovHeader.textContent = "Super racunari"
+                            break;
+
+                        case 0:
+                            podnaslovHeader.textContent = "Super smestaj"
+                            break;
+                        default:
+                    }
+                    podnaslovHeader.classList.add("animated", "fadeInLeft", "slow");
+                }, 200)
+
+            };
+
+            setInterval(changeMainHeaderPozadinu, 8000);
+        })
+    </script>
+}
