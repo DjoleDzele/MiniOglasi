@@ -2,13 +2,9 @@
 
 @using MiniOglasi.Models
 @using MiniOglasi.Models.RacunarOglasModels
-@using MiniOglasi.Models.AutoOglasModels
+@using MiniOglasi.Models.NekretninaOglasModels
 
-@{
-    ViewBag.Title = "Omiljeni Oglasi";
-}
-
-<h2>Omiljeni Oglasi</h2>
+<h2>@ViewBag.Title</h2>
 
 @foreach (var item in Model)
 {
@@ -23,8 +19,23 @@
         pathDoSlike = Url.Content(PomocnaKlasa.PlaceholderSlika);
     }
 
+    string linkDoOglasa = string.Empty;
+
+    if (item is AutoOglas)
+    {
+        linkDoOglasa = Url.Action("Details", "AutoOglasi", new { id = item.Id });
+    }
+    else if (item is RacunarOglas)
+    {
+        linkDoOglasa = Url.Action("Details", "RacunariOglasi", new { id = item.Id });
+    }
+    else if (item is NekretninaOglas)
+    {
+        linkDoOglasa = Url.Action("Details", "NekretnineOglasi", new { id = item.Id });
+    }
+
     <div class="oglas-okvir">
-        <a href="/AutoOglasi/Details/@item.Id" style="text-decoration:none;">
+        <a href="@linkDoOglasa">
             <div class="oglas-list-item">
                 <div class="slika-oglasa" style="background-image: url(@pathDoSlike);">
                 </div>
@@ -41,10 +52,10 @@
                         <strong>@Html.DisplayNameFor(oglas => oglas.DatumPostavljanja): </strong>
                         <span>@item.DatumPostavljanja.ToShortDateString()</span>
                     </p>
-                    @if (item is AutoOglas)
-                    {
-                        <p>@typeof(AutoOglas).GetProperty("Godiste").GetValue(item)</p>
-                    }
+                    @*@if (item is AutoOglas)
+                        {
+                            <p>@typeof(AutoOglas).GetProperty("Godiste").GetValue(item)</p>
+                        }*@
                 </div>
             </div>
         </a>

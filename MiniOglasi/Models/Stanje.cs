@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MiniOglasi.Models.AutoOglasModels
+namespace MiniOglasi.Models
 {
     [Table("Stanja")]
     public class Stanje

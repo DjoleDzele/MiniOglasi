@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 namespace MiniOglasi.Models
 {
@@ -11,6 +14,60 @@ namespace MiniOglasi.Models
         public static string SlikaNaslovnaRacunar = "~/Images/slika-naslovna-racunar.jpg";
         public static string SlikaNaslovnaStan = "~/Images/slika-naslovna-stan.jpg";
         public static string ImagesFolder = "~/Images";
+
+        public enum TipoviGreskeUploadSlika
+        {
+            MaxPetSlikaPoOglasu,
+            PogresanFormatSlika,
+            PrevelikaSlika,
+            NemaGreske
+        }
+
+        public static TipoviGreskeUploadSlika ProveriValidnostUploadovanihSlika(List<HttpPostedFileBase> uploadedImages)
+        {
+            if (uploadedImages?.Any(x => x != null) == true)
+            {
+                if (uploadedImages.Count > 5)
+                {
+                    return TipoviGreskeUploadSlika.MaxPetSlikaPoOglasu;
+                }
+
+                foreach (HttpPostedFileBase slika in uploadedImages)
+                {
+                    if (!JeLiTacanFormatFajla(slika))
+                    {
+                        return TipoviGreskeUploadSlika.PogresanFormatSlika;
+                    }
+
+                    if (slika.ContentLength > 500 * 1024)
+                    {
+                        return TipoviGreskeUploadSlika.PrevelikaSlika;
+                    }
+                }
+            }
+            return TipoviGreskeUploadSlika.NemaGreske;
+        }
+
+        public static void DodajSlikeOglasu(string userId, string oglasId, Oglas oglasKomSeDodajuSlike, List<HttpPostedFileBase> uploadedImages)
+        {
+            string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(HostingEnvironment.MapPath(ImagesFolder), userId, oglasId);
+
+            Directory.CreateDirectory(punaPutanjaFolderaZaSlikeOglasa);
+
+            if (uploadedImages?.Any(x => x != null) == true)
+            {
+                foreach (HttpPostedFileBase slika in uploadedImages)
+                {
+                    Slika novaSlikaZaBazu = SacuvajSlikuIDodajPutanju(slika, userId, oglasId, punaPutanjaFolderaZaSlikeOglasa);
+                    oglasKomSeDodajuSlike.Slike.Add(novaSlikaZaBazu);
+                }
+            }
+        }
+
+        public static bool DaLiDodajeViseOdPetSlika(List<HttpPostedFileBase> uploadedImages, Oglas oglasZaProveru)
+        {
+            return uploadedImages?.Any(x => x != null) == true && (uploadedImages.Count > 5 || (oglasZaProveru.Slike?.Count + uploadedImages.Count > 5));
+        }
 
         public static bool JeLiTacanFormatFajla(HttpPostedFileBase SlikaFajl)
         {

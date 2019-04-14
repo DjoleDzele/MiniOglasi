@@ -1,5 +1,4 @@
-﻿using MiniOglasi.Models.AutoOglasModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,21 +16,14 @@ namespace MiniOglasi.Models
         public ApplicationUser UserAutorOglasa { get; set; }
 
         [Required]
-        [Display(Name = "Stanje")]
-        [ForeignKey("Stanje")]
-        public int StanjeId { get; set; }
-
-        public Stanje Stanje { get; set; }
-
-        [Required]
         [Display(Name = "Naslov oglasa")]
         [StringLength(255)]
         public string NaslovOglasa { get; set; }
 
-        [Display(Name = "Datum Postavljanja")]
-        public DateTime DatumPostavljanja { get; set; }
-
-        public ICollection<Slika> Slike { get; set; }
+        [Required]
+        [StringLength(2000)]
+        [Display(Name = "Opis oglasa")]
+        public string OpisOglasa { get; set; }
 
         [Required]
         [Range(0, 99999)]
@@ -43,8 +35,15 @@ namespace MiniOglasi.Models
         public Valuta Valuta { get; set; }
 
         [Required]
-        [StringLength(2000)]
-        [Display(Name = "Opis oglasa")]
-        public string OpisOglasa { get; set; }
+        [Display(Name = "Stanje")]
+        [ForeignKey("Stanje")]
+        public int StanjeId { get; set; }
+
+        public Stanje Stanje { get; set; }
+
+        [Display(Name = "Datum Postavljanja")]
+        public DateTime DatumPostavljanja { get; set; }
+
+        public ICollection<Slika> Slike { get; set; }
     }
 }

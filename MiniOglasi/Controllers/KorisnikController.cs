@@ -23,7 +23,8 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.Slike)
                 .ToList();
 
-            return View(mojiOglasi);
+            ViewBag.Title = "Moji Oglasi";
+            return View("KorisnikoviOglasi", mojiOglasi);
         }
 
         public ActionResult OmiljeniOglasi()
@@ -35,18 +36,16 @@ namespace MiniOglasi.Controllers
                 .Include(om => om.Slike)
                 .ToList();
 
-            return View(omiljeniOglasi);
+            ViewBag.Title = "Omiljeni Oglasi";
+            return View("KorisnikoviOglasi", omiljeniOglasi);
         }
 
-        public ActionResult DaLiJeOmiljeniOglas(int idOglasa)
+        public bool DaLiJeOmiljeniOglas(int idOglasa)
         {
             string userId = User.Identity.GetUserId();
-            bool omiljeniOglas = dbContext.OmiljeniOglasiPoKorisniku
+            return dbContext.OmiljeniOglasiPoKorisniku
                 .Include(og => og.OmiljeniOglas.Slike)
-                .Any(og => og.OmiljeniOglasId == idOglasa
-                && og.KorisnikKomeJeOglasOmiljenId == userId);
-
-            return Content(omiljeniOglas.ToString());
+                .Any(og => og.OmiljeniOglasId == idOglasa && og.KorisnikKomeJeOglasOmiljenId == userId);
         }
 
         public ActionResult RegulisiKorisnike()

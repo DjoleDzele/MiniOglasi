@@ -1,0 +1,117 @@
+﻿@model MiniOglasi.Models.Oglas
+
+@using Microsoft.AspNet.Identity
+
+@using MiniOglasi.Models
+@using MiniOglasi.Models.RacunarOglasModels
+@using MiniOglasi.Models.NekretninaOglasModels
+
+@{
+    ViewBag.Title = "Detalji";
+    var oglasId = Model.Id;
+    var currentUserId = User.Identity.GetUserId();
+    var autorOglasaId = Model.UserAutorOglasaId;
+    var imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
+    var urlZaEdit = Url.Action("Edit", imeKontrolera, new { id = oglasId });
+    var requestAuthenticated = Request.IsAuthenticated;
+    var jeLiOmiljenOglas = Html.Action("DaLiJeOmiljeniOglas", "Korisnik", new { idOglasa = oglasId }).ToString() == "True";
+}
+
+<h2>@Model.NaslovOglasa</h2>
+
+<p>
+    <h4>Oglas postavljen: @Model.DatumPostavljanja.ToShortDateString()</h4>
+</p>
+
+<div class="detalji-oglasa">
+    @* SLIKE ======================================================================= *@
+    <div class="slike fotorama"
+         data-loop="true"
+         data-autoplay="true"
+         data-transition="dissolve"
+         data-allowfullscreen="true">
+
+        @if (Model.Slike.Any(x => x != null))
+        {
+            foreach (var slika in Model.Slike)
+            {
+                <img src="@Url.Content(slika.PathDoSlike)" alt="" />
+            }
+        }
+        else
+        {
+            <img src="@Url.Content(PomocnaKlasa.PlaceholderSlika)" />
+        }
+    </div>
+    <div class="detalji-oglasa-info">
+        @* GLAVNI INFO ======================================================================= *@
+        <p>
+            <span>Opis: @Html.DisplayFor(oglas => oglas.OpisOglasa)</span>
+        </p>
+        <p>
+            <span>Cena: @Html.DisplayFor(oglas => oglas.Cena) @Model.Valuta.ImeValute</span>
+        </p>
+        <p>
+            <span>Stanje: @Html.DisplayFor(oglas => oglas.Stanje.StanjePredmetaOglasa)</span>
+        </p>
+        <p>
+            <span>Postavio: @Html.DisplayFor(oglas => oglas.UserAutorOglasa.UserName)</span>
+        </p>
+        @if (requestAuthenticated)
+        {
+            if (currentUserId == autorOglasaId)
+            {
+                <p>
+                    <button class="btn btn-info dugme-edit">Edit</button>
+                    <button class="btn btn-danger dugme-delete">Delete</button>
+                </p>
+            }
+            else
+            {
+                <p>
+                    @if (jeLiOmiljenOglas)
+                    {
+                        <span id="zvezda-dugme" class="glyphicon glyphicon-star"></span>
+                    }
+                    else
+                    {
+                        <span id="zvezda-dugme" class="glyphicon glyphicon-star-empty"></span>
+                    }
+                </p>
+            }
+        }
+    </div>
+</div>
+
+@*OSTALE INFO -------------------------------------------------------------*@
+@if (Model is AutoOglas)
+{
+    { Html.RenderPartial("_DetaljiAuto", Model); }
+}
+else if (Model is RacunarOglas)
+{
+    { Html.RenderPartial("_DetaljiRacunar", Model); }
+}
+else if (Model is NekretninaOglas)
+{
+    { Html.RenderPartial("_DetaljiNekretnine", Model); }
+}
+
+<p>
+    @Html.ActionLink("Nazad na listu", "Index")
+</p>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jquery")
+
+    <script id="detaljiSkripta"
+            src="@Url.Content("~/Scripts/moje/ZaDetaljeOglasaView.js")"
+            data-oglas-id="@oglasId"
+            data-user-id="@currentUserId"
+            data-autor-oglasa-id="@autorOglasaId"
+            data-url-edit="@urlZaEdit"
+            data-request-authenticated="@requestAuthenticated"
+            data-kategorija-oglasa="@imeKontrolera">
+    </script>
+}

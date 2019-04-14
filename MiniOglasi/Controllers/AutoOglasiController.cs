@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,24 +30,12 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.Valuta)
                 .Include(o => o.Slike);
 
-            return View(autoOglasi);
+            return View("IndexOglasa", autoOglasi);
         }
 
         public ActionResult Create()
         {
-            var markeAuta = dbContext.MarkeAuta;
-            //var modeliAuta = dbContext.ModeliAuta;
-            var stanja = dbContext.Stanja;
-            var valute = dbContext.Valute;
-
-            AutoOglasViewModel autoOglasViewModel = new AutoOglasViewModel()
-            {
-                AutoOglas = new AutoOglas(),
-                MarkeAuta = markeAuta.ToList(),
-                //ModeliAuta = modeliAuta.ToList(),
-                Stanja = stanja.ToList(),
-                Valute = valute.ToList()
-            };
+            var autoOglasViewModel = NapraviAutoOglasViewModel();
 
             return View("AutoOglasForm", autoOglasViewModel);
         }
@@ -62,13 +49,12 @@ namespace MiniOglasi.Controllers
                                                 .OfType<AutoOglas>()
                                                 .Include(o => o.Slike)
                                                 .SingleOrDefault(o => o.Id == newAutoOglasViewModel.AutoOglas.Id);
+
             var markeAuta = dbContext.MarkeAuta;
-            //var modeliAuta = dbContext.ModeliAuta;
             var stanja = dbContext.Stanja;
             var valute = dbContext.Valute;
 
             newAutoOglasViewModel.MarkeAuta = markeAuta.ToList();
-            //newAutoOglasViewModel.ModeliAuta = modeliAuta.ToList();
             newAutoOglasViewModel.Stanja = stanja.ToList();
             newAutoOglasViewModel.Valute = valute.ToList();
 
@@ -78,31 +64,25 @@ namespace MiniOglasi.Controllers
             }
             //Za slucaj da mora da se vrati na formu zbog modelstate not valid**************************************
 
-            if (uploadedImages?.Any(x => x != null) == true)
+            PomocnaKlasa.TipoviGreskeUploadSlika tipGreskeUploadSlika = PomocnaKlasa.ProveriValidnostUploadovanihSlika(uploadedImages);
+
+            switch (tipGreskeUploadSlika)
             {
-                if (uploadedImages.Count > 5)
-                {
+                case PomocnaKlasa.TipoviGreskeUploadSlika.MaxPetSlikaPoOglasu:
                     ViewBag.Greska = "Maksimalno 5 slika po oglasu!";
+                    break;
 
-                    return View("AutoOglasForm", newAutoOglasViewModel);
-                }
+                case PomocnaKlasa.TipoviGreskeUploadSlika.PogresanFormatSlika:
+                    ViewBag.Greska = "Izaberite samo slike!";
+                    break;
 
-                foreach (HttpPostedFileBase slika in uploadedImages)
-                {
-                    if (!PomocnaKlasa.JeLiTacanFormatFajla(slika))
-                    {
-                        ViewBag.Greska = "Izaberite samo slike!";
-
-                        return View("AutoOglasForm", newAutoOglasViewModel);
-                    }
-
-                    if (slika.ContentLength > 500 * 1024)
-                    {
-                        ViewBag.Greska = "Svaki fajl mora biti manji od 500kb!";
-
-                        return View("AutoOglasForm", newAutoOglasViewModel);
-                    }
-                }
+                case PomocnaKlasa.TipoviGreskeUploadSlika.PrevelikaSlika:
+                    ViewBag.Greska = "Svaki fajl mora biti manji od 500kb!";
+                    break;
+            }
+            if (tipGreskeUploadSlika != PomocnaKlasa.TipoviGreskeUploadSlika.NemaGreske)
+            {
+                return View("RacunarOglasForm", newAutoOglasViewModel);
             }
 
             if (!ModelState.IsValid)
@@ -113,29 +93,21 @@ namespace MiniOglasi.Controllers
             }
             else
             {
+                string userId = User.Identity.GetUserId();
+
                 if (newAutoOglasViewModel.AutoOglas.Id != 0)
                 {
                     PopuniAutoOglas(newAutoOglasViewModel, autoOglasUBazi);
 
-                    string userId = User.Identity.GetUserId();
-                    string oglasId = autoOglasUBazi.Id.ToString();
-                    string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(Server.MapPath(PomocnaKlasa.ImagesFolder), userId, oglasId);
-
-                    if (uploadedImages?.Any(x => x != null) == true)
+                    if (PomocnaKlasa.DaLiDodajeViseOdPetSlika(uploadedImages, autoOglasUBazi))
                     {
-                        if (uploadedImages.Count > 5 || (autoOglasUBazi.Slike?.Count + uploadedImages.Count > 5))
-                        {
-                            ViewBag.Greska = "Maksimalno 5 slika po oglasu!";
+                        ViewBag.Greska = "Maksimalno 5 slika po oglasu!";
 
-                            return View("AutoOglasForm", newAutoOglasViewModel);
-                        }
-
-                        foreach (var slika in uploadedImages)
-                        {
-                            Slika novaSlikaZaBazu = PomocnaKlasa.SacuvajSlikuIDodajPutanju(slika, userId, oglasId, punaPutanjaFolderaZaSlikeOglasa);
-                            autoOglasUBazi.Slike.Add(novaSlikaZaBazu);
-                        }
+                        return View("AutoOglasForm", newAutoOglasViewModel);
                     }
+
+                    string oglasId = autoOglasUBazi.Id.ToString();
+                    PomocnaKlasa.DodajSlikeOglasu(userId, oglasId, autoOglasUBazi, uploadedImages);
                 }
                 else
                 {
@@ -144,21 +116,9 @@ namespace MiniOglasi.Controllers
                     dbContext.Oglasi.Add(newAutoOglas);
                     dbContext.SaveChanges();
 
-                    string userId = User.Identity.GetUserId();
                     string oglasId = newAutoOglas.Id.ToString();
-                    string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(Server.MapPath(PomocnaKlasa.ImagesFolder), userId, oglasId);
 
-                    Directory.CreateDirectory(punaPutanjaFolderaZaSlikeOglasa);
-
-                    if (uploadedImages?.Any(x => x != null) == true)
-                    {
-                        foreach (HttpPostedFileBase slika in uploadedImages)
-                        {
-                            Slika novaSlikaZaBazu = PomocnaKlasa.SacuvajSlikuIDodajPutanju(slika, userId, oglasId, punaPutanjaFolderaZaSlikeOglasa);
-
-                            newAutoOglas.Slike.Add(novaSlikaZaBazu);
-                        }
-                    }
+                    PomocnaKlasa.DodajSlikeOglasu(userId, oglasId, newAutoOglas, uploadedImages);
                 }
 
                 dbContext.SaveChanges();
@@ -180,28 +140,7 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.UserAutorOglasa)
                 .SingleOrDefault(o => o.Id == id);
 
-            return View(autoOglas);
-        }
-
-        public ActionResult Delete(int id)
-        {
-            var autoOglasZaBrisanje = dbContext.Oglasi.Find(id);
-
-            if (autoOglasZaBrisanje == null)
-            {
-                return HttpNotFound();
-            }
-            else
-            {
-                var omiljeniOglasiZaBrisanje = dbContext.OmiljeniOglasiPoKorisniku.Where(x => x.OmiljeniOglasId == id);
-                dbContext.OmiljeniOglasiPoKorisniku.RemoveRange(omiljeniOglasiZaBrisanje);
-
-                dbContext.Oglasi.Remove(autoOglasZaBrisanje);
-                dbContext.SaveChanges();
-
-                Directory.Delete(Server.MapPath(Path.Combine(PomocnaKlasa.ImagesFolder, User.Identity.GetUserId(), id.ToString())), true);
-            }
-            return RedirectToAction("Index");
+            return View("DetaljiOglasa", autoOglas);
         }
 
         public ActionResult Edit(int id)
@@ -210,25 +149,14 @@ namespace MiniOglasi.Controllers
                                     OfType<AutoOglas>().
                                     Include(o => o.Slike).
                                     SingleOrDefault(o => o.Id == id);
+
             if (stariAutoOglas == null)
             {
                 return HttpNotFound();
             }
             else
             {
-                var markeAuta = dbContext.MarkeAuta;
-                //var modeliAuta = dbContext.ModeliAuta;
-                var stanja = dbContext.Stanja;
-                var valute = dbContext.Valute;
-
-                AutoOglasViewModel autoOglasViewModel = new AutoOglasViewModel()
-                {
-                    AutoOglas = stariAutoOglas,
-                    MarkeAuta = markeAuta.ToList(),
-                    //ModeliAuta = modeliAuta.ToList(),
-                    Stanja = stanja.ToList(),
-                    Valute = valute.ToList()
-                };
+                var autoOglasViewModel = NapraviAutoOglasViewModel(stariAutoOglas);
 
                 return View("AutoOglasForm", autoOglasViewModel);
             }
@@ -237,24 +165,41 @@ namespace MiniOglasi.Controllers
         //**********************************************************************************
 
         [NonAction]
+        public AutoOglasViewModel NapraviAutoOglasViewModel(AutoOglas oglasIzBaze = null)
+        {
+            var markeAuta = dbContext.MarkeAuta;
+            var stanja = dbContext.Stanja;
+            var valute = dbContext.Valute;
+
+            return new AutoOglasViewModel()
+            {
+                AutoOglas = oglasIzBaze ?? new AutoOglas(),
+                MarkeAuta = markeAuta.ToList(),
+                Stanja = stanja.ToList(),
+                Valute = valute.ToList()
+            };
+        }
+
+        [NonAction]
         public AutoOglas PopuniAutoOglas(AutoOglasViewModel autoOglasViewModel, AutoOglas autoOglasZaIzmenu = null)
         {
             if (autoOglasZaIzmenu == null)
             {
                 autoOglasZaIzmenu = new AutoOglas();
             }
-
+            // >> ZAJEDNICKI >>>
+            autoOglasZaIzmenu.NaslovOglasa = autoOglasViewModel.AutoOglas.NaslovOglasa;
+            autoOglasZaIzmenu.OpisOglasa = autoOglasViewModel.AutoOglas.OpisOglasa;
             autoOglasZaIzmenu.Cena = autoOglasViewModel.AutoOglas.Cena;
+            autoOglasZaIzmenu.ValutaId = autoOglasViewModel.AutoOglas.ValutaId;
+            autoOglasZaIzmenu.StanjeId = autoOglasViewModel.AutoOglas.StanjeId;
+            // <<< ZAJEDNICKI <<<
             autoOglasZaIzmenu.Godiste = autoOglasViewModel.AutoOglas.Godiste;
             autoOglasZaIzmenu.Kilometraza = autoOglasViewModel.AutoOglas.Kilometraza;
             autoOglasZaIzmenu.KonjskeSnage = autoOglasViewModel.AutoOglas.KonjskeSnage;
             autoOglasZaIzmenu.Kubikaza = autoOglasViewModel.AutoOglas.Kubikaza;
             autoOglasZaIzmenu.MarkaAutaId = autoOglasViewModel.AutoOglas.MarkaAutaId;
             autoOglasZaIzmenu.ModelAutaId = autoOglasViewModel.AutoOglas.ModelAutaId;
-            autoOglasZaIzmenu.NaslovOglasa = autoOglasViewModel.AutoOglas.NaslovOglasa;
-            autoOglasZaIzmenu.OpisOglasa = autoOglasViewModel.AutoOglas.OpisOglasa;
-            autoOglasZaIzmenu.StanjeId = autoOglasViewModel.AutoOglas.StanjeId;
-            autoOglasZaIzmenu.ValutaId = autoOglasViewModel.AutoOglas.ValutaId;
 
             autoOglasZaIzmenu.DatumPostavljanja = autoOglasViewModel.AutoOglas.DatumPostavljanja == default(DateTime)
                 ? DateTime.Now

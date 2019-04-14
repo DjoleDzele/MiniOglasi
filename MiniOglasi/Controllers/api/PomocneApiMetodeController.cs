@@ -18,6 +18,29 @@ namespace MiniOglasi.Controllers.api
         }
 
         [HttpDelete]
+        [Route("api/delete-oglas/{id}/")]
+        public IHttpActionResult DeleteOglas(int id)
+        {
+            var oglasZaBrisanje = dbContext.Oglasi.Find(id);
+
+            if (oglasZaBrisanje == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var omiljeniOglasiZaBrisanje = dbContext.OmiljeniOglasiPoKorisniku.Where(x => x.OmiljeniOglasId == id);
+                dbContext.OmiljeniOglasiPoKorisniku.RemoveRange(omiljeniOglasiZaBrisanje);
+
+                dbContext.Oglasi.Remove(oglasZaBrisanje);
+                dbContext.SaveChanges();
+
+                Directory.Delete(HttpContext.Current.Server.MapPath(Path.Combine(PomocnaKlasa.ImagesFolder, User.Identity.GetUserId(), id.ToString())), true);
+                return Ok();
+            }
+        }
+
+        [HttpDelete]
         [Route("api/delete-user/{korisnikId}")]
         public IHttpActionResult DeleteUser(string korisnikId)
         {
@@ -110,7 +133,7 @@ namespace MiniOglasi.Controllers.api
         }
 
         [HttpDelete]
-        [Route("api/slike/{id}")]
+        [Route("api/delete-sliku/{id}")]
         public IHttpActionResult DeleteSliku(int id)
         {
             var slika = dbContext.Slike.Find(id);

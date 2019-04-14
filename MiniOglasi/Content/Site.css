@@ -216,6 +216,7 @@ span.glyphicon {
     border-top: 1px solid rgb(88, 0, 255);
     border-bottom: 1px solid rgb(88, 0, 255);
     box-shadow: 1rem 1rem 5px gray;
+    background: linear-gradient(135deg, rgba(201,201,201,0.8) 0%, rgba(255,252,252,0.8) 39%, rgba(190,190,190,0.7) 50%, rgba(255,255,255,0.8) 62%, rgba(189,189,189,0.8) 100%);
 }
 
     #kategorije h2 {
@@ -241,6 +242,7 @@ span.glyphicon {
         border-radius: 1rem;
         font-size: 2.5rem;
         margin: 2rem;
+        background-color: white;
     }
 
 @media only screen and (max-width: 850px) {

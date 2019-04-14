@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<MiniOglasi.Models.Oglas>
 
 @using MiniOglasi.Models
-@using MiniOglasi.Models.RacunarOglasModels
-@using MiniOglasi.Models.AutoOglasModels
 
 @{
-    ViewBag.Title = "Moji Oglasi";
+    ViewBag.Title = "Index";
+    var imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
 }
 
-<h2>Moji Oglasi</h2>
+<p>
+    @Html.ActionLink("Dodaj oglas", "Create", imeKontrolera)
+</p>
 
 @foreach (var item in Model)
 {
@@ -24,7 +25,7 @@
     }
 
     <div class="oglas-okvir">
-        <a href="/AutoOglasi/Details/@item.Id" style="text-decoration:none;">
+        <a href="@Url.Action("Details", imeKontrolera, new { id = item.Id })">
             <div class="oglas-list-item">
                 <div class="slika-oglasa" style="background-image: url(@pathDoSlike);">
                 </div>
@@ -35,16 +36,12 @@
                     </p>
                     <p>
                         <strong>@Html.DisplayNameFor(oglas => oglas.Cena): </strong>
-                        <span>@Html.DisplayFor(oglas => item.Cena)</span>
+                        <span>@Html.DisplayFor(oglas => item.Cena) @item.Valuta.ImeValute</span>
                     </p>
                     <p>
                         <strong>@Html.DisplayNameFor(oglas => oglas.DatumPostavljanja): </strong>
                         <span>@item.DatumPostavljanja.ToShortDateString()</span>
                     </p>
-                    @if (item is AutoOglas)
-                    {
-                        <p>@typeof(AutoOglas).GetProperty("Godiste").GetValue(item)</p>
-                    }
                 </div>
             </div>
         </a>
