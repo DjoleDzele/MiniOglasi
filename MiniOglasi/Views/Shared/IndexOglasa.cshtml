@@ -1,49 +1,230 @@
-﻿@model IEnumerable<MiniOglasi.Models.Oglas>
+﻿@model MiniOglasi.ViewModels.OglasIndexViewModel
 
 @using MiniOglasi.Models
+@using MiniOglasi.Models.RacunarOglasModels
 
 @{
     ViewBag.Title = "Index";
+    bool jeLiAutoOglas = Model._vrstaOglasa == VrstaOglasa.Auto;
     var imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
 }
 
-<p>
-    @Html.ActionLink("Dodaj oglas", "Create", imeKontrolera)
-</p>
-
-@foreach (var item in Model)
-{
-    string pathDoSlike = "";
-
-    if (item.Slike != null && item.Slike.Any())
-    {
-        pathDoSlike = Url.Content(item.Slike.ElementAt(0).PathDoSlike);
-    }
-    else
-    {
-        pathDoSlike = Url.Content(PomocnaKlasa.PlaceholderSlika);
-    }
-
-    <div class="oglas-okvir">
-        <a href="@Url.Action("Details", imeKontrolera, new { id = item.Id })">
-            <div class="oglas-list-item">
-                <div class="slika-oglasa" style="background-image: url(@pathDoSlike);">
-                </div>
-                <div class="main-info-oglasa">
-                    <p>
-                        <strong>@Html.DisplayNameFor(oglas => oglas.NaslovOglasa): </strong>
-                        <span>@Html.DisplayFor(oglas => item.NaslovOglasa)</span>
-                    </p>
-                    <p>
-                        <strong>@Html.DisplayNameFor(oglas => oglas.Cena): </strong>
-                        <span>@Html.DisplayFor(oglas => item.Cena) @item.Valuta.ImeValute</span>
-                    </p>
-                    <p>
-                        <strong>@Html.DisplayNameFor(oglas => oglas.DatumPostavljanja): </strong>
-                        <span>@item.DatumPostavljanja.ToShortDateString()</span>
-                    </p>
-                </div>
+<main id="main-lista-oglasa">
+    <div id="deoZaFiltere">
+        @using (Html.BeginForm("Index", imeKontrolera, FormMethod.Get))
+        {
+            <div class="red-filtera">
+                <input type="submit" value="Pretraga" class="dugme dugme-za-filtriranje" />
+                @Html.ActionLink("Dodaj oglas", "Create", imeKontrolera, new { @class = "dugme dugme-za-novi-oglas" })
             </div>
-        </a>
+
+            //ZA SVE--------------------------------------------------
+
+            <span>Sortiraj prema:</span>
+            <div class="red-filtera">
+                <select id="sortiranje" name="sortiranje" class="form-control">
+                    <option value="0"></option>
+                    <option value="1">Cena opadajuce</option>
+                    <option value="2">Cena rastuce</option>
+                    <option value="3">Prvo noviji</option>
+                    <option value="4">Prvo stariji</option>
+                </select>
+            </div>
+
+            <span>Opseg cene u dinarima:</span>
+            <div class="red-filtera">
+                <input id="minCena" name="minCena" type="number" value="0" placeholder="min" min="0" class="form-control" />
+                <input id="maxCena" name="maxCena" type="number" value="0" placeholder="max" min="0" class="form-control" />
+            </div>
+
+            <span>Stanje:</span>
+            <div class="red-filtera">
+                @Html.DropDownList("stanje", new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control", name = "stanje", id = "stanje" })
+            </div>
+
+            //ZA AUTE--------------------------------------------------
+
+            if (Model._vrstaOglasa == VrstaOglasa.Auto)
+            {
+                <span>Marka auta:</span>
+                <div class="red-filtera">
+                    <select id="markaAuta" name="markaAuta" class="form-control">
+                        <option value="0"></option>
+                        @foreach (var markaAuta in Model.MarkeAuta)
+                        {
+                            <option value="@markaAuta.Id">@markaAuta.Marka</option>
+                        }
+                    </select>
+                </div>
+
+                <span>Model auta:</span>
+                <div class="red-filtera">
+                    <select id="modelAuta" name="modelAuta" class="form-control"></select>
+                </div>
+
+                <span>Opeg kilometraza max:</span>
+                <div class="red-filtera">
+                    <input id="maxKilometraza" name="maxKilometraza" type="number" value="0" min="0" class="form-control" />
+                </div>
+
+                <span>Opseg konjskih snaga:</span>
+                <div class="red-filtera">
+                    <input id="minKonjskihSnaga" name="minKonjskihSnaga" type="number" value="0" placeholder="min" min="0" class="form-control" />
+                    <input id="maxKonjskihSnaga" name="maxKonjskihSnaga" type="number" value="0" placeholder="max" min="0" class="form-control" />
+                </div>
+
+                <span>Opseg kubikaza:</span>
+                <div class="red-filtera">
+                    <input id="minKubikaza" name="minKubikaza" type="number" value="0" placeholder="min" min="0" class="form-control" />
+                    <input id="maxKubikaza" name="maxKubikaza" type="number" value="0" placeholder="max" min="0" class="form-control" />
+                </div>
+            }
+        }
     </div>
+
+    <div id="deoZaListuOglasa">
+        @foreach (var item in Model.Oglasi)
+        {
+            string pathDoSlike = "";
+
+            if (item.Slike != null && item.Slike.Any())
+            {
+                pathDoSlike = Url.Content(item.Slike.ElementAt(0).PathDoSlike);
+            }
+            else
+            {
+                pathDoSlike = Url.Content(PomocnaKlasa.PlaceholderSlika);
+            }
+
+            <div class="oglas-okvir">
+                <a href="@Url.Action("Details", imeKontrolera, new { id = item.Id })">
+                    <div class="oglas-list-item">
+                        <div class="slika-oglasa" style="background-image: url(@pathDoSlike);">
+                        </div>
+                        <div class="main-info-oglasa">
+                            <p>
+                                <strong>@Html.DisplayNameFor(oglas => item.NaslovOglasa): </strong>
+                                <span>@Html.DisplayFor(oglas => item.NaslovOglasa)</span>
+                            </p>
+                            <p>
+                                <strong>@Html.DisplayNameFor(oglas => item.Cena): </strong>
+                                <span>@Html.DisplayFor(oglas => item.Cena) @item.Valuta.ImeValute</span>
+                            </p>
+                            <p>
+                                <strong>@Html.DisplayNameFor(oglas => item.DatumPostavljanja): </strong>
+                                <span>@item.DatumPostavljanja.ToShortDateString()</span>
+                            </p>
+
+                            @*ZA AUTE---------------------------------------------*@
+
+                            @if (Model._vrstaOglasa == VrstaOglasa.Auto)
+                            {
+                                <p>
+                                    <strong>@Html.DisplayNameFor(oglas => ((AutoOglas)item).MarkaAuta): </strong>
+                                    <span>@Html.DisplayFor(oglas => ((AutoOglas)item).MarkaAuta.Marka)</span>
+                                </p>
+                                <p>
+                                    <strong>@Html.DisplayNameFor(oglas => ((AutoOglas)item).ModelAuta): </strong>
+                                    <span>@Html.DisplayFor(oglas => ((AutoOglas)item).ModelAuta.AutoModel)</span>
+                                </p>
+                            }
+
+                            @*ZA RACUNARE---------------------------------------------*@
+                            @if (Model._vrstaOglasa == VrstaOglasa.Racunar)
+                            {
+                                <p>
+                                    <strong>@Html.DisplayNameFor(oglas => ((RacunarOglas)item).TipRacunara): </strong>
+                                    <span>@Html.DisplayFor(oglas => ((RacunarOglas)item).TipRacunara.Tip)</span>
+                                </p>
+                                <p>
+                                    <strong>@Html.DisplayNameFor(oglas => ((RacunarOglas)item).MarkaRacunara): </strong>
+                                    <span>@Html.DisplayFor(oglas => ((RacunarOglas)item).MarkaRacunara.Marka)</span>
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</main>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            const urlParams = new URLSearchParams(window.location.search);
+
+            var sortiranjeInput = document.querySelector("#sortiranje");
+            var minCenaInput = document.querySelector("#minCena");
+            var maxCenaInput = document.querySelector("#maxCena");
+            var stanjeInput = document.querySelector("#stanje");
+
+            sortiranjeInput.value = urlParams.get("sortiranje");
+            minCenaInput.value = urlParams.get("minCena");
+            maxCenaInput.value = urlParams.get("maxCena");
+            stanjeInput.value = urlParams.get("stanje");
+
+            if ("@jeLiAutoOglas" == "True") {
+
+                var izborAutoMarkeDropdown = document.querySelector("#markaAuta");
+                izborAutoMarkeDropdown.value = urlParams.get("markaAuta");
+
+                if (urlParams.get("markaAuta") != 0) {
+                    popuniTabeluAutoModela(urlParams.get("markaAuta"));
+                }
+
+                var izborAutoModelaDropdown = document.querySelector("#modelAuta");
+                //izborAutoModelaDropdown.value = urlParams.get("modelAuta");
+
+                var maxKilometrazaInput = document.querySelector("#maxKilometraza");
+                maxKilometrazaInput.value = urlParams.get("maxKilometraza");
+
+                var minKonjskihSnagaInput = document.querySelector("#minKonjskihSnaga");
+                minKonjskihSnagaInput.value = urlParams.get("minKonjskihSnaga");
+
+                var maxKonjskihSnagaInput = document.querySelector("#maxKonjskihSnaga");
+                maxKonjskihSnagaInput.value = urlParams.get("maxKonjskihSnaga");
+
+                var minKubikazaInput = document.querySelector("#minKubikaza");
+                minKubikazaInput.value = urlParams.get("minKubikaza");
+
+                var maxKubikazaInput = document.querySelector("#maxKubikaza");
+                maxKubikazaInput.value = urlParams.get("maxKubikaza");
+
+                izborAutoMarkeDropdown.addEventListener("change", function (e) {
+                    var izabranaMarkaAuta = e.target.value;
+
+                    if (izabranaMarkaAuta == 0) {
+                        izborAutoModelaDropdown.innerHTML = "";
+                        izborAutoModelaDropdown.innerHTML += `<option value="0"></option>`
+                    }
+                    else {
+                        popuniTabeluAutoModela(izabranaMarkaAuta);
+                    }
+                });
+
+                function popuniTabeluAutoModela(autoMarkaId) {
+                    $.ajax({
+                        url: `/api/auto-modeli/${autoMarkaId}`,
+                        method: "GET",
+                        success: function (data) {
+                            izborAutoModelaDropdown.innerHTML = "";
+                            izborAutoModelaDropdown.innerHTML += `<option value="0"></option>`
+
+                            data.forEach(function (x) {
+                                var selected = x.Id == urlParams.get("modelAuta") ? "selected" : "";
+                                var opcijaZaModel = `<option ${selected} value="${x.Id}">${x.AutoModel}</option>`
+                                izborAutoModelaDropdown.innerHTML += opcijaZaModel;
+                            })
+                        },
+                        error: function (err) {
+                            console.log(err)
+                        }
+                    })
+                }
+            }
+        })
+    </script>
 }

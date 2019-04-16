@@ -32,7 +32,14 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.Valuta)
                 .Include(o => o.Slike);
 
-            return View("IndexOglasa", racunarOglasi);
+            var stanja = dbContext.Stanja.ToList();
+            OglasIndexViewModel racunarOglasIndexViewModel = new OglasIndexViewModel(VrstaOglasa.Racunar)
+            {
+                Oglasi = racunarOglasi.ToList(),
+                Stanja = stanja
+            };
+
+            return View("IndexOglasa", racunarOglasIndexViewModel);
         }
 
         public ActionResult Create()
@@ -44,7 +51,7 @@ namespace MiniOglasi.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveRacunarOglas(RacunarOglasViewModel newRacunarOglasViewModel, List<HttpPostedFileBase> uploadedImages = null)
+        public ActionResult SaveOglas(RacunarOglasViewModel newRacunarOglasViewModel, List<HttpPostedFileBase> uploadedImages = null)
         {
             //Za slucaj da mora da se vrati na formu ako je not valid*********************************************
             RacunarOglas racunarOglasUBazi = dbContext.Oglasi
@@ -203,18 +210,6 @@ namespace MiniOglasi.Controllers
             racunarOglasZaIzmenu.Cena = racunarOglasViewModel.RacunarOglas.Cena;
             racunarOglasZaIzmenu.ValutaId = racunarOglasViewModel.RacunarOglas.ValutaId;
             racunarOglasZaIzmenu.StanjeId = racunarOglasViewModel.RacunarOglas.StanjeId;
-            // <<< ZAJEDNICKI <<<
-            racunarOglasZaIzmenu.MarkaRacunaraId = racunarOglasViewModel.RacunarOglas.MarkaRacunaraId;
-            racunarOglasZaIzmenu.TipRacunaraId = racunarOglasViewModel.RacunarOglas.TipRacunaraId;
-            racunarOglasZaIzmenu.MarkaGrafickeKarteId = racunarOglasViewModel.RacunarOglas.MarkaGrafickeKarteId;
-            racunarOglasZaIzmenu.GrafickaMemorija = racunarOglasViewModel.RacunarOglas.GrafickaMemorija;
-            racunarOglasZaIzmenu.HddMemorija = racunarOglasViewModel.RacunarOglas.HddMemorija;
-            racunarOglasZaIzmenu.RamMemorija = racunarOglasViewModel.RacunarOglas.RamMemorija;
-            racunarOglasZaIzmenu.ProcesorBrzina = racunarOglasViewModel.RacunarOglas.ProcesorBrzina;
-            racunarOglasZaIzmenu.ProcesorJezgara = racunarOglasViewModel.RacunarOglas.ProcesorJezgara;
-            racunarOglasZaIzmenu.Monitor = racunarOglasViewModel.RacunarOglas.Monitor;
-            racunarOglasZaIzmenu.Tastatura = racunarOglasViewModel.RacunarOglas.Tastatura;
-            racunarOglasZaIzmenu.Mis = racunarOglasViewModel.RacunarOglas.Mis;
 
             racunarOglasZaIzmenu.DatumPostavljanja = racunarOglasViewModel.RacunarOglas.DatumPostavljanja == default(DateTime)
                 ? DateTime.Now
@@ -226,6 +221,19 @@ namespace MiniOglasi.Controllers
             }
 
             racunarOglasZaIzmenu.UserAutorOglasaId = racunarOglasViewModel.RacunarOglas.UserAutorOglasaId ?? User.Identity.GetUserId();
+            // <<< ZAJEDNICKI <<<
+
+            racunarOglasZaIzmenu.MarkaRacunaraId = racunarOglasViewModel.RacunarOglas.MarkaRacunaraId;
+            racunarOglasZaIzmenu.TipRacunaraId = racunarOglasViewModel.RacunarOglas.TipRacunaraId;
+            racunarOglasZaIzmenu.MarkaGrafickeKarteId = racunarOglasViewModel.RacunarOglas.MarkaGrafickeKarteId;
+            racunarOglasZaIzmenu.GrafickaMemorija = racunarOglasViewModel.RacunarOglas.GrafickaMemorija;
+            racunarOglasZaIzmenu.HddMemorija = racunarOglasViewModel.RacunarOglas.HddMemorija;
+            racunarOglasZaIzmenu.RamMemorija = racunarOglasViewModel.RacunarOglas.RamMemorija;
+            racunarOglasZaIzmenu.ProcesorBrzina = racunarOglasViewModel.RacunarOglas.ProcesorBrzina;
+            racunarOglasZaIzmenu.ProcesorJezgara = racunarOglasViewModel.RacunarOglas.ProcesorJezgara;
+            racunarOglasZaIzmenu.Monitor = racunarOglasViewModel.RacunarOglas.Monitor;
+            racunarOglasZaIzmenu.Tastatura = racunarOglasViewModel.RacunarOglas.Tastatura;
+            racunarOglasZaIzmenu.Mis = racunarOglasViewModel.RacunarOglas.Mis;
 
             return racunarOglasZaIzmenu;
         }

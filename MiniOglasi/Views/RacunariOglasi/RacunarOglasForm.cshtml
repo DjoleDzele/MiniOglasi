@@ -1,191 +1,191 @@
 ﻿@model MiniOglasi.ViewModels.RacunarOglasViewModel
 
-@{
-    ViewBag.Title = Model.RacunarOglas.Id == 0 ? "Novi oglas za racunare" : "Izmeni oglas za racunar";
-}
-
-<h3 class="naslov">@ViewBag.Title</h3>
-
-@if (ViewBag.Greska != null)
-{
-    <span class="text-danger field-validation-error">
-        <span>@ViewBag.Greska</span>
-    </span>
-}
-
-@using (Html.BeginForm("SaveRacunarOglas",
-                       "RacunariOglasi",
-                       FormMethod.Post,
-                       new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.NaslovOglasa, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.NaslovOglasa, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.NaslovOglasa, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.OpisOglasa, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.TextAreaFor(model => model.RacunarOglas.OpisOglasa, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.OpisOglasa, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.Cena, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.Cena, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.Cena, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.ValutaId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.DropDownListFor(model => model.RacunarOglas.ValutaId, new SelectList(Model.Valute, "Id", "ImeValute"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.ValutaId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.StanjeId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.DropDownListFor(model => model.RacunarOglas.StanjeId, new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.StanjeId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.MarkaRacunaraId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.DropDownListFor(model => model.RacunarOglas.MarkaRacunaraId, new SelectList(Model.MarkeRacunara, "Id", "Marka"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.MarkaRacunaraId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.TipRacunaraId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.DropDownListFor(model => model.RacunarOglas.TipRacunaraId, new SelectList(Model.TipoviRacunara, "Id", "Tip"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.TipRacunaraId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.MarkaGrafickeKarteId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.DropDownListFor(model => model.RacunarOglas.MarkaGrafickeKarteId, new SelectList(Model.GrafickaKartaMarke, "Id", "MarkaGraficke"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.MarkaGrafickeKarteId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.GrafickaMemorija, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.GrafickaMemorija, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.GrafickaMemorija, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.HddMemorija, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.HddMemorija, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.HddMemorija, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.RamMemorija, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.RamMemorija, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.RamMemorija, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.ProcesorBrzina, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.ProcesorBrzina, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.ProcesorBrzina, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.ProcesorJezgara, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.ProcesorJezgara, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.ProcesorJezgara, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.Monitor, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.Monitor, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.Monitor, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.Tastatura, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.Tastatura, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.Tastatura, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RacunarOglas.Mis, htmlAttributes: new { @class = "control-label " })
-            <div class="">
-                @Html.EditorFor(model => model.RacunarOglas.Mis, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RacunarOglas.Mis, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label " for="uploadedImage">Dodaj slike</label>
-            <div class="">
-                <input type="file" multiple name="uploadedImages" id="uploadedImages" accept=".jpg,.png" value="Izaberite sliku" class="form-control" style="padding:0" />
-            </div>
-        </div>
-
-        @Html.HiddenFor(model => model.RacunarOglas.Id)
-        @Html.HiddenFor(model => model.RacunarOglas.UserAutorOglasaId)
-        @Html.HiddenFor(model => model.RacunarOglas.DatumPostavljanja)
-        <div class="form-group">
-            <input type="submit" value="Sacuvaj" class="btn btn-success" />
-        </div>
-    </div>
-}
-
-<div id="slikeZaBrisanjeDiv">
-    @if (Model.RacunarOglas.Slike != null && Model.RacunarOglas.Id != 0)
-    {
-        foreach (var slika in Model.RacunarOglas.Slike)
-        {
-            <img data-slika-id="@slika.Id"
-                 class="js-delete-img"
-                 src="@Url.Content(slika.PathDoSlike)"
-                 alt="Alternate Text" width="100" height="100" style="margin: 15px" />
-        }
+    @{
+        ViewBag.Title = Model.RacunarOglas.Id == 0 ? "Novi oglas za racunare" : "Izmeni oglas za racunar";
     }
-</div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    <h3 class="naslov">@ViewBag.Title</h3>
 
-@section scripts
+    @if (ViewBag.Greska != null)
+    {
+        <span class="text-danger field-validation-error">
+            <span>@ViewBag.Greska</span>
+        </span>
+    }
+
+    @using (Html.BeginForm("SaveOglas",
+                           "RacunariOglasi",
+                           FormMethod.Post,
+                           new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.NaslovOglasa, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.NaslovOglasa, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.NaslovOglasa, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.OpisOglasa, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.TextAreaFor(model => model.RacunarOglas.OpisOglasa, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.OpisOglasa, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.Cena, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.Cena, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.Cena, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.ValutaId, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.DropDownListFor(model => model.RacunarOglas.ValutaId, new SelectList(Model.Valute, "Id", "ImeValute"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.ValutaId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.StanjeId, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.DropDownListFor(model => model.RacunarOglas.StanjeId, new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.StanjeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.MarkaRacunaraId, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.DropDownListFor(model => model.RacunarOglas.MarkaRacunaraId, new SelectList(Model.MarkeRacunara, "Id", "Marka"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.MarkaRacunaraId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.TipRacunaraId, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.DropDownListFor(model => model.RacunarOglas.TipRacunaraId, new SelectList(Model.TipoviRacunara, "Id", "Tip"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.TipRacunaraId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.MarkaGrafickeKarteId, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.DropDownListFor(model => model.RacunarOglas.MarkaGrafickeKarteId, new SelectList(Model.GrafickaKartaMarke, "Id", "MarkaGraficke"), new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.MarkaGrafickeKarteId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.GrafickaMemorija, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.GrafickaMemorija, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.GrafickaMemorija, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.HddMemorija, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.HddMemorija, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.HddMemorija, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.RamMemorija, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.RamMemorija, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.RamMemorija, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.ProcesorBrzina, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.ProcesorBrzina, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.ProcesorBrzina, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.ProcesorJezgara, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.ProcesorJezgara, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.ProcesorJezgara, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.Monitor, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.Monitor, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.Monitor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.Tastatura, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.Tastatura, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.Tastatura, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RacunarOglas.Mis, htmlAttributes: new { @class = "control-label " })
+                <div class="">
+                    @Html.EditorFor(model => model.RacunarOglas.Mis, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RacunarOglas.Mis, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label " for="uploadedImage">Dodaj slike</label>
+                <div class="">
+                    <input type="file" multiple name="uploadedImages" id="uploadedImages" accept=".jpg,.png" value="Izaberite sliku" class="form-control" style="padding:0" />
+                </div>
+            </div>
+
+            @Html.HiddenFor(model => model.RacunarOglas.Id)
+            @Html.HiddenFor(model => model.RacunarOglas.UserAutorOglasaId)
+            @Html.HiddenFor(model => model.RacunarOglas.DatumPostavljanja)
+            <div class="form-group">
+                <input type="submit" value="Sacuvaj" class="btn btn-success" />
+            </div>
+        </div>
+    }
+
+    <div id="slikeZaBrisanjeDiv">
+        @if (Model.RacunarOglas.Slike != null && Model.RacunarOglas.Id != 0)
+        {
+            foreach (var slika in Model.RacunarOglas.Slike)
+            {
+                <img data-slikaId="@slika.Id"
+                     class="js-delete-img"
+                     src="@Url.Content(slika.PathDoSlike)"
+                     alt="Alternate Text" width="100" height="100" style="margin: 15px" />
+            }
+        }
+    </div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section scripts
 {
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/moje/ZaApiBrisanjeSlika.js")
-}
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/Scripts/moje/ZaApiBrisanjeSlika.js")
+    }

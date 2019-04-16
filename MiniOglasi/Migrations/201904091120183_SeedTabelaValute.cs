@@ -7,7 +7,7 @@ namespace MiniOglasi.Migrations
         public override void Up()
         {
             Sql("SET IDENTITY_INSERT [dbo].[Valute] ON " +
-            "INSERT INTO [dbo].[Valute] ([Id], [ImeValute]) VALUES (1, N'Dinar') " +
+            "INSERT INTO [dbo].[Valute] ([Id], [ImeValute]) VALUES (1, N'DIN') " +
             "INSERT INTO [dbo].[Valute] ([Id], [ImeValute]) VALUES (2, N'EUR') " +
             "SET IDENTITY_INSERT [dbo].[Valute] OFF ");
         }

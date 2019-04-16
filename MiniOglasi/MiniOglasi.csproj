@@ -299,6 +299,7 @@
     <Compile Include="Models\RacunarOglasModels\MarkaRacunara.cs" />
     <Compile Include="Models\Stanje.cs" />
     <Compile Include="Models\Valuta.cs" />
+    <Compile Include="Models\VrstaOglasa.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\AutoOglasModels\AutoOglas.cs" />
     <Compile Include="Models\Grad.cs" />
@@ -314,6 +315,7 @@
     <Compile Include="Models\Slika.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\OglasIndexViewModel.cs" />
     <Compile Include="ViewModels\RacunarOglasViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +354,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moje\PopunjavanjeAutoModela.js" />
     <Content Include="Scripts\moje\ZaApiBrisanjeSlika.js" />
     <Content Include="Scripts\moje\ZaDetaljeOglasaView.js" />
     <Content Include="Web.config" />

@@ -9,7 +9,7 @@
             var slikaId;
 
             if (slikaZaBrisanje.classList.contains("js-delete-img")) {
-                slikaId = slikaZaBrisanje.dataset["slikaId"];
+                slikaId = slikaZaBrisanje.dataset["slikaid"];
 
                 $.ajax({
                     url: `/api/delete-sliku/${slikaId}`,

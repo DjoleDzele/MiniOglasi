@@ -8,13 +8,13 @@
 
 @{
     ViewBag.Title = "Detalji";
-    var oglasId = Model.Id;
-    var currentUserId = User.Identity.GetUserId();
-    var autorOglasaId = Model.UserAutorOglasaId;
-    var imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
-    var urlZaEdit = Url.Action("Edit", imeKontrolera, new { id = oglasId });
-    var requestAuthenticated = Request.IsAuthenticated;
-    var jeLiOmiljenOglas = Html.Action("DaLiJeOmiljeniOglas", "Korisnik", new { idOglasa = oglasId }).ToString() == "True";
+    int oglasId = Model.Id;
+    string currentUserId = User.Identity.GetUserId();
+    string autorOglasaId = Model.UserAutorOglasaId;
+    string imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
+    string urlZaEdit = Url.Action("Edit", imeKontrolera, new { id = oglasId });
+    bool requestAuthenticated = Request.IsAuthenticated;
+    bool jeLiOmiljenOglas = Html.Action("DaLiJeOmiljeniOglas", "Korisnik", new { idOglasa = oglasId }).ToString() == "True";
 }
 
 <h2>@Model.NaslovOglasa</h2>

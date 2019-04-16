@@ -13,7 +13,5 @@ namespace MiniOglasi.ViewModels
         public AutoOglas AutoOglas { get; set; }
 
         public ICollection<MarkaAuta> MarkeAuta { get; set; }
-
-        //public ICollection<ModelAuta> ModeliAuta { get; set; }
     }
 }

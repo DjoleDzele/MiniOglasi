@@ -20,8 +20,9 @@ namespace MiniOglasi.Controllers
             dbContext = new ApplicationDbContext();
         }
 
+        [HttpGet]
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(int minKubikaza = 0, int maxKubikaza = 0, int minKonjskihSnaga = 0, int maxKonjskihSnaga = 0, int maxKilometraza = 0, int sortiranje = 0, int minCena = 0, int maxCena = 0, int markaAuta = 0, int modelAuta = 0)
         {
             var autoOglasi = dbContext.Oglasi
                 .OfType<AutoOglas>()
@@ -30,7 +31,83 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.Valuta)
                 .Include(o => o.Slike);
 
-            return View("IndexOglasa", autoOglasi);
+            if (sortiranje != 0)
+            {
+                switch (sortiranje)
+                {
+                    case 1:
+                        autoOglasi = autoOglasi.OrderByDescending(x => x.ValutaId == 1 ? x.Cena : x.Cena * 120);
+                        break;
+
+                    case 2:
+                        autoOglasi = autoOglasi.OrderBy(x => x.ValutaId == 1 ? x.Cena : x.Cena * 120);
+                        break;
+
+                    case 3:
+                        autoOglasi = autoOglasi.OrderByDescending(x => x.DatumPostavljanja);
+                        break;
+
+                    case 4:
+                        autoOglasi = autoOglasi.OrderBy(x => x.DatumPostavljanja);
+                        break;
+                }
+            }
+
+            if (minCena != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.ValutaId == 1 ? x.Cena > minCena : x.Cena * 120 > minCena);
+            }
+
+            if (maxCena != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.ValutaId == 1 ? x.Cena < maxCena : x.Cena * 120 < maxCena);
+            }
+
+            if (markaAuta != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.MarkaAutaId == markaAuta);
+            }
+
+            if (modelAuta != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.ModelAutaId == modelAuta);
+            }
+
+            if (maxKilometraza != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.Kilometraza < maxKilometraza);
+            }
+
+            if (minKonjskihSnaga != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.KonjskeSnage > minKonjskihSnaga);
+            }
+
+            if (maxKonjskihSnaga != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.KonjskeSnage < maxKonjskihSnaga);
+            }
+
+            if (minKubikaza != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.Kubikaza > minKubikaza);
+            }
+
+            if (maxKubikaza != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.Kubikaza < maxKubikaza);
+            }
+
+            var markeAuta = dbContext.MarkeAuta.ToList();
+            var stanja = dbContext.Stanja.ToList();
+            OglasIndexViewModel autoOglasIndexViewModel = new OglasIndexViewModel(VrstaOglasa.Auto)
+            {
+                Oglasi = autoOglasi.ToList(),
+                MarkeAuta = markeAuta,
+                Stanja = stanja
+            };
+
+            return View("IndexOglasa", autoOglasIndexViewModel);
         }
 
         public ActionResult Create()
@@ -42,7 +119,7 @@ namespace MiniOglasi.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveAutoOglas(AutoOglasViewModel newAutoOglasViewModel, List<HttpPostedFileBase> uploadedImages = null)
+        public ActionResult SaveOglas(AutoOglasViewModel newAutoOglasViewModel, List<HttpPostedFileBase> uploadedImages = null)
         {
             //Za slucaj da mora da se vrati na formu zbog modelstate not valid**************************************
             AutoOglas autoOglasUBazi = dbContext.Oglasi

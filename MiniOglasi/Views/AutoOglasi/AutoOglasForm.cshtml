@@ -13,7 +13,7 @@
     </span>
 }
 
-@using (Html.BeginForm("SaveAutoOglas",
+@using (Html.BeginForm("SaveOglas",
                        "AutoOglasi",
                        FormMethod.Post,
                        new { enctype = "multipart/form-data" }))
@@ -66,7 +66,6 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AutoOglas.MarkaAutaId, htmlAttributes: new { @class = "control-label " })
             <div class="">
-                @*@Html.DropDownListFor(model => model.AutoOglas.MarkaAutaId, new SelectList(Model.MarkeAuta, "Id", "Marka"), "", new { htmlAttributes = new { @class = "form -control" } })*@
                 <select id="AutoOglas_MarkaAutaId" name="AutoOglas.MarkaAutaId" class="form-control">
                     @foreach (var markaAuta in Model.MarkeAuta)
                     {
@@ -155,45 +154,8 @@
 {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="@Url.Content("~/Scripts/moje/ZaApiBrisanjeSlika.js")"></script>
-    <script>
-        $(document).ready(function () {
-
-            var izborAutoMarkeDropdown = document.querySelector("#AutoOglas_MarkaAutaId");  // $("#marke-auta-dropdownlist");
-            var izborAutoModelaDropdown = document.querySelector("#AutoOglas_ModelAutaId"); // $("#modeli-auta-dropdownlist");
-
-            popuniTabeluAutoModela(izborAutoMarkeDropdown.value);
-
-            function popuniTabeluAutoModela(autoMarkaId) {
-                $.ajax({
-                    url: `/api/auto-modeli/${autoMarkaId}`,
-                    method: "GET",
-                    success: function (data) {
-
-                        izborAutoModelaDropdown.innerHTML = "";
-
-                        data.forEach(function (x) {
-                            //var opcijaZaModel = document.createElement("option");
-                            //opcijaZaModel.value = x.Id;
-                            //opcijaZaModel.text = x.AutoModel;
-
-                            var opcijaZaModel =
-                                `<option ${x.Id == @Model.AutoOglas.ModelAutaId ? selected="selected" : ""} value="${x.Id}">${x.AutoModel}</option>`
-                            izborAutoModelaDropdown.innerHTML += opcijaZaModel;
-
-                            //izborAutoModelaDropdown.append(opcijaZaModel);
-                        })
-                    },
-                    error: function (err) {
-                        console.log(err)
-                    }
-                })
-            }
-
-            izborAutoMarkeDropdown.addEventListener("change", function (e) {
-                var izabranaMarkaAuta = e.target.value;
-
-                popuniTabeluAutoModela(izabranaMarkaAuta);
-            });
-        })
+    <script id="script-popunjavanje-automodela"
+            src="~/Scripts/moje/PopunjavanjeAutoModela.js"
+            data-model-auta-id="@Model.AutoOglas.ModelAutaId">
     </script>
 }
