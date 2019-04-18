@@ -22,7 +22,24 @@ namespace MiniOglasi.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(
+            int maxProcesorJezgara = 0,
+            int minProcesorJezgara = 0,
+            int maxProcesorBrzina = 0,
+            int minProcesorBrzina = 0,
+            int maxRamMemorija = 0,
+            int minRamMemorija = 0,
+            int maxHddMemorija = 0,
+            int minHddMemorija = 0,
+            int maxGrafickaMemorija = 0,
+            int minGrafickaMemorija = 0,
+            int markaGraficke = 0,
+            int tipRacunara = 0,
+            int markaRacunara = 0,
+            int stanje = 0,
+            int minCena = 0,
+            int maxCena = 0,
+            int sortiranje = 0)
         {
             var racunarOglasi = dbContext.Oglasi
                 .OfType<RacunarOglas>()
@@ -32,11 +49,104 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.Valuta)
                 .Include(o => o.Slike);
 
+            if (sortiranje != 0)
+            {
+                switch (sortiranje)
+                {
+                    case 1:
+                        racunarOglasi = racunarOglasi.OrderByDescending(x => x.ValutaId == 1 ? x.Cena : x.Cena * 120);
+                        break;
+
+                    case 2:
+                        racunarOglasi = racunarOglasi.OrderBy(x => x.ValutaId == 1 ? x.Cena : x.Cena * 120);
+                        break;
+
+                    case 3:
+                        racunarOglasi = racunarOglasi.OrderByDescending(x => x.DatumPostavljanja);
+                        break;
+
+                    case 4:
+                        racunarOglasi = racunarOglasi.OrderBy(x => x.DatumPostavljanja);
+                        break;
+                }
+            }
+            if (minCena != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.ValutaId == 1 ? x.Cena >= minCena : x.Cena * 120 >= minCena);
+            }
+            if (maxCena != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.ValutaId == 1 ? x.Cena <= maxCena : x.Cena * 120 <= maxCena);
+            }
+            if (stanje != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.StanjeId == stanje);
+            }
+            if (markaRacunara != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.MarkaRacunaraId == markaRacunara);
+            }
+            if (tipRacunara != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.TipRacunaraId == tipRacunara);
+            }
+            if (markaGraficke != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.MarkaGrafickeKarteId == markaGraficke);
+            }
+            if (maxGrafickaMemorija != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.GrafickaMemorija <= maxGrafickaMemorija);
+            }
+            if (minGrafickaMemorija != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.GrafickaMemorija >= minGrafickaMemorija);
+            }
+            if (maxHddMemorija != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.HddMemorija <= maxHddMemorija);
+            }
+            if (minHddMemorija != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.HddMemorija >= minHddMemorija);
+            }
+            if (maxRamMemorija != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.RamMemorija <= maxRamMemorija);
+            }
+            if (minRamMemorija != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.RamMemorija >= minRamMemorija);
+            }
+            if (maxProcesorBrzina != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.ProcesorBrzina <= maxProcesorBrzina);
+            }
+            if (minProcesorBrzina != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.ProcesorBrzina >= minProcesorBrzina);
+            }
+            if (maxProcesorJezgara != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.ProcesorJezgara <= maxProcesorJezgara);
+            }
+            if (minProcesorJezgara != 0)
+            {
+                racunarOglasi = racunarOglasi.Where(x => x.ProcesorJezgara >= minProcesorJezgara);
+            }
+
             var stanja = dbContext.Stanja.ToList();
+            var tipoviRacunara = dbContext.TipoviRacunara.ToList();
+            var markeRacunara = dbContext.MarkeRacunara.ToList();
+            var markeGraficke = dbContext.GrafickeKarte.ToList();
+
             OglasIndexViewModel racunarOglasIndexViewModel = new OglasIndexViewModel(VrstaOglasa.Racunar)
             {
                 Oglasi = racunarOglasi.ToList(),
-                Stanja = stanja
+                Stanja = stanja,
+                TipoviRacunara = tipoviRacunara,
+                MarkeRacunara = markeRacunara,
+                GrafickaKartaMarke = markeGraficke
             };
 
             return View("IndexOglasa", racunarOglasIndexViewModel);

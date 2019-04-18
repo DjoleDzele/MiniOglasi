@@ -393,7 +393,6 @@
     <Content Include="Views\AutoOglasi\AutoOglasForm.cshtml" />
     <Content Include="Views\Shared\DetaljiOglasa.cshtml" />
     <Content Include="Views\Korisnik\RegulisiKorisnike.cshtml" />
-    <Content Include="Views\Korisnik\KorisnikoviOglasi.cshtml" />
     <Content Include="Views\RacunariOglasi\RacunarOglasForm.cshtml" />
     <Content Include="Views\Shared\IndexOglasa.cshtml" />
     <Content Include="Views\AutoOglasi\_DetaljiAuto.cshtml" />

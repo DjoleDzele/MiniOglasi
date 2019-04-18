@@ -13,6 +13,7 @@ namespace MiniOglasi.Models
         [ForeignKey("UserAutorOglasa")]
         public string UserAutorOglasaId { get; set; }
 
+        [Display(Name = "Postavio")]
         public ApplicationUser UserAutorOglasa { get; set; }
 
         [Required]
@@ -29,6 +30,7 @@ namespace MiniOglasi.Models
         [Range(0, 99999)]
         public int Cena { get; set; }
 
+        [Display(Name = "Valuta")]
         [ForeignKey("Valuta")]
         public int ValutaId { get; set; }
 
@@ -41,7 +43,7 @@ namespace MiniOglasi.Models
 
         public Stanje Stanje { get; set; }
 
-        [Display(Name = "Datum Postavljanja")]
+        [Display(Name = "Datum postavljanja")]
         public DateTime DatumPostavljanja { get; set; }
 
         public ICollection<Slika> Slike { get; set; }

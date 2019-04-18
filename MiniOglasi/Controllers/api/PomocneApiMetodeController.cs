@@ -152,7 +152,7 @@ namespace MiniOglasi.Controllers.api
         }
 
         [Route("api/auto-modeli/{id}")]
-        public IHttpActionResult GetAutoModelePoProizvodjacu(int id)
+        public IHttpActionResult GetAutoModelePoProizvodjacu(int id = 0)
         {
             var autoModeli = dbContext.ModeliAuta.Where(mod => mod.MarkaAutaId == id);
             if (autoModeli?.Any() == null)

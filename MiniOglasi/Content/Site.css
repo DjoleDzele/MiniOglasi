@@ -2,6 +2,7 @@
     font-size: 62.5%;
     scroll-behavior: smooth;
     box-sizing: border-box;
+    --glavna-ljubicasta: rgb(98, 106, 255);
 }
 
     html a:any-link {
@@ -51,7 +52,7 @@ textarea {
 
     .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
         color: #fff;
-        background-color: rgb(57, 0, 255);
+        background-color: var(--glavna-ljubicasta);
     }
 
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
@@ -64,6 +65,10 @@ textarea {
 
 .dropdown-menu > li > a:hover {
     background-color: gray;
+    color: white;
+}
+
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover {
     color: white;
 }
 
@@ -125,7 +130,7 @@ span.glyphicon {
     }
 
     span.glyphicon.glyphicon-star {
-        color: #5100ff;
+        color: var(--glavna-ljubicasta);
     }
 
 /*POCETNA STRANA========================================================*/
@@ -138,7 +143,7 @@ span.glyphicon {
 }
 
     .main-header-pocetna a:any-link {
-        color: rgba(88, 0, 255, 0.80);
+        color: var(--glavna-ljubicasta);
     }
 
 .pozadina-slike {
@@ -207,7 +212,7 @@ span.glyphicon {
 
 @keyframes strelicaGoreDole {
     0% {
-        color: rgba(112, 37, 255, 0.80);
+        color: var(--glavna-ljubicasta);
         transform: translateY(-1rem);
     }
 
@@ -217,7 +222,7 @@ span.glyphicon {
     }
 
     100% {
-        color: #793bff;
+        color: var(--glavna-ljubicasta);
         transform: translateY(-1rem);
     }
 }
@@ -230,11 +235,11 @@ span.glyphicon {
 
 #kategorije {
     width: 80vw;
-    height: calc(100vh - 150px);
+    min-height: calc(100vh - 150px);
     padding: 2rem 3rem;
     margin: 10rem auto 2rem auto;
-    border-top: 1px solid rgb(88, 0, 255);
-    border-bottom: 1px solid rgb(88, 0, 255);
+    border-top: 1px solid var(--glavna-ljubicasta);
+    border-bottom: 1px solid var(--glavna-ljubicasta);
     box-shadow: 1rem 1rem 5px gray;
     background: linear-gradient(135deg, rgba(201,201,201,0.8) 0%, rgba(255,252,252,0.8) 39%, rgba(190,190,190,0.7) 50%, rgba(255,255,255,0.8) 62%, rgba(189,189,189,0.8) 100%);
 }
@@ -242,7 +247,7 @@ span.glyphicon {
     #kategorije h2 {
         display: inline-block;
         padding: 1rem;
-        border-bottom: 2px solid rgba(57, 0, 255, 0.75);
+        border-bottom: 2px solid var(--glavna-ljubicasta);
         font-weight: 300;
     }
 
@@ -309,7 +314,7 @@ span.glyphicon {
     .naslovna-kategorija:hover {
         cursor: pointer;
         color: white;
-        box-shadow: 0 0 20px rgb(57, 0, 255);
+        box-shadow: 0 0 20px var(--glavna-ljubicasta);
         transform: scale(1.1);
         border: 4px solid rgba(88, 0, 255, 0.80);
     }
@@ -341,40 +346,41 @@ span.glyphicon {
 
 /*================ ZA OGLASE LISTU =========================================*/
 #main-lista-oglasa {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(27rem, 1fr) repeat(2, minmax(15rem, 30rem)) 1fr;
+    grid-column-gap: 1rem;
 }
 
 #deoZaFiltere {
+    grid-column: 1 /span 1;
     display: flex;
     flex-direction: column;
-    width: 35rem;
+    width: 100%;
     min-height: calc(100vh - 50px);
     background-color: #d9d9d9;
-    border-right: 1px solid rgb(114, 114, 114);
-    border-bottom: 1px solid rgb(114, 114, 114);
-    border-bottom-right-radius: 1.4rem;
-    margin-right: 3em;
+    border: 1px solid rgb(114, 114, 114);
 }
 
 .red-filtera {
     width: 90%;
     display: flex;
     align-content: center;
-    justify-content: space-between;
-    padding: 1.5rem;
+    justify-content: space-around;
+    padding: 1rem;
     margin: 0.5rem auto;
     border-bottom: 2px solid #b5b5b5;
 }
 
-    .red-filtera input[type=number] {
+    .red-filtera > input[type=number], select {
         margin: auto;
-        margin: 1rem;
     }
 
 .dugme {
     display: block;
     width: 13rem;
+    min-width: 10rem;
     padding: 1rem;
+    margin: 0.5rem;
     border-radius: 1rem;
     transition: all 0.3s;
 }
@@ -386,21 +392,22 @@ span.glyphicon {
 
 .dugme-za-novi-oglas:any-link {
     color: white;
-    background-color: rgb(41, 0, 213);
+    background-color: var(--glavna-ljubicasta);
 }
 
 .dugme-za-filtriranje {
     background-color: whitesmoke;
-    border: 2px solid rgb(41, 0, 213);
-    color: rgb(41, 0, 213);
+    border: 2px solid var(--glavna-ljubicasta);
+    color: var(--glavna-ljubicasta);
 }
 
 #deoZaListuOglasa {
-    width: 45rem;
+    grid-column: 2 / span 2;
+    width: 100%;
+    margin: 1rem auto;
 }
 
 .oglas-okvir {
-    max-width: 100%;
     height: 17rem;
     margin: 1rem auto;
 }
@@ -419,9 +426,9 @@ div.oglas-list-item {
 }
 
 .oglas-list-item:hover {
-    border: 5px solid rgba(57, 0, 255, 0.80);
-    box-shadow: 0 0 2rem #000000;
-    transform: translateX(-5%);
+    border: 3px solid var(--glavna-ljubicasta);
+    /*box-shadow: 0 0 2rem #000000;*/
+    transform: translateX(-3%);
 }
 
 .slika-oglasa {
@@ -441,12 +448,99 @@ div.oglas-list-item {
 .main-info-oglasa {
     width: 55%;
     height: 100%;
-    padding: 1rem;
+    /*padding: 0.5rem;*/
     transition: all 1s;
+    position: relative;
+}
+
+.oglas-item-naslov {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    font-weight: bold;
+    background-color: var(--glavna-ljubicasta);
+    text-shadow: 3px 3px 3px gray;
+    width: 100%;
+    padding: 3px;
+}
+
+.oglas-item-cena {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: white;
+    font-weight: bold;
+    text-shadow: 3px 3px 3px gray;
+    background-color: #23d400;
+    width: 40%;
+    padding: 3px;
+}
+
+.oglas-item-body {
+    line-height: 1rem;
+    margin: 3.5rem 1.5rem;
+    text-align: left;
+}
+
+.oglas-item-red-polje {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #d1d1d1;
+    padding-bottom: 0.4rem;
+}
+
+.naziv-polja-oglasa {
+    color: gray;
+}
+
+.vrednost-polja-oglasa {
+    color: black;
 }
 
 .oglas-list-item:hover .main-info-oglasa {
-    background: linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 80%, rgba(121, 59, 255, 0.74) 80%, rgba(57, 0, 255, 0.80) 100%);
+    background: linear-gradient(45deg, rgb(255,255,255) 0%, rgb(255,255,255) 75%, rgba(81, 255, 85, 0.50) 75%, rgba(81, 255, 85, 0.70) 100%);
+}
+
+@media only screen and (max-width:690px) {
+    #main-lista-oglasa {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #deoZaFiltere {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    #deoZaListuOglasa {
+        width: 90%;
+        margin: 1rem auto;
+    }
+}
+
+@media only screen and (max-width:500px) {
+    #main-lista-oglasa {
+        padding: 0;
+        flex-direction: column;
+    }
+
+    #deoZaFiltere {
+        width: 93%;
+        margin: 0 auto;
+    }
+
+    #deoZaListuOglasa {
+        width: 95%;
+        margin: 1rem auto;
+        font-size: 90%;
+    }
+
+    .oglas-item-cena {
+        width: 65%;
+    }
 }
 
 /*=============== ZA DETALJE OGLASA =======================================*/

@@ -22,7 +22,20 @@ namespace MiniOglasi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult Index(int minKubikaza = 0, int maxKubikaza = 0, int minKonjskihSnaga = 0, int maxKonjskihSnaga = 0, int maxKilometraza = 0, int sortiranje = 0, int minCena = 0, int maxCena = 0, int markaAuta = 0, int modelAuta = 0)
+        public ActionResult Index(
+            int izborGodista1 = 0,
+            int izborGodista2 = 0,
+            int minKubikaza = 0,
+            int maxKubikaza = 0,
+            int minKonjskihSnaga = 0,
+            int maxKonjskihSnaga = 0,
+            int maxKilometraza = 0,
+            int modelAuta = 0,
+            int markaAuta = 0,
+            int stanje = 0,
+            int minCena = 0,
+            int maxCena = 0,
+            int sortiranje = 0)
         {
             var autoOglasi = dbContext.Oglasi
                 .OfType<AutoOglas>()
@@ -52,54 +65,58 @@ namespace MiniOglasi.Controllers
                         break;
                 }
             }
-
             if (minCena != 0)
             {
-                autoOglasi = autoOglasi.Where(x => x.ValutaId == 1 ? x.Cena > minCena : x.Cena * 120 > minCena);
+                autoOglasi = autoOglasi.Where(x => x.ValutaId == 1 ? x.Cena >= minCena : x.Cena * 120 >= minCena);
             }
-
             if (maxCena != 0)
             {
-                autoOglasi = autoOglasi.Where(x => x.ValutaId == 1 ? x.Cena < maxCena : x.Cena * 120 < maxCena);
+                autoOglasi = autoOglasi.Where(x => x.ValutaId == 1 ? x.Cena <= maxCena : x.Cena * 120 <= maxCena);
             }
-
+            if (stanje != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.StanjeId == stanje);
+            }
             if (markaAuta != 0)
             {
                 autoOglasi = autoOglasi.Where(x => x.MarkaAutaId == markaAuta);
             }
-
             if (modelAuta != 0)
             {
                 autoOglasi = autoOglasi.Where(x => x.ModelAutaId == modelAuta);
             }
-
             if (maxKilometraza != 0)
             {
-                autoOglasi = autoOglasi.Where(x => x.Kilometraza < maxKilometraza);
+                autoOglasi = autoOglasi.Where(x => x.Kilometraza <= maxKilometraza);
             }
-
             if (minKonjskihSnaga != 0)
             {
-                autoOglasi = autoOglasi.Where(x => x.KonjskeSnage > minKonjskihSnaga);
+                autoOglasi = autoOglasi.Where(x => x.KonjskeSnage >= minKonjskihSnaga);
             }
-
             if (maxKonjskihSnaga != 0)
             {
-                autoOglasi = autoOglasi.Where(x => x.KonjskeSnage < maxKonjskihSnaga);
+                autoOglasi = autoOglasi.Where(x => x.KonjskeSnage <= maxKonjskihSnaga);
             }
-
             if (minKubikaza != 0)
             {
-                autoOglasi = autoOglasi.Where(x => x.Kubikaza > minKubikaza);
+                autoOglasi = autoOglasi.Where(x => x.Kubikaza >= minKubikaza);
             }
-
             if (maxKubikaza != 0)
             {
-                autoOglasi = autoOglasi.Where(x => x.Kubikaza < maxKubikaza);
+                autoOglasi = autoOglasi.Where(x => x.Kubikaza <= maxKubikaza);
+            }
+            if (izborGodista1 != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.Godiste >= izborGodista1);
+            }
+            if (izborGodista2 != 0)
+            {
+                autoOglasi = autoOglasi.Where(x => x.Godiste <= izborGodista2);
             }
 
             var markeAuta = dbContext.MarkeAuta.ToList();
             var stanja = dbContext.Stanja.ToList();
+
             OglasIndexViewModel autoOglasIndexViewModel = new OglasIndexViewModel(VrstaOglasa.Auto)
             {
                 Oglasi = autoOglasi.ToList(),
@@ -270,13 +287,6 @@ namespace MiniOglasi.Controllers
             autoOglasZaIzmenu.Cena = autoOglasViewModel.AutoOglas.Cena;
             autoOglasZaIzmenu.ValutaId = autoOglasViewModel.AutoOglas.ValutaId;
             autoOglasZaIzmenu.StanjeId = autoOglasViewModel.AutoOglas.StanjeId;
-            // <<< ZAJEDNICKI <<<
-            autoOglasZaIzmenu.Godiste = autoOglasViewModel.AutoOglas.Godiste;
-            autoOglasZaIzmenu.Kilometraza = autoOglasViewModel.AutoOglas.Kilometraza;
-            autoOglasZaIzmenu.KonjskeSnage = autoOglasViewModel.AutoOglas.KonjskeSnage;
-            autoOglasZaIzmenu.Kubikaza = autoOglasViewModel.AutoOglas.Kubikaza;
-            autoOglasZaIzmenu.MarkaAutaId = autoOglasViewModel.AutoOglas.MarkaAutaId;
-            autoOglasZaIzmenu.ModelAutaId = autoOglasViewModel.AutoOglas.ModelAutaId;
 
             autoOglasZaIzmenu.DatumPostavljanja = autoOglasViewModel.AutoOglas.DatumPostavljanja == default(DateTime)
                 ? DateTime.Now
@@ -288,6 +298,14 @@ namespace MiniOglasi.Controllers
             }
 
             autoOglasZaIzmenu.UserAutorOglasaId = autoOglasViewModel.AutoOglas.UserAutorOglasaId ?? User.Identity.GetUserId();
+
+            // <<< ZAJEDNICKI <<<
+            autoOglasZaIzmenu.Godiste = autoOglasViewModel.AutoOglas.Godiste;
+            autoOglasZaIzmenu.Kilometraza = autoOglasViewModel.AutoOglas.Kilometraza;
+            autoOglasZaIzmenu.KonjskeSnage = autoOglasViewModel.AutoOglas.KonjskeSnage;
+            autoOglasZaIzmenu.Kubikaza = autoOglasViewModel.AutoOglas.Kubikaza;
+            autoOglasZaIzmenu.MarkaAutaId = autoOglasViewModel.AutoOglas.MarkaAutaId;
+            autoOglasZaIzmenu.ModelAutaId = autoOglasViewModel.AutoOglas.ModelAutaId;
 
             return autoOglasZaIzmenu;
         }

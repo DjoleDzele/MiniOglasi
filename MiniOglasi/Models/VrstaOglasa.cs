@@ -4,6 +4,7 @@
     {
         Auto,
         Racunar,
-        Nekretnina
+        Nekretnina,
+        SpisakOmiljenihIMojih
     }
 }

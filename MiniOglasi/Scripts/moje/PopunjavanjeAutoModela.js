@@ -5,6 +5,12 @@
 
     popuniTabeluAutoModela(izborAutoMarkeDropdown.value);
 
+    izborAutoMarkeDropdown.addEventListener("change", function (e) {
+        var izabranaMarkaAuta = e.target.value;
+
+        popuniTabeluAutoModela(izabranaMarkaAuta);
+    });
+
     function popuniTabeluAutoModela(autoMarkaId) {
         $.ajax({
             url: `/api/auto-modeli/${autoMarkaId}`,
@@ -13,20 +19,14 @@
                 izborAutoModelaDropdown.innerHTML = "";
 
                 data.forEach(function (x) {
-                    var opcijaZaModel =
-                        `<option ${x.Id == podaci.scriptPopunjavanjeAutomodela ? selected = "selected" : ""} value="${x.Id}">${x.AutoModel}</option>`
+                    var selected = x.Id == podaci.modelAutaId ? selected = "selected" : "";
+                    var opcijaZaModel = `<option ${selected} value="${x.Id}">${x.AutoModel}</option>`
                     izborAutoModelaDropdown.innerHTML += opcijaZaModel;
                 })
             },
             error: function (err) {
-                console.log(err)
+                console.log(err.responseText)
             }
         })
     }
-
-    izborAutoMarkeDropdown.addEventListener("change", function (e) {
-        var izabranaMarkaAuta = e.target.value;
-
-        popuniTabeluAutoModela(izabranaMarkaAuta);
-    });
 })

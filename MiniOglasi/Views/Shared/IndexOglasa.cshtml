@@ -2,85 +2,175 @@
 
 @using MiniOglasi.Models
 @using MiniOglasi.Models.RacunarOglasModels
+@using MiniOglasi.Models.NekretninaOglasModels
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Lista oglasa";
     bool jeLiAutoOglas = Model._vrstaOglasa == VrstaOglasa.Auto;
+    bool jeLiRacunarOglas = Model._vrstaOglasa == VrstaOglasa.Racunar;
+    bool jeLiNekretninaOglas = Model._vrstaOglasa == VrstaOglasa.Nekretnina;
+    bool jeLiMojaListaIOmiljeni = Model._vrstaOglasa == VrstaOglasa.SpisakOmiljenihIMojih;
     var imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
 }
 
 <main id="main-lista-oglasa">
-    <div id="deoZaFiltere">
-        @using (Html.BeginForm("Index", imeKontrolera, FormMethod.Get))
-        {
-            <div class="red-filtera">
-                <input type="submit" value="Pretraga" class="dugme dugme-za-filtriranje" />
-                @Html.ActionLink("Dodaj oglas", "Create", imeKontrolera, new { @class = "dugme dugme-za-novi-oglas" })
-            </div>
-
-            //ZA SVE--------------------------------------------------
-
-            <span>Sortiraj prema:</span>
-            <div class="red-filtera">
-                <select id="sortiranje" name="sortiranje" class="form-control">
-                    <option value="0"></option>
-                    <option value="1">Cena opadajuce</option>
-                    <option value="2">Cena rastuce</option>
-                    <option value="3">Prvo noviji</option>
-                    <option value="4">Prvo stariji</option>
-                </select>
-            </div>
-
-            <span>Opseg cene u dinarima:</span>
-            <div class="red-filtera">
-                <input id="minCena" name="minCena" type="number" value="0" placeholder="min" min="0" class="form-control" />
-                <input id="maxCena" name="maxCena" type="number" value="0" placeholder="max" min="0" class="form-control" />
-            </div>
-
-            <span>Stanje:</span>
-            <div class="red-filtera">
-                @Html.DropDownList("stanje", new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control", name = "stanje", id = "stanje" })
-            </div>
-
-            //ZA AUTE--------------------------------------------------
-
-            if (Model._vrstaOglasa == VrstaOglasa.Auto)
+    @if (!jeLiMojaListaIOmiljeni)
+    {
+        <div id="deoZaFiltere">
+            @using (Html.BeginForm("Index", imeKontrolera, FormMethod.Get))
             {
-                <span>Marka auta:</span>
                 <div class="red-filtera">
-                    <select id="markaAuta" name="markaAuta" class="form-control">
+                    <input type="submit" value="Pretraga" class="dugme dugme-za-filtriranje" />
+                    @Html.ActionLink("Dodaj oglas", "Create", imeKontrolera, new { @class = "dugme dugme-za-novi-oglas" })
+                </div>
+
+                //ZA SVE--------------------------------------------------
+
+                <span>Sortiraj prema:</span>
+                <div class="red-filtera">
+                    <select id="sortiranje" name="sortiranje" class="form-control">
                         <option value="0"></option>
-                        @foreach (var markaAuta in Model.MarkeAuta)
-                        {
-                            <option value="@markaAuta.Id">@markaAuta.Marka</option>
-                        }
+                        <option value="1">Cena opadajuce</option>
+                        <option value="2">Cena rastuce</option>
+                        <option value="3">Prvo noviji</option>
+                        <option value="4">Prvo stariji</option>
                     </select>
                 </div>
 
-                <span>Model auta:</span>
+                <span>Cena u dinarima:</span>
                 <div class="red-filtera">
-                    <select id="modelAuta" name="modelAuta" class="form-control"></select>
+                    <input id="minCena" name="minCena" type="number" placeholder="min" min="0" class="form-control" />
+                    <input id="maxCena" name="maxCena" type="number" placeholder="max" min="0" class="form-control" />
                 </div>
 
-                <span>Opeg kilometraza max:</span>
+                <span>Stanje:</span>
                 <div class="red-filtera">
-                    <input id="maxKilometraza" name="maxKilometraza" type="number" value="0" min="0" class="form-control" />
+                    @Html.DropDownList("stanje", new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control", name = "stanje", id = "stanje" })
                 </div>
 
-                <span>Opseg konjskih snaga:</span>
-                <div class="red-filtera">
-                    <input id="minKonjskihSnaga" name="minKonjskihSnaga" type="number" value="0" placeholder="min" min="0" class="form-control" />
-                    <input id="maxKonjskihSnaga" name="maxKonjskihSnaga" type="number" value="0" placeholder="max" min="0" class="form-control" />
-                </div>
+                //ZA AUTE--------------------------------------------------
 
-                <span>Opseg kubikaza:</span>
-                <div class="red-filtera">
-                    <input id="minKubikaza" name="minKubikaza" type="number" value="0" placeholder="min" min="0" class="form-control" />
-                    <input id="maxKubikaza" name="maxKubikaza" type="number" value="0" placeholder="max" min="0" class="form-control" />
-                </div>
+                if (jeLiAutoOglas)
+                {
+                    <span>Marka auta:</span>
+                    <div class="red-filtera">
+                        <select id="markaAuta" name="markaAuta" class="form-control">
+                            <option value="0"></option>
+                            @foreach (var markaAuta in Model.MarkeAuta)
+                            {
+                                <option value="@markaAuta.Id">@markaAuta.Marka</option>
+                            }
+                        </select>
+                    </div>
+
+                    <span>Model auta:</span>
+                    <div class="red-filtera">
+                        <select id="modelAuta" name="modelAuta" class="form-control"></select>
+                    </div>
+
+                    <span>Kilometraza max:</span>
+                    <div class="red-filtera">
+                        <input id="maxKilometraza" name="maxKilometraza" type="number" min="0" class="form-control" />
+                    </div>
+
+                    <span>Konjskih snaga:</span>
+                    <div class="red-filtera">
+                        <input id="minKonjskihSnaga" name="minKonjskihSnaga" type="number" placeholder="min" min="0" class="form-control" />
+                        <input id="maxKonjskihSnaga" name="maxKonjskihSnaga" type="number" placeholder="max" min="0" class="form-control" />
+                    </div>
+
+                    <span>Kubikaza:</span>
+                    <div class="red-filtera">
+                        <input id="minKubikaza" name="minKubikaza" type="number" placeholder="min" min="0" class="form-control" />
+                        <input id="maxKubikaza" name="maxKubikaza" type="number" placeholder="max" min="0" class="form-control" />
+                    </div>
+
+                    <span>Godiste:</span>
+                    <div class="red-filtera">
+                        <select id="izborGodista1" name="izborGodista1" class="form-control">
+                            <option value="0">Od</option>
+                            @for (int i = DateTime.Now.Year; i >= 1900; i--)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                        <select id="izborGodista2" name="izborGodista2" class="form-control">
+                            <option value="0">Do</option>
+                            @for (int j = DateTime.Now.Year; j >= 1900; j--)
+                            {
+                                <option value="@j">@j</option>
+                            }
+                        </select>
+                    </div>
+                }
+                else if (jeLiRacunarOglas)
+                {
+                    <span>Marka racunara:</span>
+                    <div class="red-filtera">
+                        <select id="markaRacunara" name="markaRacunara" class="form-control">
+                            <option value="0"></option>
+                            @foreach (var markaRacunara in Model.MarkeRacunara)
+                            {
+                                <option value="@markaRacunara.Id">@markaRacunara.Marka</option>
+                            }
+                        </select>
+                    </div>
+
+                    <span>Tip racunara:</span>
+                    <div class="red-filtera">
+                        <select id="tipRacunara" name="tipRacunara" class="form-control">
+                            <option value="0"></option>
+                            @foreach (var tipRacunara in Model.TipoviRacunara)
+                            {
+                                <option value="@tipRacunara.Id">@tipRacunara.Tip</option>
+                            }
+                        </select>
+                    </div>
+
+                    <span>Marka graficke:</span>
+                    <div class="red-filtera">
+                        <select id="markaGraficke" name="markaGraficke" class="form-control">
+                            <option value="0"></option>
+                            @foreach (var markaGraficke in Model.GrafickaKartaMarke)
+                            {
+                                <option value="@markaGraficke.Id">@markaGraficke.MarkaGraficke</option>
+                            }
+                        </select>
+                    </div>
+
+                    <span>Graficka memorija:</span>
+                    <div class="red-filtera">
+                        <input id="minGrafickaMemorija" name="minGrafickaMemorija" type="number" placeholder="min" min="0" class="form-control" />
+                        <input id="maxGrafickaMemorija" name="maxGrafickaMemorija" type="number" placeholder="max" min="0" class="form-control" />
+                    </div>
+
+                    <span>HDD memorija:</span>
+                    <div class="red-filtera">
+                        <input id="minHddMemorija" name="minHddMemorija" type="number" placeholder="min" min="0" class="form-control" />
+                        <input id="maxHddMemorija" name="maxHddMemorija" type="number" placeholder="max" min="0" class="form-control" />
+                    </div>
+
+                    <span>RAM memorija:</span>
+                    <div class="red-filtera">
+                        <input id="minRamMemorija" name="minRamMemorija" type="number" placeholder="min" min="0" class="form-control" />
+                        <input id="maxRamMemorija" name="maxRamMemorija" type="number" placeholder="max" min="0" class="form-control" />
+                    </div>
+
+                    <span>CPU brzina:</span>
+                    <div class="red-filtera">
+                        <input id="minProcesorBrzina" name="minProcesorBrzina" type="number" placeholder="min" min="0" class="form-control" />
+                        <input id="maxProcesorBrzina" name="maxProcesorBrzina" type="number" placeholder="max" min="0" class="form-control" />
+                    </div>
+
+                    <span>CPU jezgara:</span>
+                    <div class="red-filtera">
+                        <input id="minProcesorJezgara" name="minProcesorJezgara" type="number" placeholder="min" min="0" class="form-control" />
+                        <input id="maxProcesorJezgara" name="maxProcesorJezgara" type="number" placeholder="max" min="0" class="form-control" />
+                    </div>
+                }
             }
-        }
-    </div>
+        </div>
+    }
 
     <div id="deoZaListuOglasa">
         @foreach (var item in Model.Oglasi)
@@ -96,51 +186,90 @@
                 pathDoSlike = Url.Content(PomocnaKlasa.PlaceholderSlika);
             }
 
+            if (jeLiMojaListaIOmiljeni)
+            {
+                if (item is AutoOglas)
+                {
+                    imeKontrolera = "AutoOglasi";
+                }
+                else if (item is RacunarOglas)
+                {
+                    imeKontrolera = "RacunariOglasi";
+                }
+                else if (item is NekretninaOglas)
+                {
+                    imeKontrolera = "NekretnineOglasi";
+                }
+            }
+
             <div class="oglas-okvir">
                 <a href="@Url.Action("Details", imeKontrolera, new { id = item.Id })">
                     <div class="oglas-list-item">
                         <div class="slika-oglasa" style="background-image: url(@pathDoSlike);">
                         </div>
                         <div class="main-info-oglasa">
-                            <p>
-                                <strong>@Html.DisplayNameFor(oglas => item.NaslovOglasa): </strong>
+                            <p class="oglas-item-naslov">
                                 <span>@Html.DisplayFor(oglas => item.NaslovOglasa)</span>
                             </p>
-                            <p>
-                                <strong>@Html.DisplayNameFor(oglas => item.Cena): </strong>
+                            <p class="oglas-item-cena">
                                 <span>@Html.DisplayFor(oglas => item.Cena) @item.Valuta.ImeValute</span>
                             </p>
-                            <p>
-                                <strong>@Html.DisplayNameFor(oglas => item.DatumPostavljanja): </strong>
-                                <span>@item.DatumPostavljanja.ToShortDateString()</span>
-                            </p>
+                            <div class="oglas-item-body">
+                                <p class="oglas-item-red-polje">
+                                    <strong class="naziv-polja-oglasa">Postavljen: </strong>
+                                    <span class="vrednost-polja-oglasa">@item.DatumPostavljanja.ToShortDateString()</span>
+                                </p>
 
-                            @*ZA AUTE---------------------------------------------*@
+                                @*ZA AUTE---------------------------------------------*@
 
-                            @if (Model._vrstaOglasa == VrstaOglasa.Auto)
-                            {
-                                <p>
-                                    <strong>@Html.DisplayNameFor(oglas => ((AutoOglas)item).MarkaAuta): </strong>
-                                    <span>@Html.DisplayFor(oglas => ((AutoOglas)item).MarkaAuta.Marka)</span>
-                                </p>
-                                <p>
-                                    <strong>@Html.DisplayNameFor(oglas => ((AutoOglas)item).ModelAuta): </strong>
-                                    <span>@Html.DisplayFor(oglas => ((AutoOglas)item).ModelAuta.AutoModel)</span>
-                                </p>
-                            }
+                                @if (jeLiAutoOglas)
+                                {
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((AutoOglas)item).MarkaAutaId): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((AutoOglas)item).MarkaAuta.Marka)</span>
+                                    </p>
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((AutoOglas)item).ModelAutaId): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((AutoOglas)item).ModelAuta.AutoModel)</span>
+                                    </p>
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((AutoOglas)item).Godiste): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((AutoOglas)item).Godiste)</span>
+                                    </p>
+                                }
 
-                            @*ZA RACUNARE---------------------------------------------*@
-                            @if (Model._vrstaOglasa == VrstaOglasa.Racunar)
-                            {
-                                <p>
-                                    <strong>@Html.DisplayNameFor(oglas => ((RacunarOglas)item).TipRacunara): </strong>
-                                    <span>@Html.DisplayFor(oglas => ((RacunarOglas)item).TipRacunara.Tip)</span>
-                                </p>
-                                <p>
-                                    <strong>@Html.DisplayNameFor(oglas => ((RacunarOglas)item).MarkaRacunara): </strong>
-                                    <span>@Html.DisplayFor(oglas => ((RacunarOglas)item).MarkaRacunara.Marka)</span>
-                                </p>
-                            }
+                                @*ZA RACUNARE---------------------------------------------*@
+
+                                @if (jeLiRacunarOglas)
+                                {
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((RacunarOglas)item).TipRacunara): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((RacunarOglas)item).TipRacunara.Tip)</span>
+                                    </p>
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((RacunarOglas)item).MarkaRacunara): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((RacunarOglas)item).MarkaRacunara.Marka)</span>
+                                    </p>
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((RacunarOglas)item).MarkaGrafickeKarte): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((RacunarOglas)item).MarkaGrafickeKarte.MarkaGraficke)</span>
+                                    </p>
+                                }
+
+                                @*ZA OMILJENE---------------------------------------------*@
+
+                                @if (jeLiMojaListaIOmiljeni)
+                                {
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => item.UserAutorOglasa): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => item.UserAutorOglasa.UserName)</span>
+                                    </p>
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => item.Stanje): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => item.Stanje.StanjePredmetaOglasa)</span>
+                                    </p>
+                                }
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -193,6 +322,12 @@
                 var maxKubikazaInput = document.querySelector("#maxKubikaza");
                 maxKubikazaInput.value = urlParams.get("maxKubikaza");
 
+                var izborGodista1Input = document.querySelector("#izborGodista1");
+                izborGodista1Input.value = urlParams.get("izborGodista1") == null ? 0 : urlParams.get("izborGodista1");
+
+                var izborGodista2Input = document.querySelector("#izborGodista2");
+                izborGodista2Input.value = urlParams.get("izborGodista2") == null ? 0 : urlParams.get("izborGodista2");
+
                 izborAutoMarkeDropdown.addEventListener("change", function (e) {
                     var izabranaMarkaAuta = e.target.value;
 
@@ -220,10 +355,41 @@
                             })
                         },
                         error: function (err) {
-                            console.log(err)
+                            console.log(err.responseText)
                         }
                     })
                 }
+            }
+
+            else if ("@jeLiRacunarOglas" == "True") {
+
+                var markaRacunaraInput = document.querySelector("#markaRacunara");
+                var tipRacunaraInput = document.querySelector("#tipRacunara");
+                var markaGrafickeInput = document.querySelector("#markaGraficke");
+                var minGrafickaMemorijaInput = document.querySelector("#minGrafickaMemorija");
+                var maxGrafickaMemorijaInput = document.querySelector("#maxGrafickaMemorija");
+                var minHddMemorijaInput = document.querySelector("#minHddMemorija");
+                var maxHddMemorijaInput = document.querySelector("#maxHddMemorija");
+                var minRamMemorijaInput = document.querySelector("#minRamMemorija");
+                var maxRamMemorijaInput = document.querySelector("#maxRamMemorija");
+                var minProcesorBrzinaInput = document.querySelector("#minProcesorBrzina");
+                var maxProcesorBrzinaInput = document.querySelector("#maxProcesorBrzina");
+                var minProcesorJezgaraInput = document.querySelector("#minProcesorJezgara");
+                var maxProcesorJezgaraInput = document.querySelector("#maxProcesorJezgara");
+
+                markaRacunaraInput.value = urlParams.get("markaRacunara");
+                tipRacunaraInput.value = urlParams.get("tipRacunara");
+                markaGrafickeInput.value = urlParams.get("markaGraficke");
+                minGrafickaMemorijaInput.value = urlParams.get("minGrafickaMemorija");
+                maxGrafickaMemorijaInput.value = urlParams.get("maxGrafickaMemorija");
+                minHddMemorijaInput.value = urlParams.get("minHddMemorija");
+                maxHddMemorijaInput.value = urlParams.get("maxHddMemorija");
+                minRamMemorijaInput.value = urlParams.get("minRamMemorija");
+                maxRamMemorijaInput.value = urlParams.get("maxRamMemorija");
+                minProcesorBrzinaInput.value = urlParams.get("minProcesorBrzina");
+                maxProcesorBrzinaInput.value = urlParams.get("maxProcesorBrzina");
+                minProcesorJezgaraInput.value = urlParams.get("minProcesorJezgara");
+                maxProcesorJezgaraInput.value = urlParams.get("maxProcesorJezgara");
             }
         })
     </script>

@@ -8,16 +8,19 @@ namespace MiniOglasi.Models.RacunarOglasModels
         [ForeignKey("MarkaRacunara")]
         public int? MarkaRacunaraId { get; set; }
 
+        [Display(Name = "Marka racunara")]
         public MarkaRacunara MarkaRacunara { get; set; }
 
         [ForeignKey("TipRacunara")]
         public int? TipRacunaraId { get; set; }
 
+        [Display(Name = "Tip racunara")]
         public TipRacunara TipRacunara { get; set; }
 
         [ForeignKey("MarkaGrafickeKarte")]
         public int? MarkaGrafickeKarteId { get; set; }
 
+        [Display(Name = "Marka graficke")]
         public GrafickaKartaMarka MarkaGrafickeKarte { get; set; }
 
         [Range(0, 16000)]

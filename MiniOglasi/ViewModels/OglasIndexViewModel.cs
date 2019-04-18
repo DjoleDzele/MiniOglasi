@@ -23,5 +23,9 @@ namespace MiniOglasi.ViewModels
 
         //RACUNARI
         public ICollection<TipRacunara> TipoviRacunara { get; set; }
+
+        public ICollection<MarkaRacunara> MarkeRacunara { get; set; }
+
+        public ICollection<GrafickaKartaMarka> GrafickaKartaMarke { get; set; }
     }
 }
