@@ -124,7 +124,7 @@ input[type="file"] {
 }
 
 span.glyphicon {
-    font-size: 5rem;
+    font-size: 5.5rem;
     transition: all 0.3s;
 }
 
@@ -134,11 +134,11 @@ span.glyphicon {
     }
 
 .glyphicon.glyphicon-star-empty {
-    color: dimgray;
+    color: gold;
 }
 
 .glyphicon.glyphicon-star {
-    color: var(--glavna-ljubicasta);
+    color: gold;
 }
 
 /*POCETNA STRANA========================================================*/
@@ -387,16 +387,21 @@ span.glyphicon {
     display: block;
     width: 13rem;
     min-width: 10rem;
-    padding: 1rem;
+    padding: 0.7rem;
     margin: 0.5rem auto;
     border-radius: 1rem;
     transition: all 0.3s;
+    font-size: 1.6rem;
 }
 
-    .dugme:hover {
-        transform: translateY(-0.5rem);
-        box-shadow: 0 0.5rem 5px gray;
-    }
+.red-filtera .dugme {
+    margin: 0.5rem;
+}
+
+.dugme:hover {
+    transform: translateY(-0.5rem);
+    box-shadow: 0 0.5rem 5px gray;
+}
 
 .dugme-za-novi-oglas:any-link {
     color: white;
@@ -407,6 +412,18 @@ span.glyphicon {
     background-color: whitesmoke;
     border: 2px solid var(--glavna-ljubicasta);
     color: var(--glavna-ljubicasta);
+}
+
+.dugme-crveno {
+    background-color: red;
+    border: 2px solid white;
+    color: white;
+}
+
+.dugme-plavo {
+    background-color: dodgerblue;
+    border: 2px solid white;
+    color: white;
 }
 
 #deoZaListuOglasa {
@@ -554,30 +571,68 @@ div.oglas-list-item {
 /*=============== ZA DETALJE OGLASA =======================================*/
 
 .detalji-oglasa {
-    width: 80%;
-    height: 60vh;
+    border: 2px dashed #a7a7a7;
+    border-radius: 1rem;
+    max-width: 60%;
     margin: 2rem auto;
     padding: 2rem;
+    position: relative;
+}
+
+#zvezda-dugme {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+}
+
+.detalji-oglasa .red-prvi {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #a7a7a7;
 }
 
-    .detalji-oglasa .fotorama {
-        width: 50%;
-    }
-
-.slike img {
-    width: 100%;
+.detalji-oglasa .fotorama {
+    border: 2px solid #a7a7a7;
     height: 100%;
+    width: 50%;
 }
 
-.detalji-oglasa .detalji-oglasa-info {
-    width: 40%;
+.detalji-oglasa-info {
+    width: 45%;
+    height: 100%;
     padding: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 }
 
-/*=============== ZA DETALJE OGLASA ===============*/
+.detalji-oglasa-info, .detalji-oglasa-tabela {
+    font-size: 1.6rem;
+}
+
+.detalji-oglasa-tabela {
+    width: 70%;
+    margin: 1rem auto;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+    .detalji-oglasa-tabela tr:nth-of-type(even) {
+        background-color: #cccccc;
+    }
+
+    .detalji-oglasa-tabela td:nth-of-type(2) {
+        text-align: right;
+    }
+
+    .detalji-oglasa-tabela td {
+        padding: 0.3rem 1rem;
+    }
+
+.detalji-oglasa-info button {
+    display: inline-block;
+    margin: 1rem 0.5rem;
+}

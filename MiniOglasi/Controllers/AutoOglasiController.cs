@@ -234,6 +234,7 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.Stanje)
                 .Include(o => o.Valuta)
                 .Include(o => o.UserAutorOglasa)
+                .Include(o => o.UserAutorOglasa.Grad)
                 .SingleOrDefault(o => o.Id == id);
 
             return View("DetaljiOglasa", autoOglas);

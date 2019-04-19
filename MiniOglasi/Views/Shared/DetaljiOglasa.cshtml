@@ -24,78 +24,97 @@
 </p>
 
 <div class="detalji-oglasa">
-    @* SLIKE ======================================================================= *@
-    <div class="slike fotorama"
-         data-loop="true"
-         data-autoplay="true"
-         data-transition="dissolve"
-         data-allowfullscreen="true">
+    <div class="red-prvi">
+        @* SLIKE ======================================================================= *@
+        <div class="slike fotorama"
+             data-fit="cover"
+             data-loop="true"
+             data-autoplay="true"
+             data-transition="dissolve"
+             data-allowfullscreen="true"
+             data-shuffle="true"
+             data-width="100%"
+             data-ratio="800/600">
 
-        @if (Model.Slike.Any(x => x != null))
-        {
-            foreach (var slika in Model.Slike)
+            @if (Model.Slike.Any(x => x != null))
             {
-                <img src="@Url.Content(slika.PathDoSlike)" alt="" />
-            }
-        }
-        else
-        {
-            <img src="@Url.Content(PomocnaKlasa.PlaceholderSlika)" />
-        }
-    </div>
-    <div class="detalji-oglasa-info">
-        @* GLAVNI INFO ======================================================================= *@
-        <p>
-            <span>Opis: @Html.DisplayFor(oglas => oglas.OpisOglasa)</span>
-        </p>
-        <p>
-            <span>Cena: @Html.DisplayFor(oglas => oglas.Cena) @Model.Valuta.ImeValute</span>
-        </p>
-        <p>
-            <span>Stanje: @Html.DisplayFor(oglas => oglas.Stanje.StanjePredmetaOglasa)</span>
-        </p>
-        <p>
-            <span>Postavio: @Html.DisplayFor(oglas => oglas.UserAutorOglasa.UserName)</span>
-        </p>
-        @if (requestAuthenticated)
-        {
-            if (currentUserId == autorOglasaId)
-            {
-                <p>
-                    <button class="btn btn-info dugme-edit">Edit</button>
-                    <button class="btn btn-danger dugme-delete">Delete</button>
-                </p>
+                foreach (var slika in Model.Slike)
+                {
+                    <img src="@Url.Content(slika.PathDoSlike)" alt="" />
+                }
             }
             else
             {
-                <p>
-                    @if (jeLiOmiljenOglas)
-                    {
-                        <span id="zvezda-dugme" class="glyphicon glyphicon-star"></span>
-                    }
-                    else
-                    {
-                        <span id="zvezda-dugme" class="glyphicon glyphicon-star-empty"></span>
-                    }
-                </p>
+                <img src="@Url.Content(PomocnaKlasa.PlaceholderSlika)" />
             }
-        }
+        </div>
+        <div class="detalji-oglasa-info">
+            @if (requestAuthenticated)
+            {
+                if (currentUserId == autorOglasaId)
+                {
+                    <p>
+                        <button class="dugme dugme-plavo dugme-edit">Edit</button>
+                        <button class="dugme dugme-crveno dugme-delete">Delete</button>
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        @if (jeLiOmiljenOglas)
+                        {
+                            <span id="zvezda-dugme" class="glyphicon glyphicon-star"></span>
+                        }
+                        else
+                        {
+                            <span id="zvezda-dugme" class="glyphicon glyphicon-star-empty"></span>
+                        }
+                    </p>
+                }
+            }
+            @* GLAVNI INFO ======================================================================= *@
+            <p>
+                <span>Opis: @Html.DisplayFor(oglas => oglas.OpisOglasa)</span>
+            </p>
+            <p>
+                <span>Cena: @Html.DisplayFor(oglas => oglas.Cena) @Model.Valuta.ImeValute</span>
+            </p>
+        </div>
+    </div>
+    <div class="ostali-info">
+        @*OSTALE INFO -------------------------------------------------------------*@
+        <table class="detalji-oglasa-tabela">
+            @if (Model is AutoOglas)
+            {
+                { Html.RenderPartial("_DetaljiAuto", Model); }
+            }
+            else if (Model is RacunarOglas)
+            {
+                { Html.RenderPartial("_DetaljiRacunar", Model); }
+            }
+            else if (Model is NekretninaOglas)
+            {
+                { Html.RenderPartial("_DetaljiNekretnine", Model); }
+            }
+            <tr>
+                <td><strong>Stanje: </strong></td>
+                <td>@Html.DisplayFor(oglas => oglas.Stanje.StanjePredmetaOglasa)</td>
+            </tr>
+            <tr>
+                <td><strong>Postavio: </strong></td>
+                <td>@Html.DisplayFor(oglas => oglas.UserAutorOglasa.UserName)</td>
+            </tr>
+            <tr>
+                <td><strong>Kontakt: </strong></td>
+                <td>@Html.DisplayFor(oglas => oglas.UserAutorOglasa.KontaktTelefon)</td>
+            </tr>
+            <tr>
+                <td><strong>Grad: </strong></td>
+                <td>@Html.DisplayFor(oglas => oglas.UserAutorOglasa.Grad.ImeGrada)</td>
+            </tr>
+        </table>
     </div>
 </div>
-
-@*OSTALE INFO -------------------------------------------------------------*@
-@if (Model is AutoOglas)
-{
-    { Html.RenderPartial("_DetaljiAuto", Model); }
-}
-else if (Model is RacunarOglas)
-{
-    { Html.RenderPartial("_DetaljiRacunar", Model); }
-}
-else if (Model is NekretninaOglas)
-{
-    { Html.RenderPartial("_DetaljiNekretnine", Model); }
-}
 
 <p>
     @Html.ActionLink("Nazad na listu", "Index")

@@ -15,9 +15,9 @@ namespace MiniOglasi.ViewModels
 
         public VrstaOglasa _vrstaOglasa { get; set; }
 
-        public IPagedList<Oglas> Oglasi { get; set; }
-
         public ICollection<Stanje> Stanja { get; set; }
+
+        public IPagedList<Oglas> Oglasi { get; set; }
 
         //AUTI
         public ICollection<MarkaAuta> MarkeAuta { get; set; }
