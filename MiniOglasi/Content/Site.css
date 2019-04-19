@@ -2,7 +2,7 @@
     font-size: 62.5%;
     scroll-behavior: smooth;
     box-sizing: border-box;
-    --glavna-ljubicasta: rgb(98, 106, 255);
+    --glavna-ljubicasta: rgb(109, 87, 224);
 }
 
     html a:any-link {
@@ -39,16 +39,24 @@ textarea {
 
 /*MOJE BOOTSTRAP IZMENE OSNOVNE===========================================*/
 .navbar-inverse, .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-    background-color: rgb(159, 159, 159);
+    background-color: #646464;
 }
 
     .navbar-inverse .navbar-nav > li > a {
-        color: black;
+        color: white;
     }
 
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: gold;
+        }
+
     .navbar-inverse .navbar-brand {
-        color: black;
+        color: white;
     }
+
+        .navbar-inverse .navbar-brand:hover {
+            color: gold;
+        }
 
     .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
         color: #fff;
@@ -125,13 +133,13 @@ span.glyphicon {
         transform: scale(1.2);
     }
 
-    span.glyphicon.glyphicon-star-empty {
-        color: dimgray;
-    }
+.glyphicon.glyphicon-star-empty {
+    color: dimgray;
+}
 
-    span.glyphicon.glyphicon-star {
-        color: var(--glavna-ljubicasta);
-    }
+.glyphicon.glyphicon-star {
+    color: var(--glavna-ljubicasta);
+}
 
 /*POCETNA STRANA========================================================*/
 
@@ -380,7 +388,7 @@ span.glyphicon {
     width: 13rem;
     min-width: 10rem;
     padding: 1rem;
-    margin: 0.5rem;
+    margin: 0.5rem auto;
     border-radius: 1rem;
     transition: all 0.3s;
 }
@@ -427,7 +435,7 @@ div.oglas-list-item {
 
 .oglas-list-item:hover {
     border: 3px solid var(--glavna-ljubicasta);
-    /*box-shadow: 0 0 2rem #000000;*/
+    box-shadow: 0 0 2rem black;
     transform: translateX(-3%);
 }
 
@@ -460,7 +468,7 @@ div.oglas-list-item {
     color: white;
     font-weight: bold;
     background-color: var(--glavna-ljubicasta);
-    text-shadow: 3px 3px 3px gray;
+    text-shadow: 2px 2px 5px black;
     width: 100%;
     padding: 3px;
 }
@@ -471,7 +479,7 @@ div.oglas-list-item {
     right: 0;
     color: white;
     font-weight: bold;
-    text-shadow: 3px 3px 3px gray;
+    text-shadow: 2px 2px 5px black;
     background-color: #23d400;
     width: 40%;
     padding: 3px;

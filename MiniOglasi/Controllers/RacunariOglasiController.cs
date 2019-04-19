@@ -2,6 +2,7 @@
 using MiniOglasi.Models;
 using MiniOglasi.Models.RacunarOglasModels;
 using MiniOglasi.ViewModels;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,6 +24,7 @@ namespace MiniOglasi.Controllers
 
         [AllowAnonymous]
         public ActionResult Index(
+            int? page,
             int maxProcesorJezgara = 0,
             int minProcesorJezgara = 0,
             int maxProcesorBrzina = 0,
@@ -142,7 +144,7 @@ namespace MiniOglasi.Controllers
 
             OglasIndexViewModel racunarOglasIndexViewModel = new OglasIndexViewModel(VrstaOglasa.Racunar)
             {
-                Oglasi = racunarOglasi.ToList(),
+                Oglasi = racunarOglasi.ToList().ToPagedList(page ?? 1, 5),
                 Stanja = stanja,
                 TipoviRacunara = tipoviRacunara,
                 MarkeRacunara = markeRacunara,

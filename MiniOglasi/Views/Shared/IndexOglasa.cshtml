@@ -3,6 +3,8 @@
 @using MiniOglasi.Models
 @using MiniOglasi.Models.RacunarOglasModels
 @using MiniOglasi.Models.NekretninaOglasModels
+@using PagedList;
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Lista oglasa";
@@ -275,8 +277,73 @@
                 </a>
             </div>
         }
+        @if (jeLiAutoOglas)
+        {
+            @Html.PagedListPager(Model.Oglasi, page => Url.Action("Index",
+            new {
+                page,
+                sortiranje = Request.QueryString.Get("sortiranje"),
+                maxCena = Request.QueryString.Get("maxCena"),
+                minCena = Request.QueryString.Get("minCena"),
+                stanje = Request.QueryString.Get("stanje"),
+                //-------------------------------------------------
+                markaAuta = Request.QueryString.Get("markaAuta"),
+                modelAuta = Request.QueryString.Get("modelAuta"),
+                maxKilometraza = Request.QueryString.Get("maxKilometraza"),
+                maxKonjskihSnaga = Request.QueryString.Get("maxKonjskihSnaga"),
+                minKonjskihSnaga = Request.QueryString.Get("minKonjskihSnaga"),
+                maxKubikaza = Request.QueryString.Get("maxKubikaza"),
+                minKubikaza = Request.QueryString.Get("minKubikaza"),
+                izborGodista2 = Request.QueryString.Get("izborGodista2"),
+                izborGodista1 = Request.QueryString.Get("izborGodista1"),
+            }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+        }
+        else if (jeLiRacunarOglas)
+        {
+            @Html.PagedListPager(Model.Oglasi, page => Url.Action("Index",
+            new {
+                page,
+                sortiranje = Request.QueryString.Get("sortiranje"),
+                maxCena = Request.QueryString.Get("maxCena"),
+                minCena = Request.QueryString.Get("minCena"),
+                stanje = Request.QueryString.Get("stanje"),
+                //-------------------------------------------------
+                markaRacunara = Request.QueryString.Get("markaRacunara"),
+                tipRacunara = Request.QueryString.Get("tipRacunara"),
+                markaGraficke = Request.QueryString.Get("markaGraficke"),
+                minGrafickaMemorija = Request.QueryString.Get("minGrafickaMemorija"),
+                maxGrafickaMemorija = Request.QueryString.Get("maxGrafickaMemorija"),
+                minHddMemorija = Request.QueryString.Get("minHddMemorija"),
+                maxHddMemorija = Request.QueryString.Get("maxHddMemorija"),
+                minRamMemorija = Request.QueryString.Get("minRamMemorija"),
+                maxRamMemorija = Request.QueryString.Get("maxRamMemorija"),
+                minProcesorBrzina = Request.QueryString.Get("minProcesorBrzina"),
+                maxProcesorBrzina = Request.QueryString.Get("maxProcesorBrzina"),
+                minProcesorJezgara = Request.QueryString.Get("minProcesorJezgara"),
+                maxProcesorJezgara = Request.QueryString.Get("maxProcesorJezgara"),
+            }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+        }
+        else if (jeLiNekretninaOglas)
+        {
+            @Html.PagedListPager(Model.Oglasi, page => Url.Action("Index",
+            new {
+                page,
+                sortiranje = Request.QueryString.Get("sortiranje"),
+                maxCena = Request.QueryString.Get("maxCena"),
+                minCena = Request.QueryString.Get("minCena"),
+                stanje = Request.QueryString.Get("stanje"),
+                //-------------------------------------------------
+            }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+        }
+        else if (jeLiMojaListaIOmiljeni)
+        {
+            @Html.PagedListPager(Model.Oglasi, page => Url.Action("Index",
+            new { page }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+        }
     </div>
 </main>
+
+@*Page @(Model.Oglasi.PageCount < Model.Oglasi.PageNumber ? 0 : Model.Oglasi.PageNumber) of @Model.Oglasi.PageCount*@
 
 @section scripts
 {

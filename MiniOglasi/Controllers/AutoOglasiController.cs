@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using MiniOglasi.Models;
 using MiniOglasi.ViewModels;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,6 +24,7 @@ namespace MiniOglasi.Controllers
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Index(
+            int? page,
             int izborGodista1 = 0,
             int izborGodista2 = 0,
             int minKubikaza = 0,
@@ -119,7 +121,7 @@ namespace MiniOglasi.Controllers
 
             OglasIndexViewModel autoOglasIndexViewModel = new OglasIndexViewModel(VrstaOglasa.Auto)
             {
-                Oglasi = autoOglasi.ToList(),
+                Oglasi = autoOglasi.ToList().ToPagedList(page ?? 1, 5),
                 MarkeAuta = markeAuta,
                 Stanja = stanja
             };
@@ -176,7 +178,7 @@ namespace MiniOglasi.Controllers
             }
             if (tipGreskeUploadSlika != PomocnaKlasa.TipoviGreskeUploadSlika.NemaGreske)
             {
-                return View("RacunarOglasForm", newAutoOglasViewModel);
+                return View("AutoOglasForm", newAutoOglasViewModel);
             }
 
             if (!ModelState.IsValid)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using MiniOglasi.Models;
 using MiniOglasi.ViewModels;
+using PagedList;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -16,7 +17,7 @@ namespace MiniOglasi.Controllers
             dbContext = new ApplicationDbContext();
         }
 
-        public ActionResult MojiOglasi()
+        public ActionResult MojiOglasi(int? page)
         {
             string userId = User.Identity.GetUserId();
 
@@ -32,13 +33,13 @@ namespace MiniOglasi.Controllers
 
             OglasIndexViewModel mojiOglasiViewModel = new OglasIndexViewModel(VrstaOglasa.SpisakOmiljenihIMojih)
             {
-                Oglasi = mojiOglasi
+                Oglasi = mojiOglasi.ToPagedList(page ?? 1, 5)
             };
 
             return View("IndexOglasa", mojiOglasiViewModel);
         }
 
-        public ActionResult OmiljeniOglasi()
+        public ActionResult OmiljeniOglasi(int? page)
         {
             string userId = User.Identity.GetUserId();
 
@@ -55,7 +56,7 @@ namespace MiniOglasi.Controllers
 
             OglasIndexViewModel mojiOglasiViewModel = new OglasIndexViewModel(VrstaOglasa.SpisakOmiljenihIMojih)
             {
-                Oglasi = omiljeniOglasi
+                Oglasi = omiljeniOglasi.ToPagedList(page ?? 1, 5)
             };
 
             return View("IndexOglasa", mojiOglasiViewModel);

@@ -1,6 +1,7 @@
 ﻿using MiniOglasi.Models;
 using MiniOglasi.Models.AutoOglasModels;
 using MiniOglasi.Models.RacunarOglasModels;
+using PagedList;
 using System.Collections.Generic;
 
 namespace MiniOglasi.ViewModels
@@ -14,7 +15,7 @@ namespace MiniOglasi.ViewModels
 
         public VrstaOglasa _vrstaOglasa { get; set; }
 
-        public IEnumerable<Oglas> Oglasi { get; set; }
+        public IPagedList<Oglas> Oglasi { get; set; }
 
         public ICollection<Stanje> Stanja { get; set; }
 
