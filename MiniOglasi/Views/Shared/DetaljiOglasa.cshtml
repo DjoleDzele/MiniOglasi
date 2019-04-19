@@ -25,9 +25,45 @@
 
 <div class="detalji-oglasa">
     <div class="red-prvi">
+        @* DETALJI INFO ======================================================================= *@
+        <div class="detalji-oglasa-info">
+            @* DUGMAD SRCAD ======================================================================= *@
+            @if (requestAuthenticated)
+            {
+                if (currentUserId == autorOglasaId)
+                {
+                    <p class="detalji-oglasa-dugmad-red">
+                        <button class="dugme dugme-plavo dugme-edit">Edit</button>
+                        <button class="dugme dugme-crveno dugme-delete">Delete</button>
+                    </p>
+                }
+                else
+                {
+                    <p class="detalji-oglasa-dugmad-red">
+                        @if (jeLiOmiljenOglas)
+                        {
+                            <span id="srce-dugme" class="glyphicon glyphicon-heart"></span>
+                        }
+                        else
+                        {
+                            <span id="srce-dugme" class="glyphicon glyphicon-heart-empty"></span>
+                        }
+                    </p>
+                }
+            }
+
+            @* GLAVNI INFO ======================================================================= *@
+            <div>
+                <p class="detalji-oglasa-cena">
+                    <span>@Html.DisplayFor(oglas => oglas.Cena) @Model.Valuta.ImeValute</span>
+                </p>
+                <p>
+                    <span>Opis: @Html.DisplayFor(oglas => oglas.OpisOglasa)</span>
+                </p>
+            </div>
+        </div>
         @* SLIKE ======================================================================= *@
         <div class="slike fotorama"
-             data-fit="cover"
              data-loop="true"
              data-autoplay="true"
              data-transition="dissolve"
@@ -47,38 +83,6 @@
             {
                 <img src="@Url.Content(PomocnaKlasa.PlaceholderSlika)" />
             }
-        </div>
-        <div class="detalji-oglasa-info">
-            @if (requestAuthenticated)
-            {
-                if (currentUserId == autorOglasaId)
-                {
-                    <p>
-                        <button class="dugme dugme-plavo dugme-edit">Edit</button>
-                        <button class="dugme dugme-crveno dugme-delete">Delete</button>
-                    </p>
-                }
-                else
-                {
-                    <p>
-                        @if (jeLiOmiljenOglas)
-                        {
-                            <span id="zvezda-dugme" class="glyphicon glyphicon-star"></span>
-                        }
-                        else
-                        {
-                            <span id="zvezda-dugme" class="glyphicon glyphicon-star-empty"></span>
-                        }
-                    </p>
-                }
-            }
-            @* GLAVNI INFO ======================================================================= *@
-            <p>
-                <span>Opis: @Html.DisplayFor(oglas => oglas.OpisOglasa)</span>
-            </p>
-            <p>
-                <span>Cena: @Html.DisplayFor(oglas => oglas.Cena) @Model.Valuta.ImeValute</span>
-            </p>
         </div>
     </div>
     <div class="ostali-info">

@@ -124,21 +124,17 @@ input[type="file"] {
 }
 
 span.glyphicon {
-    font-size: 5.5rem;
+    font-size: 4.5rem;
     transition: all 0.3s;
 }
 
     span.glyphicon:hover {
         cursor: pointer;
-        transform: scale(1.2);
+        transform: scale(1.3);
     }
 
-.glyphicon.glyphicon-star-empty {
-    color: gold;
-}
-
-.glyphicon.glyphicon-star {
-    color: gold;
+.glyphicon-heart-empty, .glyphicon-heart {
+    color: rgb(109, 87, 224);
 }
 
 /*POCETNA STRANA========================================================*/
@@ -385,8 +381,8 @@ span.glyphicon {
 
 .dugme {
     display: block;
-    width: 13rem;
-    min-width: 10rem;
+    width: 12rem;
+    min-width: 9rem;
     padding: 0.7rem;
     margin: 0.5rem auto;
     border-radius: 1rem;
@@ -573,24 +569,42 @@ div.oglas-list-item {
 .detalji-oglasa {
     border: 2px dashed #a7a7a7;
     border-radius: 1rem;
-    max-width: 60%;
-    margin: 2rem auto;
-    padding: 2rem;
+    max-width: 70%;
+    margin: 4rem auto;
+    padding: 1rem;
     position: relative;
 }
 
-#zvezda-dugme {
+.detalji-oglasa-cena {
     position: absolute;
-    top: 2rem;
+    top: -3.4rem;
     right: 2rem;
+    padding: 0.5rem 2.5rem;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    background-color: #26d163;
+    color: white;
+}
+
+#srce-dugme {
+    text-align: center;
 }
 
 .detalji-oglasa .red-prvi {
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    margin-bottom: 3rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
     padding-bottom: 3rem;
+    border-bottom: 1px solid #a7a7a7;
+}
+
+.detalji-oglasa-dugmad-red {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
     border-bottom: 1px solid #a7a7a7;
 }
 
@@ -598,6 +612,7 @@ div.oglas-list-item {
     border: 2px solid #a7a7a7;
     height: 100%;
     width: 50%;
+    margin-top: 1rem;
 }
 
 .detalji-oglasa-info {
@@ -607,6 +622,8 @@ div.oglas-list-item {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: baseline;
+    text-align: left;
 }
 
 .detalji-oglasa-info, .detalji-oglasa-tabela {
@@ -635,4 +652,28 @@ div.oglas-list-item {
 .detalji-oglasa-info button {
     display: inline-block;
     margin: 1rem 0.5rem;
+}
+
+@media only screen and (max-width: 800px) {
+    .detalji-oglasa {
+        max-width: 85%;
+    }
+
+        .detalji-oglasa .red-prvi {
+            flex-direction: column;
+        }
+
+    .detalji-oglasa-tabela {
+        width: 85%;
+    }
+
+    .detalji-oglasa-info {
+        width: 90%;
+        margin: auto;
+    }
+
+    .detalji-oglasa .fotorama {
+        width: 90%;
+        margin: 1rem auto;
+    }
 }

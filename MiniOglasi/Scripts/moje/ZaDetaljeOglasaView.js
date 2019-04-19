@@ -2,20 +2,20 @@
     var podaci = $("#detaljiSkripta").data();
 
     if (podaci.requestAuthenticated) {
-        var zvezdaDugme = $("#zvezda-dugme")
+        var srceDugme = $("#srce-dugme")
 
         var mozeDaKlikneZvezdu = true
         if (mozeDaKlikneZvezdu) {
             mozeDaKlikneZvezdu = false
 
-            zvezdaDugme.on("click", function (e) {
-                var zvezda = e.target
-                if (zvezda.classList == "glyphicon glyphicon-star") {
+            srceDugme.on("click", function (e) {
+                var srce = e.target
+                if (srce.classList == "glyphicon glyphicon-heart") {
                     $.ajax({
                         url: `/api/omiljeni-oglas/${podaci.oglasId}`,
                         method: "DELETE",
                         success: function () {
-                            zvezda.classList = "glyphicon glyphicon-star-empty"
+                            srce.classList = "glyphicon glyphicon-heart-empty"
                         },
                         error: function (err) {
                             //console.log(err)
@@ -30,7 +30,7 @@
                         url: `/api/omiljeni-oglas/${podaci.oglasId}`,
                         method: "POST",
                         success: function () {
-                            zvezda.classList = "glyphicon glyphicon-star"
+                            srce.classList = "glyphicon glyphicon-heart"
                         },
                         error: function (err) {
                             //console.log(err)
