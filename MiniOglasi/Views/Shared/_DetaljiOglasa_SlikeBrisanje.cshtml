@@ -1,0 +1,24 @@
+﻿@model MiniOglasi.Models.Oglas
+
+@if (Model.Slike != null && Model.Id != 0 && Model.Slike.Any(x => x != null))
+{
+    <div id="slikeZaBrisanjeDiv">
+        <p class="slike-brisanje-naslov">Klik na sliku za brisanje</p>
+        <div class="slike-brisanje">
+            @if (Model.Slike != null && Model.Id != 0)
+            {
+                foreach (var slika in Model.Slike)
+                {
+                    <img data-slikaId="@slika.Id"
+                         class="js-delete-img"
+                         src="@Url.Content(slika.PathDoSlike)"
+                         alt="Alternate Text" />
+                }
+            }
+        </div>
+    </div>
+}
+
+<div>
+    <a href="@Url.Action("Index")" class="dugme dugme-crveno" style="color:white"><i class="fas fa-arrow-left"></i> Nazad</a>
+</div>

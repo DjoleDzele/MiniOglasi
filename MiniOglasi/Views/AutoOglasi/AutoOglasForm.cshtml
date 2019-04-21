@@ -1,7 +1,7 @@
 ﻿@model MiniOglasi.ViewModels.AutoOglasViewModel
 
 @{
-    ViewBag.Title = Model.AutoOglas.Id == 0 ? "Novi Auto Oglas" : "Izmeni Auto Oglas";
+    ViewBag.Title = Model.AutoOglas.Id == 0 ? "Novi oglas za automobil" : "Izmeni oglas za automobil";
 }
 
 <h3 class="naslov">@ViewBag.Title</h3>
@@ -119,8 +119,6 @@
                         <option @selected value="@i">@i</option>
                     }
                 </select>
-                @*@Html.EditorFor(model => model.AutoOglas.Godiste, new { htmlAttributes = new { @class = "form-control", placeholder = "1900 - " + DateTime.Now.Year } })
-                    @Html.ValidationMessageFor(model => model.AutoOglas.Godiste, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
@@ -135,27 +133,12 @@
         @Html.HiddenFor(model => model.AutoOglas.UserAutorOglasaId)
         @Html.HiddenFor(model => model.AutoOglas.DatumPostavljanja)
         <div class="form-group">
-            <input type="submit" value="Sacuvaj" class="dugme dugme-plavo" />
+            <button type="submit" class="dugme dugme-plavo">Sacuvaj <i class="fas fa-save"></i></button>
         </div>
     </div>
 }
 
-<div id="slikeZaBrisanjeDiv">
-    @if (Model.AutoOglas.Slike != null && Model.AutoOglas.Id != 0)
-    {
-        foreach (var slika in Model.AutoOglas.Slike)
-        {
-            <img data-slikaId="@slika.Id"
-                 class="js-delete-img"
-                 src="@Url.Content(slika.PathDoSlike)"
-                 alt="Alternate Text" width="100" height="100" style="margin: 15px" />
-        }
-    }
-</div>
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@Html.Partial("_DetaljiOglasa_SlikeBrisanje", Model.AutoOglas)
 
 @section scripts
 {

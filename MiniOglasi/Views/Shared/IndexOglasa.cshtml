@@ -7,23 +7,23 @@
 @using PagedList.Mvc;
 
 @{
-    ViewBag.Title = "Lista oglasa";
     bool jeLiAutoOglas = Model._vrstaOglasa == VrstaOglasa.Auto;
     bool jeLiRacunarOglas = Model._vrstaOglasa == VrstaOglasa.Racunar;
     bool jeLiNekretninaOglas = Model._vrstaOglasa == VrstaOglasa.Nekretnina;
-    bool jeLiMojaListaIOmiljeni = Model._vrstaOglasa == VrstaOglasa.SpisakOmiljenihIMojih;
+    bool jeLiListaOglasaPoKorisniku = Model._vrstaOglasa == VrstaOglasa.OglasiPoKorisniku;
     var imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
+    string imeZaListuOglasa = jeLiListaOglasaPoKorisniku ? "lista-oglasa-po-korisniku" : "main-lista-oglasa";
 }
 
-<main id="main-lista-oglasa">
-    @if (!jeLiMojaListaIOmiljeni)
+<main id="@imeZaListuOglasa">
+    @if (!jeLiListaOglasaPoKorisniku)
     {
         <div id="deoZaFiltere">
             @using (Html.BeginForm("Index", imeKontrolera, FormMethod.Get))
             {
                 <div class="red-filtera">
-                    <input type="submit" value="Pretraga" class="dugme dugme-za-filtriranje" />
-                    @Html.ActionLink("Novi oglas", "Create", imeKontrolera, new { @class = "dugme dugme-za-novi-oglas" })
+                    <button class="dugme dugme-za-filtriranje" type="submit">Pretraga <i class="fas fa-search"></i></button>
+                    <a href="@Url.Action("Create", imeKontrolera)" class="dugme dugme-za-novi-oglas">Novi oglas <i class="fas fa-file-alt"></i></a>
                 </div>
 
                 //ZA SVE--------------------------------------------------
@@ -175,6 +175,26 @@
     }
 
     <div id="deoZaListuOglasa">
+        @if (jeLiListaOglasaPoKorisniku)
+        {
+            if (ViewBag.Title != null)
+            {
+                <h3>@ViewBag.Title</h3>
+            }
+            if (ViewBag.Telefon != null)
+            {
+                <h4>@ViewBag.Telefon</h4>
+            }
+            if (ViewBag.Grad != null)
+            {
+                <h4>@ViewBag.Grad</h4>
+            }
+            if (!(Model.Oglasi.Any(x => x != null)))
+            {
+                <h3>Lista prazna</h3>
+            }
+            <hr />
+        }
         @foreach (var item in Model.Oglasi)
         {
             string pathDoSlike = "";
@@ -188,7 +208,7 @@
                 pathDoSlike = Url.Content(PomocnaKlasa.PlaceholderSlika);
             }
 
-            if (jeLiMojaListaIOmiljeni)
+            if (jeLiListaOglasaPoKorisniku)
             {
                 if (item is AutoOglas)
                 {
@@ -260,7 +280,7 @@
 
                                 @*ZA OMILJENE---------------------------------------------*@
 
-                                @if (jeLiMojaListaIOmiljeni)
+                                @if (jeLiListaOglasaPoKorisniku)
                                 {
                                     <p class="oglas-item-red-polje">
                                         <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => item.UserAutorOglasa): </strong>
@@ -335,15 +355,13 @@
                 //-------------------------------------------------
             }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
         }
-        else if (jeLiMojaListaIOmiljeni)
+        else if (jeLiListaOglasaPoKorisniku)
         {
             @Html.PagedListPager(Model.Oglasi, page => Url.Action("Index",
             new { page }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
         }
     </div>
 </main>
-
-@*Page @(Model.Oglasi.PageCount < Model.Oglasi.PageNumber ? 0 : Model.Oglasi.PageNumber) of @Model.Oglasi.PageCount*@
 
 @section scripts
 {

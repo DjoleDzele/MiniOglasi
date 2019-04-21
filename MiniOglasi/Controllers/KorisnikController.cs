@@ -31,7 +31,7 @@ namespace MiniOglasi.Controllers
 
             ViewBag.Title = "Moji oglasi";
 
-            OglasIndexViewModel mojiOglasiViewModel = new OglasIndexViewModel(VrstaOglasa.SpisakOmiljenihIMojih)
+            OglasIndexViewModel mojiOglasiViewModel = new OglasIndexViewModel(VrstaOglasa.OglasiPoKorisniku)
             {
                 Oglasi = mojiOglasi.ToPagedList(page ?? 1, 5)
             };
@@ -54,7 +54,7 @@ namespace MiniOglasi.Controllers
 
             ViewBag.Title = "Omiljeni oglasi";
 
-            OglasIndexViewModel mojiOglasiViewModel = new OglasIndexViewModel(VrstaOglasa.SpisakOmiljenihIMojih)
+            OglasIndexViewModel mojiOglasiViewModel = new OglasIndexViewModel(VrstaOglasa.OglasiPoKorisniku)
             {
                 Oglasi = omiljeniOglasi.ToPagedList(page ?? 1, 5)
             };
@@ -62,6 +62,31 @@ namespace MiniOglasi.Controllers
             return View("IndexOglasa", mojiOglasiViewModel);
         }
 
+        public ActionResult OglasiPoKorisniku(int? page, string korisnikID)
+        {
+            var user = dbContext.Users.Find(korisnikID);
+
+            var oglasiPoKorisniku = dbContext.Oglasi
+                .Include(om => om.Slike)
+                .Include(om => om.Valuta)
+                .Include(o => o.UserAutorOglasa)
+                .Include(o => o.Stanje)
+                .Include(o => o.UserAutorOglasa.Grad)
+                .Where(x => x.UserAutorOglasaId == korisnikID).ToList();
+
+            ViewBag.Title = "Oglasi korisnika " + user.UserName;
+            ViewBag.Telefon = "Telefon: " + user.KontaktTelefon;
+            ViewBag.Grad = "Grad: " + user.Grad.ImeGrada;
+
+            OglasIndexViewModel mojiOglasiViewModel = new OglasIndexViewModel(VrstaOglasa.OglasiPoKorisniku)
+            {
+                Oglasi = oglasiPoKorisniku.ToPagedList(page ?? 1, 5)
+            };
+
+            return View("IndexOglasa", mojiOglasiViewModel);
+        }
+
+        [AllowAnonymous]
         public bool DaLiJeOmiljeniOglas(int idOglasa)
         {
             string userId = User.Identity.GetUserId();
@@ -70,9 +95,26 @@ namespace MiniOglasi.Controllers
                 .Any(og => og.OmiljeniOglasId == idOglasa && og.KorisnikKomeJeOglasOmiljenId == userId);
         }
 
-        public ActionResult RegulisiKorisnike()
+        [HttpGet]
+        public ActionResult RegulisiKorisnike(string username = "", string telefon = "", string grad = "")
         {
-            var korisniciLista = dbContext.Users.ToList();
+            var korisniciLista = dbContext.Users
+                                    .Include(x => x.Grad);
+            if (username != "")
+            {
+                korisniciLista = korisniciLista.Where(x => x.UserName.Contains(username));
+            }
+
+            if (telefon != "")
+            {
+                korisniciLista = korisniciLista.Where(x => x.KontaktTelefon.Replace("-", "").Contains(telefon));
+            }
+
+            if (grad != "")
+            {
+                korisniciLista = korisniciLista.Where(x => x.Grad.ImeGrada.Contains(grad));
+            }
+
             return View(korisniciLista);
         }
     }

@@ -3,128 +3,119 @@
 @using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "RegulisiKorisnike";
+    ViewBag.Title = "Regulisi korisnike";
     string trenutniAdminId = User.Identity.GetUserId();
 }
 
-<h2>RegulisiKorisnike</h2>
+<h2>
+    @ViewBag.Title <i class="fas fa-users-cog"></i>
+</h2>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.EmailConfirmed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PasswordHash)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SecurityStamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LockoutEnabled)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AccessFailedCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.KontaktTelefon)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.GradId)
-            </th>*@
-        <th></th>
-    </tr>
+<div class="lista-korisnika-pretraga">
+    <form action="/Korisnik/RegulisiKorisnike" method="get">
+        <input type="text" name="username" placeholder="Username" value="" />
+        <input type="text" name="telefon" placeholder="Telefon" value="" />
+        <input type="text" name="grad" placeholder="Grad" value="" />
+        <input type="submit" value="Trazi" />
+    </form>
+</div>
 
-    @foreach (var item in Model)
-    {
-        if (item.Id != trenutniAdminId)
+<table id="tabela-korisnici">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+                <i class="far fa-envelope"></i>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KontaktTelefon)
+                <i class="fas fa-mobile-alt"></i>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grad)
+                <i class="fas fa-city"></i>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.EmailConfirmed)
+            if (item.Id != trenutniAdminId)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PasswordHash)
+                        @Html.DisplayFor(modelItem => item.KontaktTelefon)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.SecurityStamp)
+                        @Html.DisplayFor(modelItem => item.Grad.ImeGrada)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        <a href="@Url.Action("OglasiPoKorisniku", "Korisnik", new { korisnikID = item.Id })" class="dugme dugme-plavo" data-user-id="@item.Id">
+                            Oglasi
+                        </a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
+                        <button class="js-delete-user dugme dugme-crveno" data-user-id="@item.Id">
+                            Izbrisi
+                        </button>
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LockoutEnabled)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AccessFailedCount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UserName)
-                    </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.KontaktTelefon)
-                </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.GradId)
-                    </td>*@
-                <td>
-                    @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
-                    <button class="js-delete-user btn btn-danger" data-user-id="@item.Id">Ukloni korisnika</button>
-                </td>
-            </tr>
+                </tr>
+            }
         }
-    }
+    </tbody>
 </table>
 
 @section scripts
 {
     <script>
         $(document).ready(function () {
+
+            var mozeDaKlikneDugme = true;
+
             $("table").on("click", function (e) {
-                if (e.target.classList.contains("js-delete-user")) {
+                if (e.target.classList.contains("js-delete-user") && mozeDaKlikneDugme) {
+
+                    mozeDaKlikneDugme = false;
                     var korisnikId = e.target.dataset.userId;
 
-                    $.ajax({
-                        url: `/api/delete-user/${korisnikId}`,
-                        method: "DELETE",
-                        success: function (data) {
-                            e.target.parentElement.parentElement.remove();
+                    bootbox.confirm({
+                        message: "Izbrisi korisnika i njegove oglase?",
+                        buttons: {
+                            cancel: {
+                                label: 'Ne',
+                            },
+                            confirm: {
+                                label: 'Da',
+                                className: 'btn-danger'
+                            }
                         },
-                        error: function (err) {
-                            console.log(err);
+                        className: "heartBeat animated",
+                        size: "small",
+
+                        callback: function (result) {
+                            mozeDaKlikneDugme = true;
+                            if (result) {
+
+                                $.ajax({
+                                    url: `/api/delete-user/${korisnikId}`,
+                                    method: "DELETE",
+                                    success: function (data) {
+                                        e.target.parentElement.parentElement.remove();
+                                    },
+                                    error: function (err) {
+                                        console.log(err);
+                                    }
+                                })
+                            }
                         }
-                    })
+                    });
+
                 }
             })
         })

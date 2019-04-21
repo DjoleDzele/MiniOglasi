@@ -18,6 +18,7 @@ namespace MiniOglasi.Models
         public ICollection<OmiljeniOglasiPoKorisniku> OmiljeniOglasi { get; set; }
 
         [Required]
+        [Display(Name = "Telefon")]
         [RegularExpression(
             @"0\d{2}-\d{3}-\d{3,4}",
             ErrorMessage = "Pogresan format telefona, unesite 0XX-XXX-XXX(X) ")]

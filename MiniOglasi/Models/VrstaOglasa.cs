@@ -5,6 +5,6 @@
         Auto,
         Racunar,
         Nekretnina,
-        SpisakOmiljenihIMojih
+        OglasiPoKorisniku
     }
 }
