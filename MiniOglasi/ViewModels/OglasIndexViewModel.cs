@@ -1,5 +1,6 @@
 ﻿using MiniOglasi.Models;
 using MiniOglasi.Models.AutoOglasModels;
+using MiniOglasi.Models.NekretninaOglasModels;
 using MiniOglasi.Models.RacunarOglasModels;
 using PagedList;
 using System.Collections.Generic;
@@ -28,5 +29,10 @@ namespace MiniOglasi.ViewModels
         public ICollection<MarkaRacunara> MarkeRacunara { get; set; }
 
         public ICollection<GrafickaKartaMarka> GrafickaKartaMarke { get; set; }
+
+        //NEKRETNINE
+        public ICollection<TipNekretnine> TipoviNekretnine { get; set; }
+
+        public ICollection<Grad> Gradovi { get; set; }
     }
 }

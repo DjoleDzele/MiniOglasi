@@ -395,12 +395,14 @@ span.glyphicon {
     text-align: center;
     display: block;
     max-width: 12rem;
-    min-width: 8rem;
+    min-width: 10rem;
     padding: 0.7rem;
     margin: 0.5rem auto;
     border-radius: 1rem;
     transition: all 0.3s;
     font-size: 1.6rem;
+    border: 1px solid #a7a7a7;
+    background-color: #d8d8d8;
 }
 
 .red-filtera .dugme {

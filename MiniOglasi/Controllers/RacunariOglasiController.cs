@@ -293,11 +293,11 @@ namespace MiniOglasi.Controllers
         [NonAction]
         public RacunarOglasViewModel NapraviRacunarOglasViewModel(RacunarOglas oglasIzBaze = null)
         {
+            var stanja = dbContext.Stanja;
+            var valute = dbContext.Valute;
             var markeRacunara = dbContext.MarkeRacunara;
             var grafickeKarte = dbContext.GrafickeKarte;
             var tipoviRacunara = dbContext.TipoviRacunara;
-            var stanja = dbContext.Stanja;
-            var valute = dbContext.Valute;
 
             return new RacunarOglasViewModel()
             {

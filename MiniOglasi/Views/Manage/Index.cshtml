@@ -3,29 +3,25 @@
 @using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = "Upravljanje profilom";
     var mojId = User.Identity.GetUserId();
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2>@ViewBag.Title</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Change your account settings</h4>
     <hr />
     <dl>
-        <dt>Password:</dt>
         <dd>
-            [
             @if (Model.HasPassword)
             {
-                @Html.ActionLink("Change your password", "ChangePassword")
+                @Html.ActionLink("Promenite sifru", "ChangePassword", null, new { @class = "dugme dugme-plavo", style = "color:white" })
             }
             else
             {
-                @Html.ActionLink("Create", "SetPassword")
+                @Html.ActionLink("Postavite sifru", "SetPassword", null, new { @class = "dugme dugme-plavo" })
             }
-            ]
         </dd>
 
         @*<dt>External Logins:</dt>
@@ -100,7 +96,7 @@
             @Html.AntiForgeryToken()
         }
 
-        <button class="js-delete-user btn btn-danger">Izbrisi profil</button>
+        <button class="js-delete-user dugme dugme-crveno">Izbrisi profil</button>
     </p>
 </div>
 

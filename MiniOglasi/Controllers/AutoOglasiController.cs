@@ -301,8 +301,8 @@ namespace MiniOglasi.Controllers
             }
 
             autoOglasZaIzmenu.UserAutorOglasaId = autoOglasViewModel.AutoOglas.UserAutorOglasaId ?? User.Identity.GetUserId();
-
             // <<< ZAJEDNICKI <<<
+
             autoOglasZaIzmenu.Godiste = autoOglasViewModel.AutoOglas.Godiste;
             autoOglasZaIzmenu.Kilometraza = autoOglasViewModel.AutoOglas.Kilometraza;
             autoOglasZaIzmenu.KonjskeSnage = autoOglasViewModel.AutoOglas.KonjskeSnage;

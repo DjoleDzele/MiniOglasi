@@ -49,30 +49,30 @@ namespace MiniOglasi.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Unesite vas email")]
         [Display(Name = "Email")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Unesite pravilan email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Unesite vasu sifru")]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Sifra")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Ostani prijavljen?")]
         public bool RememberMe { get; set; }
     }
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Unesite vas telefon")]
         [Display(Name = "Kontakt telefon")]
         [RegularExpression(
             @"0\d{2}-\d{3}-\d{3,4}",
             ErrorMessage = "Pogresan format telefona, unesite 0XX-XXX-XXX(X) ")]
         public string KontaktTelefon { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Izaberite vas grad")]
         [Display(Name = "Izaberite vas grad")]
         public int GradId { get; set; }
 
@@ -80,20 +80,20 @@ namespace MiniOglasi.Models
 
         //MOJE DODATO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Email je obavezan")]
+        [EmailAddress(ErrorMessage = "Unesite validnu email adresu")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Sifra je obavezna")]
+        [StringLength(100, ErrorMessage = "{0} mora imati bar {2} karaktera.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Sifra")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Ponovi sifru")]
+        [Compare("Password", ErrorMessage = "Sifre se ne podudaraju")]
         public string ConfirmPassword { get; set; }
     }
 

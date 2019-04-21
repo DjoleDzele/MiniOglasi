@@ -13,6 +13,11 @@
     bool jeLiListaOglasaPoKorisniku = Model._vrstaOglasa == VrstaOglasa.OglasiPoKorisniku;
     var imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
     string imeZaListuOglasa = jeLiListaOglasaPoKorisniku ? "lista-oglasa-po-korisniku" : "main-lista-oglasa";
+
+    if (!jeLiListaOglasaPoKorisniku)
+    {
+        ViewBag.Title = "Lista oglasa";
+    }
 }
 
 <main id="@imeZaListuOglasa">
@@ -170,6 +175,42 @@
                         <input id="maxProcesorJezgara" name="maxProcesorJezgara" type="number" placeholder="max" min="0" class="form-control" />
                     </div>
                 }
+                else if (jeLiNekretninaOglas)
+                {
+                    <span>Tip nekretnine:</span>
+                    <div class="red-filtera">
+                        <select id="tipNekretnine" name="tipNekretnine" class="form-control">
+                            <option value="0"></option>
+                            @foreach (var tipNekretnine in Model.TipoviNekretnine)
+                            {
+                                <option value="@tipNekretnine.Id">@tipNekretnine.Tip</option>
+                            }
+                        </select>
+                    </div>
+
+                    <span>Lokacija nekretnine:</span>
+                    <div class="red-filtera">
+                        <select id="lokacijaNekretnine" name="lokacijaNekretnine" class="form-control">
+                            <option value="0"></option>
+                            @foreach (var lokacijaNekretnine in Model.Gradovi)
+                            {
+                                <option value="@lokacijaNekretnine.Id">@lokacijaNekretnine.ImeGrada</option>
+                            }
+                        </select>
+                    </div>
+
+                    <span>Kvadratura:</span>
+                    <div class="red-filtera">
+                        <input id="minKvadratura" name="minKvadratura" type="number" placeholder="min" min="0" class="form-control" />
+                        <input id="maxKvadratura" name="maxKvadratura" type="number" placeholder="max" min="0" class="form-control" />
+                    </div>
+
+                    <span>Broj soba:</span>
+                    <div class="red-filtera">
+                        <input id="minBrojSoba" name="minBrojSoba" type="number" placeholder="min" min="0" class="form-control" />
+                        <input id="maxBrojSoba" name="maxBrojSoba" type="number" placeholder="max" min="0" class="form-control" />
+                    </div>
+                }
             }
         </div>
     }
@@ -278,6 +319,24 @@
                                     </p>
                                 }
 
+                                @*ZA NEKRETNINE---------------------------------------------*@
+
+                                @if (jeLiNekretninaOglas)
+                                {
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((NekretninaOglas)item).TipNekretnine): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((NekretninaOglas)item).TipNekretnine.Tip)</span>
+                                    </p>
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((NekretninaOglas)item).Grad): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((NekretninaOglas)item).Grad.ImeGrada)</span>
+                                    </p>
+                                    <p class="oglas-item-red-polje">
+                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((NekretninaOglas)item).Kvadratura): </strong>
+                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((NekretninaOglas)item).Kvadratura) m<sup>2</sup></span>
+                                    </p>
+                                }
+
                                 @*ZA OMILJENE---------------------------------------------*@
 
                                 @if (jeLiListaOglasaPoKorisniku)
@@ -353,6 +412,12 @@
                 minCena = Request.QueryString.Get("minCena"),
                 stanje = Request.QueryString.Get("stanje"),
                 //-------------------------------------------------
+                tipNekretnine = Request.QueryString.Get("tipNekretnine"),
+                lokacijaNekretnine = Request.QueryString.Get("lokacijaNekretnine"),
+                minKvadratura = Request.QueryString.Get("minKvadratura"),
+                maxKvadratura = Request.QueryString.Get("maxKvadratura"),
+                minBrojSoba = Request.QueryString.Get("minBrojSoba"),
+                maxBrojSoba = Request.QueryString.Get("maxBrojSoba"),
             }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
         }
         else if (jeLiListaOglasaPoKorisniku)
@@ -449,32 +514,64 @@
             else if ("@jeLiRacunarOglas" == "True") {
 
                 var markaRacunaraInput = document.querySelector("#markaRacunara");
-                var tipRacunaraInput = document.querySelector("#tipRacunara");
-                var markaGrafickeInput = document.querySelector("#markaGraficke");
-                var minGrafickaMemorijaInput = document.querySelector("#minGrafickaMemorija");
-                var maxGrafickaMemorijaInput = document.querySelector("#maxGrafickaMemorija");
-                var minHddMemorijaInput = document.querySelector("#minHddMemorija");
-                var maxHddMemorijaInput = document.querySelector("#maxHddMemorija");
-                var minRamMemorijaInput = document.querySelector("#minRamMemorija");
-                var maxRamMemorijaInput = document.querySelector("#maxRamMemorija");
-                var minProcesorBrzinaInput = document.querySelector("#minProcesorBrzina");
-                var maxProcesorBrzinaInput = document.querySelector("#maxProcesorBrzina");
-                var minProcesorJezgaraInput = document.querySelector("#minProcesorJezgara");
-                var maxProcesorJezgaraInput = document.querySelector("#maxProcesorJezgara");
-
                 markaRacunaraInput.value = urlParams.get("markaRacunara");
+
+                var tipRacunaraInput = document.querySelector("#tipRacunara");
                 tipRacunaraInput.value = urlParams.get("tipRacunara");
+
+                var markaGrafickeInput = document.querySelector("#markaGraficke");
                 markaGrafickeInput.value = urlParams.get("markaGraficke");
+
+                var minGrafickaMemorijaInput = document.querySelector("#minGrafickaMemorija");
                 minGrafickaMemorijaInput.value = urlParams.get("minGrafickaMemorija");
+
+                var maxGrafickaMemorijaInput = document.querySelector("#maxGrafickaMemorija");
                 maxGrafickaMemorijaInput.value = urlParams.get("maxGrafickaMemorija");
+
+                var minHddMemorijaInput = document.querySelector("#minHddMemorija");
                 minHddMemorijaInput.value = urlParams.get("minHddMemorija");
+
+                var maxHddMemorijaInput = document.querySelector("#maxHddMemorija");
                 maxHddMemorijaInput.value = urlParams.get("maxHddMemorija");
+
+                var minRamMemorijaInput = document.querySelector("#minRamMemorija");
                 minRamMemorijaInput.value = urlParams.get("minRamMemorija");
+
+                var maxRamMemorijaInput = document.querySelector("#maxRamMemorija");
                 maxRamMemorijaInput.value = urlParams.get("maxRamMemorija");
+
+                var minProcesorBrzinaInput = document.querySelector("#minProcesorBrzina");
                 minProcesorBrzinaInput.value = urlParams.get("minProcesorBrzina");
+
+                var maxProcesorBrzinaInput = document.querySelector("#maxProcesorBrzina");
                 maxProcesorBrzinaInput.value = urlParams.get("maxProcesorBrzina");
+
+                var minProcesorJezgaraInput = document.querySelector("#minProcesorJezgara");
                 minProcesorJezgaraInput.value = urlParams.get("minProcesorJezgara");
+
+                var maxProcesorJezgaraInput = document.querySelector("#maxProcesorJezgara");
                 maxProcesorJezgaraInput.value = urlParams.get("maxProcesorJezgara");
+            }
+
+            else if ("@jeLiNekretninaOglas" == "True") {
+
+                var tipNekretnineInput = document.querySelector("#tipNekretnine");
+                tipNekretnineInput.value = urlParams.get("tipNekretnine");
+
+                var lokacijaNekretnineInput = document.querySelector("#lokacijaNekretnine");
+                lokacijaNekretnineInput.value = urlParams.get("lokacijaNekretnine");
+
+                var minKvadraturaInput = document.querySelector("#minKvadratura");
+                minKvadraturaInput.value = urlParams.get("minKvadratura");
+
+                var maxKvadraturaInput = document.querySelector("#maxKvadratura");
+                maxKvadraturaInput.value = urlParams.get("maxKvadratura");
+
+                var minBrojSobaInput = document.querySelector("#minBrojSoba");
+                minBrojSobaInput.value = urlParams.get("minBrojSoba");
+
+                var maxBrojSobaInput = document.querySelector("#maxBrojSoba");
+                maxBrojSobaInput.value = urlParams.get("maxBrojSoba");
             }
         })
     </script>

@@ -25,7 +25,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.NaslovOglasa, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.NaslovOglasa, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.NaslovOglasa, "", new { @class = "text-danger" })
             </div>
@@ -33,7 +33,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.OpisOglasa, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.TextAreaFor(model => model.RacunarOglas.OpisOglasa, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.OpisOglasa, "", new { @class = "text-danger" })
             </div>
@@ -41,7 +41,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.Cena, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.Cena, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.Cena, "", new { @class = "text-danger" })
             </div>
@@ -49,7 +49,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.ValutaId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.DropDownListFor(model => model.RacunarOglas.ValutaId, new SelectList(Model.Valute, "Id", "ImeValute"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.ValutaId, "", new { @class = "text-danger" })
             </div>
@@ -57,7 +57,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.StanjeId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.DropDownListFor(model => model.RacunarOglas.StanjeId, new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.StanjeId, "", new { @class = "text-danger" })
             </div>
@@ -65,7 +65,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.MarkaRacunaraId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.DropDownListFor(model => model.RacunarOglas.MarkaRacunaraId, new SelectList(Model.MarkeRacunara, "Id", "Marka"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.MarkaRacunaraId, "", new { @class = "text-danger" })
             </div>
@@ -73,7 +73,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.TipRacunaraId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.DropDownListFor(model => model.RacunarOglas.TipRacunaraId, new SelectList(Model.TipoviRacunara, "Id", "Tip"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.TipRacunaraId, "", new { @class = "text-danger" })
             </div>
@@ -81,7 +81,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.MarkaGrafickeKarteId, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.DropDownListFor(model => model.RacunarOglas.MarkaGrafickeKarteId, new SelectList(Model.GrafickaKartaMarke, "Id", "MarkaGraficke"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.MarkaGrafickeKarteId, "", new { @class = "text-danger" })
             </div>
@@ -89,7 +89,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.GrafickaMemorija, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.GrafickaMemorija, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.GrafickaMemorija, "", new { @class = "text-danger" })
             </div>
@@ -97,7 +97,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.HddMemorija, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.HddMemorija, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.HddMemorija, "", new { @class = "text-danger" })
             </div>
@@ -105,7 +105,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.RamMemorija, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.RamMemorija, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.RamMemorija, "", new { @class = "text-danger" })
             </div>
@@ -113,7 +113,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.ProcesorBrzina, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.ProcesorBrzina, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.ProcesorBrzina, "", new { @class = "text-danger" })
             </div>
@@ -121,7 +121,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.ProcesorJezgara, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.ProcesorJezgara, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.ProcesorJezgara, "", new { @class = "text-danger" })
             </div>
@@ -129,7 +129,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.Monitor, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.Monitor, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.Monitor, "", new { @class = "text-danger" })
             </div>
@@ -137,7 +137,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.Tastatura, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.Tastatura, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.Tastatura, "", new { @class = "text-danger" })
             </div>
@@ -145,7 +145,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.Mis, htmlAttributes: new { @class = "control-label " })
-            <div class="">
+            <div>
                 @Html.EditorFor(model => model.RacunarOglas.Mis, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.Mis, "", new { @class = "text-danger" })
             </div>
@@ -153,7 +153,7 @@
 
         <div class="form-group">
             <label class="control-label " for="uploadedImage">Dodaj slike</label>
-            <div class="">
+            <div>
                 <input type="file" multiple name="uploadedImages" id="uploadedImages" accept=".jpg,.png" value="Izaberite sliku" class="form-control" style="padding:0" />
             </div>
         </div>
