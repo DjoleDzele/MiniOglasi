@@ -13,6 +13,7 @@ namespace MiniOglasi.Models.NekretninaOglasModels
         public TipNekretnine TipNekretnine { get; set; }
 
         [Required]
+        [Display(Name = "Lokacija")]
         [ForeignKey("Grad")]
         public int GradId { get; set; }
 

@@ -43,7 +43,7 @@
             })
         }
 
-        if (podaci.userId == podaci.autorOglasaId) {
+        if (podaci.userId == podaci.autorOglasaId || podaci.adminGleda == "True") {
             var mozeDaKlikneDugme = true;
             if (mozeDaKlikneDugme) {
                 mozeDaKlikneDugme = false;

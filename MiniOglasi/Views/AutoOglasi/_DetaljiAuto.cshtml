@@ -1,8 +1,12 @@
 ﻿@model MiniOglasi.Models.AutoOglas
 
 <tr>
-    <td><strong>Godiste: </strong></td>
-    <td>@Html.DisplayFor(oglas => oglas.Godiste)</td>
+    <td><strong>Proizvodjac: </strong></td>
+    <td>@Html.DisplayFor(oglas => oglas.MarkaAuta.Marka)</td>
+</tr>
+<tr>
+    <td><strong>Model: </strong></td>
+    <td>@Html.DisplayFor(oglas => oglas.ModelAuta.AutoModel)</td>
 </tr>
 <tr>
     <td><strong>Kilometraza: </strong></td>
@@ -13,10 +17,10 @@
     <td>@Html.DisplayFor(oglas => oglas.KonjskeSnage)</td>
 </tr>
 <tr>
-    <td><strong>Proizvodjac: </strong></td>
-    <td>@Html.DisplayFor(oglas => oglas.MarkaAuta.Marka)</td>
+    <td><strong>Kubikaza: </strong></td>
+    <td>@Html.DisplayFor(oglas => oglas.Kubikaza)</td>
 </tr>
 <tr>
-    <td><strong>Proizvodjac: </strong></td>
-    <td>@Html.DisplayFor(oglas => oglas.ModelAuta.AutoModel)</td>
+    <td><strong>Godiste: </strong></td>
+    <td>@Html.DisplayFor(oglas => oglas.Godiste)</td>
 </tr>

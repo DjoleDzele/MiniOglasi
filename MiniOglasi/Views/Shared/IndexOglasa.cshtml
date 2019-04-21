@@ -12,6 +12,7 @@
     bool jeLiNekretninaOglas = Model._vrstaOglasa == VrstaOglasa.Nekretnina;
     bool jeLiListaOglasaPoKorisniku = Model._vrstaOglasa == VrstaOglasa.OglasiPoKorisniku;
     var imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
+    var imeAkcije = ViewContext.RouteData.Values["action"].ToString();
     string imeZaListuOglasa = jeLiListaOglasaPoKorisniku ? "lista-oglasa-po-korisniku" : "main-lista-oglasa";
 
     if (!jeLiListaOglasaPoKorisniku)
@@ -422,8 +423,11 @@
         }
         else if (jeLiListaOglasaPoKorisniku)
         {
-            @Html.PagedListPager(Model.Oglasi, page => Url.Action("Index",
-            new { page }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
+            @Html.PagedListPager(Model.Oglasi, page => Url.Action(imeAkcije,
+            new {
+                page,
+                korisnikID = Request.QueryString.Get("korisnikID")
+            }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
         }
     </div>
 </main>
@@ -435,15 +439,18 @@
 
             const urlParams = new URLSearchParams(window.location.search);
 
-            var sortiranjeInput = document.querySelector("#sortiranje");
-            var minCenaInput = document.querySelector("#minCena");
-            var maxCenaInput = document.querySelector("#maxCena");
-            var stanjeInput = document.querySelector("#stanje");
+            if ("@jeLiListaOglasaPoKorisniku" == "False") {
 
-            sortiranjeInput.value = urlParams.get("sortiranje");
-            minCenaInput.value = urlParams.get("minCena");
-            maxCenaInput.value = urlParams.get("maxCena");
-            stanjeInput.value = urlParams.get("stanje");
+                var sortiranjeInput = document.querySelector("#sortiranje");
+                var minCenaInput = document.querySelector("#minCena");
+                var maxCenaInput = document.querySelector("#maxCena");
+                var stanjeInput = document.querySelector("#stanje");
+
+                sortiranjeInput.value = urlParams.get("sortiranje");
+                minCenaInput.value = urlParams.get("minCena");
+                maxCenaInput.value = urlParams.get("maxCena");
+                stanjeInput.value = urlParams.get("stanje");
+            }
 
             if ("@jeLiAutoOglas" == "True") {
 

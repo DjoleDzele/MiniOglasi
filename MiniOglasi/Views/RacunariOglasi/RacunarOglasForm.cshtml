@@ -58,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RacunarOglas.StanjeId, htmlAttributes: new { @class = "control-label " })
             <div>
-                @Html.DropDownListFor(model => model.RacunarOglas.StanjeId, new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.RacunarOglas.StanjeId, new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RacunarOglas.StanjeId, "", new { @class = "text-danger" })
             </div>
         </div>

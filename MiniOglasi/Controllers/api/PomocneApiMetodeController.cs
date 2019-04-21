@@ -29,13 +29,14 @@ namespace MiniOglasi.Controllers.api
             }
             else
             {
+                string userId = oglasZaBrisanje.UserAutorOglasaId;
                 var omiljeniOglasiZaBrisanje = dbContext.OmiljeniOglasiPoKorisniku.Where(x => x.OmiljeniOglasId == id);
                 dbContext.OmiljeniOglasiPoKorisniku.RemoveRange(omiljeniOglasiZaBrisanje);
 
                 dbContext.Oglasi.Remove(oglasZaBrisanje);
                 dbContext.SaveChanges();
 
-                Directory.Delete(HttpContext.Current.Server.MapPath(Path.Combine(PomocnaKlasa.ImagesFolder, User.Identity.GetUserId(), id.ToString())), true);
+                Directory.Delete(HttpContext.Current.Server.MapPath(Path.Combine(PomocnaKlasa.ImagesFolder, userId, id.ToString())), true);
                 return Ok();
             }
         }

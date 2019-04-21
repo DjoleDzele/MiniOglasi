@@ -50,6 +50,11 @@ textarea {
 }
 
 /*MOJE BOOTSTRAP IZMENE OSNOVNE-----------------------------------------------*/
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: var(--glavna-ljubicasta);
+    border-color: var(--glavna-ljubicasta);
+}
+
 h1, .h1, h2, .h2, h3, .h3 {
     margin: 2rem auto;
 }
@@ -444,6 +449,7 @@ span.glyphicon {
 }
 
 .oglas-okvir {
+    max-width: 46rem;
     height: 17rem;
     margin: 1rem auto;
 }

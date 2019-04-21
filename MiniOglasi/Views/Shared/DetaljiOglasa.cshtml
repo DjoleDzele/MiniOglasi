@@ -9,6 +9,7 @@
 @{
     ViewBag.Title = "Detalji";
     int oglasId = Model.Id;
+    bool daLiJeUserAdmin = User.IsInRole("admin");
     string currentUserId = User.Identity.GetUserId();
     string autorOglasaId = Model.UserAutorOglasaId;
     string imeKontrolera = ViewContext.RouteData.Values["controller"].ToString();
@@ -30,7 +31,22 @@
             @* DUGMAD SRCAD ======================================================================= *@
             @if (requestAuthenticated)
             {
-                if (currentUserId == autorOglasaId)
+                if (daLiJeUserAdmin && currentUserId != autorOglasaId)
+                {
+                    <p class="detalji-oglasa-dugmad-red">
+                        @if (jeLiOmiljenOglas)
+                        {
+                            <span id="srce-dugme" class="glyphicon glyphicon-heart"></span>
+                        }
+                        else
+                        {
+                            <span id="srce-dugme" class="glyphicon glyphicon-heart-empty"></span>
+                        }
+                        @*<button class="dugme dugme-plavo dugme-edit">Edit <i class="fas fa-edit"></i></button>*@
+                        <button class="dugme dugme-crveno dugme-delete">Delete <i class="fas fa-times"></i></button>
+                    </p>
+                }
+                else if (currentUserId == autorOglasaId)
                 {
                     <p class="detalji-oglasa-dugmad-red">
                         <button class="dugme dugme-plavo dugme-edit">Edit <i class="fas fa-edit"></i></button>
@@ -137,6 +153,7 @@
             data-autor-oglasa-id="@autorOglasaId"
             data-url-edit="@urlZaEdit"
             data-request-authenticated="@requestAuthenticated"
-            data-kategorija-oglasa="@imeKontrolera">
+            data-kategorija-oglasa="@imeKontrolera"
+            data-admin-gleda="@daLiJeUserAdmin">
     </script>
 }

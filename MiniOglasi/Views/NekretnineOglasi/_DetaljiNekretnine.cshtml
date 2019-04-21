@@ -18,17 +18,17 @@
 </tr>
 <tr>
     <td><strong>Internet: </strong></td>
-    <td>@Html.DisplayFor(oglas => oglas.Internet)</td>
+    <td>@(Model.Internet == true ? "DA" : "NE")</td>
 </tr>
 <tr>
     <td><strong>Grejanje: </strong></td>
-    <td>@Html.DisplayFor(oglas => oglas.Grejanje)</td>
+    <td>@(Model.Grejanje == true ? "DA" : "NE")</td>
 </tr>
 <tr>
     <td><strong>Kablovska: </strong></td>
-    <td>@Html.DisplayFor(oglas => oglas.Kablovska)</td>
+    <td>@(Model.Kablovska == true ? "DA" : "NE")</td>
 </tr>
 <tr>
     <td><strong>Terasa: </strong></td>
-    <td>@Html.DisplayFor(oglas => oglas.Terasa)</td>
+    <td>@(Model.Terasa == true ? "DA" : "NE")</td>
 </tr>
