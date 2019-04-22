@@ -74,7 +74,11 @@
                     <span>@Html.DisplayFor(oglas => oglas.Cena) @Model.Valuta.ImeValute</span>
                 </p>
                 <p>
-                    <span><strong>Opis: </strong>@Html.DisplayFor(oglas => oglas.OpisOglasa)</span>
+                    <span>
+                        <strong>Opis: </strong>
+                        <br />
+                        @Html.Raw(Html.Encode(Model.OpisOglasa).Replace("\n", "<br />"))
+                    </span>
                 </p>
             </div>
         </div>
