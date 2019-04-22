@@ -15,7 +15,7 @@
                     url: `/api/delete-sliku/${slikaId}`,
                     method: "DELETE",
                     success: function () {
-                        slikaZaBrisanje.remove();
+                        slikaZaBrisanje.parentElement.remove();
                     },
                     error: function (err) {
                         //console.log(err)

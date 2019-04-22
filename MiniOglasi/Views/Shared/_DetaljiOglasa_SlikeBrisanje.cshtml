@@ -9,10 +9,12 @@
             {
                 foreach (var slika in Model.Slike)
                 {
-                    <img data-slikaId="@slika.Id"
-                         class="js-delete-img"
-                         src="@Url.Content(slika.PathDoSlike)"
-                         alt="Alternate Text" />
+                    <div class="okvir-slika-za-brisanje">
+                        <img data-slikaId="@slika.Id"
+                             class="js-delete-img"
+                             src="@Url.Content(slika.PathDoSlike)"
+                             alt="Alternate Text" />
+                    </div>
                 }
             }
         </div>
