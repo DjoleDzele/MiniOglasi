@@ -1,0 +1,14 @@
+﻿@model MiniOglasi.Models.AutoOglas
+
+<p class="oglas-item-red-polje">
+    <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => oglas.MarkaAutaId): </strong>
+    <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => oglas.MarkaAuta.Marka)</span>
+</p>
+<p class="oglas-item-red-polje">
+    <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => oglas.ModelAutaId): </strong>
+    <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => oglas.ModelAuta.AutoModel)</span>
+</p>
+<p class="oglas-item-red-polje">
+    <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => oglas.Godiste): </strong>
+    <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => oglas.Godiste)</span>
+</p>

@@ -6,6 +6,20 @@ namespace MiniOglasi.Models.NekretninaOglasModels
     public class NekretninaOglas : Oglas
     {
         [Required]
+        [ForeignKey("TipGradnje")]
+        [Display(Name = "Tip gradnje")]
+        public int TipGradnjeId { get; set; }
+
+        public TipGradnje TipGradnje { get; set; }
+
+        [Required]
+        [Display(Name = "Vrsta usluge")]
+        [ForeignKey("RezimOglasaNekretnine")]
+        public int RezimOglasaNekretnineId { get; set; }
+
+        public RezimOglasaNekretnine RezimOglasaNekretnine { get; set; }
+
+        [Required]
         [ForeignKey("TipNekretnine")]
         [Display(Name = "Tip nekretnine")]
         public int TipNekretnineId { get; set; }

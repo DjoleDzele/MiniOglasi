@@ -19,9 +19,14 @@ namespace MiniOglasi.Models
         public DbSet<OmiljeniOglasiPoKorisniku> OmiljeniOglasiPoKorisniku { get; set; }
         public DbSet<Slika> Slike { get; set; }
         public DbSet<Stanje> Stanja { get; set; }
+
         public DbSet<MarkaAuta> MarkeAuta { get; set; }
         public DbSet<ModelAuta> ModeliAuta { get; set; }
+
         public DbSet<TipNekretnine> TipoviNekretnina { get; set; }
+        public DbSet<TipGradnje> TipoviGradnje { get; set; }
+        public DbSet<RezimOglasaNekretnine> RezimiOglasaNekretnine { get; set; }
+
         public DbSet<GrafickaKartaMarka> GrafickeKarte { get; set; }
         public DbSet<MarkaRacunara> MarkeRacunara { get; set; }
         public DbSet<TipRacunara> TipoviRacunara { get; set; }
@@ -62,6 +67,18 @@ namespace MiniOglasi.Models
                 .HasForeignKey(n => n.TipNekretnineId)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<NekretninaOglas>()
+                .HasRequired(n => n.RezimOglasaNekretnine)
+                .WithMany(t => t.NekretninaOglasi)
+                .HasForeignKey(n => n.RezimOglasaNekretnineId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<NekretninaOglas>()
+                .HasRequired(n => n.TipGradnje)
+                .WithMany(t => t.NekretninaOglasi)
+                .HasForeignKey(n => n.TipGradnjeId)
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<Oglas>()
                 .HasMany(o => o.Slike)
                 .WithRequired(s => s.Oglas)
@@ -69,7 +86,7 @@ namespace MiniOglasi.Models
                 .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Oglas>()
-                .HasRequired(o => o.Stanje)
+                .HasOptional(o => o.Stanje)
                 .WithMany(s => s.Oglasi)
                 .HasForeignKey(o => o.StanjeId)
                 .WillCascadeOnDelete(false);

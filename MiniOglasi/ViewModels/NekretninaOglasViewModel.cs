@@ -6,7 +6,7 @@ namespace MiniOglasi.ViewModels
 {
     public class NekretninaOglasViewModel
     {
-        public ICollection<Stanje> Stanja { get; set; }
+        //public ICollection<Stanje> Stanja { get; set; }
 
         public ICollection<Valuta> Valute { get; set; }
 
@@ -15,5 +15,9 @@ namespace MiniOglasi.ViewModels
         public ICollection<TipNekretnine> TipoviNekretnina { get; set; }
 
         public ICollection<Grad> Gradovi { get; set; }
+
+        public ICollection<TipGradnje> TipoviGradnje { get; set; }
+
+        public ICollection<RezimOglasaNekretnine> RezimiOglasaNekretnina { get; set; }
     }
 }

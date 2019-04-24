@@ -34,5 +34,9 @@ namespace MiniOglasi.ViewModels
         public ICollection<TipNekretnine> TipoviNekretnine { get; set; }
 
         public ICollection<Grad> Gradovi { get; set; }
+
+        public ICollection<TipGradnje> TipoviGradnje { get; set; }
+
+        public ICollection<RezimOglasaNekretnine> RezimiOglasaNekretnina { get; set; }
     }
 }

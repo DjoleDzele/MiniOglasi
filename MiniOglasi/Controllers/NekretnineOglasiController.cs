@@ -26,13 +26,15 @@ namespace MiniOglasi.Controllers
         [AllowAnonymous]
         public ActionResult Index(
             int? page,
+            int vrstaUsluge = 0,
+            int tipGradnje = 0,
             int tipNekretnine = 0,
             int lokacijaNekretnine = 0,
             int minKvadratura = 0,
             int maxKvadratura = 0,
             int minBrojSoba = 0,
             int maxBrojSoba = 0,
-            int stanje = 0,
+            //int stanje = 0,
             int minCena = 0,
             int maxCena = 0,
             int sortiranje = 0)
@@ -41,6 +43,8 @@ namespace MiniOglasi.Controllers
                 .OfType<NekretninaOglas>()
                 .Include(o => o.Grad)
                 .Include(o => o.TipNekretnine)
+                .Include(o => o.TipGradnje)
+                .Include(o => o.RezimOglasaNekretnine)
                 .Include(o => o.Valuta)
                 .Include(o => o.Slike);
 
@@ -73,10 +77,10 @@ namespace MiniOglasi.Controllers
             {
                 nekretnineOglasi = nekretnineOglasi.Where(x => x.ValutaId == 1 ? x.Cena <= maxCena : x.Cena * 120 <= maxCena);
             }
-            if (stanje != 0)
-            {
-                nekretnineOglasi = nekretnineOglasi.Where(x => x.StanjeId == stanje);
-            }
+            //if (stanje != 0)
+            //{
+            //    nekretnineOglasi = nekretnineOglasi.Where(x => x.StanjeId == stanje);
+            //}
             if (maxBrojSoba != 0)
             {
                 nekretnineOglasi = nekretnineOglasi.Where(x => x.BrojSoba <= maxBrojSoba);
@@ -101,17 +105,28 @@ namespace MiniOglasi.Controllers
             {
                 nekretnineOglasi = nekretnineOglasi.Where(x => x.TipNekretnineId == tipNekretnine);
             }
+            if (vrstaUsluge != 0)
+            {
+                nekretnineOglasi = nekretnineOglasi.Where(x => x.RezimOglasaNekretnineId == vrstaUsluge);
+            }
+            if (tipGradnje != 0)
+            {
+                nekretnineOglasi = nekretnineOglasi.Where(x => x.TipGradnjeId == tipGradnje);
+            }
 
-            var stanja = dbContext.Stanja.ToList();
+            //var stanja = dbContext.Stanja.ToList();
             var tipoviNekretnine = dbContext.TipoviNekretnina.ToList();
             var gradovi = dbContext.Gradovi.ToList();
+            var rezimiNekretnina = dbContext.RezimiOglasaNekretnine.ToList();
+            var tipoviGradnje = dbContext.TipoviGradnje.ToList();
 
             OglasIndexViewModel nekretnineOglasIndexViewModel = new OglasIndexViewModel(VrstaOglasa.Nekretnina)
             {
                 Oglasi = nekretnineOglasi.ToList().ToPagedList(page ?? 1, 5),
                 TipoviNekretnine = tipoviNekretnine,
                 Gradovi = gradovi,
-                Stanja = stanja
+                RezimiOglasaNekretnina = rezimiNekretnina,
+                TipoviGradnje = tipoviGradnje
             };
 
             return View("IndexOglasa", nekretnineOglasIndexViewModel);
@@ -134,15 +149,19 @@ namespace MiniOglasi.Controllers
                                                 .Include(o => o.Slike)
                                                 .SingleOrDefault(o => o.Id == newNekretninaOglasViewModel.NekretninaOglas.Id);
 
-            var stanja = dbContext.Stanja;
+            //var stanja = dbContext.Stanja;
             var valute = dbContext.Valute;
             var tipoviNekretnine = dbContext.TipoviNekretnina;
             var gradovi = dbContext.Gradovi;
+            var rezimiNekretnina = dbContext.RezimiOglasaNekretnine;
+            var tipoviGradnje = dbContext.TipoviGradnje;
 
-            newNekretninaOglasViewModel.Stanja = stanja.ToList();
+            //newNekretninaOglasViewModel.Stanja = stanja.ToList();
             newNekretninaOglasViewModel.Valute = valute.ToList();
             newNekretninaOglasViewModel.TipoviNekretnina = tipoviNekretnine.ToList();
             newNekretninaOglasViewModel.Gradovi = gradovi.ToList();
+            newNekretninaOglasViewModel.TipoviGradnje = tipoviGradnje.ToList();
+            newNekretninaOglasViewModel.RezimiOglasaNekretnina = rezimiNekretnina.ToList();
 
             if (newNekretninaOglasViewModel.NekretninaOglas.Id != 0)
             {
@@ -221,8 +240,10 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.Grad)
                 .Include(o => o.TipNekretnine)
                 .Include(o => o.Slike)
-                .Include(o => o.Stanje)
+                //.Include(o => o.Stanje)
                 .Include(o => o.Valuta)
+                .Include(o => o.RezimOglasaNekretnine)
+                .Include(o => o.TipGradnje)
                 .Include(o => o.UserAutorOglasa)
                 .Include(o => o.UserAutorOglasa.Grad)
                 .SingleOrDefault(o => o.Id == id);
@@ -254,18 +275,22 @@ namespace MiniOglasi.Controllers
         [NonAction]
         public NekretninaOglasViewModel NapraviNekretninuOglasViewModel(NekretninaOglas oglasIzBaze = null)
         {
-            var stanja = dbContext.Stanja;
+            //var stanja = dbContext.Stanja;
             var valute = dbContext.Valute;
             var tipoviNekretnine = dbContext.TipoviNekretnina;
             var gradovi = dbContext.Gradovi;
+            var rezimiNekretnina = dbContext.RezimiOglasaNekretnine;
+            var tipoviGradnje = dbContext.TipoviGradnje;
 
             return new NekretninaOglasViewModel()
             {
                 NekretninaOglas = oglasIzBaze ?? new NekretninaOglas(),
-                Stanja = stanja.ToList(),
+                //Stanja = stanja.ToList(),
                 Valute = valute.ToList(),
                 TipoviNekretnina = tipoviNekretnine.ToList(),
-                Gradovi = gradovi.ToList()
+                Gradovi = gradovi.ToList(),
+                RezimiOglasaNekretnina = rezimiNekretnina.ToList(),
+                TipoviGradnje = tipoviGradnje.ToList(),
             };
         }
 
@@ -281,7 +306,7 @@ namespace MiniOglasi.Controllers
             nekretninaOglasZaIzmenu.OpisOglasa = nekretninaOglasViewModel.NekretninaOglas.OpisOglasa;
             nekretninaOglasZaIzmenu.Cena = nekretninaOglasViewModel.NekretninaOglas.Cena;
             nekretninaOglasZaIzmenu.ValutaId = nekretninaOglasViewModel.NekretninaOglas.ValutaId;
-            nekretninaOglasZaIzmenu.StanjeId = nekretninaOglasViewModel.NekretninaOglas.StanjeId;
+            //nekretninaOglasZaIzmenu.StanjeId = nekretninaOglasViewModel.NekretninaOglas.StanjeId;
 
             nekretninaOglasZaIzmenu.DatumPostavljanja = nekretninaOglasViewModel.NekretninaOglas.DatumPostavljanja == default(DateTime)
                 ? DateTime.Now
@@ -295,6 +320,8 @@ namespace MiniOglasi.Controllers
             nekretninaOglasZaIzmenu.UserAutorOglasaId = nekretninaOglasViewModel.NekretninaOglas.UserAutorOglasaId ?? User.Identity.GetUserId();
             // <<< ZAJEDNICKI <<<
 
+            nekretninaOglasZaIzmenu.TipGradnjeId = nekretninaOglasViewModel.NekretninaOglas.TipGradnjeId;
+            nekretninaOglasZaIzmenu.RezimOglasaNekretnineId = nekretninaOglasViewModel.NekretninaOglas.RezimOglasaNekretnineId;
             nekretninaOglasZaIzmenu.TipNekretnineId = nekretninaOglasViewModel.NekretninaOglas.TipNekretnineId;
             nekretninaOglasZaIzmenu.GradId = nekretninaOglasViewModel.NekretninaOglas.GradId;
             nekretninaOglasZaIzmenu.Kvadratura = nekretninaOglasViewModel.NekretninaOglas.Kvadratura;

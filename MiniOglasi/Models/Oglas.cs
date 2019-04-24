@@ -27,7 +27,7 @@ namespace MiniOglasi.Models
         public string OpisOglasa { get; set; }
 
         [Required]
-        [Range(0, 99999)]
+        [Range(0, 999999999)]
         public int Cena { get; set; }
 
         [Display(Name = "Valuta")]
@@ -36,10 +36,9 @@ namespace MiniOglasi.Models
 
         public Valuta Valuta { get; set; }
 
-        [Required]
         [Display(Name = "Stanje")]
         [ForeignKey("Stanje")]
-        public int StanjeId { get; set; }
+        public int? StanjeId { get; set; }
 
         public Stanje Stanje { get; set; }
 

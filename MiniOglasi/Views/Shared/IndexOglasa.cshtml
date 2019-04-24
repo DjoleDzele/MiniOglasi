@@ -51,10 +51,13 @@
                     <input id="maxCena" name="maxCena" type="number" placeholder="max" min="0" class="form-control" />
                 </div>
 
-                <span>Stanje:</span>
-                <div class="red-filtera">
-                    @Html.DropDownList("stanje", new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control", name = "stanje", id = "stanje" })
-                </div>
+                if (!jeLiNekretninaOglas)
+                {
+                    <span>Stanje:</span>
+                    <div class="red-filtera">
+                        @Html.DropDownList("stanje", new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), "", new { @class = "form-control", name = "stanje", id = "stanje" })
+                    </div>
+                }
 
                 //ZA AUTE--------------------------------------------------
 
@@ -200,6 +203,28 @@
                         </select>
                     </div>
 
+                    <span>Vrsta usluge:</span>
+                    <div class="red-filtera">
+                        <select id="vrstaUsluge" name="vrstaUsluge" class="form-control">
+                            <option value="0"></option>
+                            @foreach (var vrstaUsluge in Model.RezimiOglasaNekretnina)
+                            {
+                                <option value="@vrstaUsluge.Id">@vrstaUsluge.Rezim</option>
+                            }
+                        </select>
+                    </div>
+
+                    <span>Tip gradnje:</span>
+                    <div class="red-filtera">
+                        <select id="tipGradnje" name="tipGradnje" class="form-control">
+                            <option value="0"></option>
+                            @foreach (var tipGradnje in Model.TipoviGradnje)
+                            {
+                                <option value="@tipGradnje.Id">@tipGradnje.Tip</option>
+                            }
+                        </select>
+                    </div>
+
                     <span>Kvadratura:</span>
                     <div class="red-filtera">
                         <input id="minKvadratura" name="minKvadratura" type="number" placeholder="min" min="0" class="form-control" />
@@ -288,54 +313,21 @@
 
                                 @if (jeLiAutoOglas)
                                 {
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((AutoOglas)item).MarkaAutaId): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((AutoOglas)item).MarkaAuta.Marka)</span>
-                                    </p>
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((AutoOglas)item).ModelAutaId): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((AutoOglas)item).ModelAuta.AutoModel)</span>
-                                    </p>
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((AutoOglas)item).Godiste): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((AutoOglas)item).Godiste)</span>
-                                    </p>
+                                    { Html.RenderPartial("_IndexAuti", item); }
                                 }
 
                                 @*ZA RACUNARE---------------------------------------------*@
 
                                 @if (jeLiRacunarOglas)
                                 {
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((RacunarOglas)item).TipRacunara): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((RacunarOglas)item).TipRacunara.Tip)</span>
-                                    </p>
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((RacunarOglas)item).MarkaRacunara): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((RacunarOglas)item).MarkaRacunara.Marka)</span>
-                                    </p>
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((RacunarOglas)item).MarkaGrafickeKarte): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((RacunarOglas)item).MarkaGrafickeKarte.MarkaGraficke)</span>
-                                    </p>
+                                    { Html.RenderPartial("_IndexRacunari", item); }
                                 }
 
                                 @*ZA NEKRETNINE---------------------------------------------*@
 
                                 @if (jeLiNekretninaOglas)
                                 {
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((NekretninaOglas)item).TipNekretnine): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((NekretninaOglas)item).TipNekretnine.Tip)</span>
-                                    </p>
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((NekretninaOglas)item).Grad): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((NekretninaOglas)item).Grad.ImeGrada)</span>
-                                    </p>
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => ((NekretninaOglas)item).Kvadratura): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => ((NekretninaOglas)item).Kvadratura) m<sup>2</sup></span>
-                                    </p>
+                                    { Html.RenderPartial("_IndexNekretnine", item); }
                                 }
 
                                 @*ZA OMILJENE---------------------------------------------*@
@@ -345,10 +337,6 @@
                                     <p class="oglas-item-red-polje">
                                         <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => item.UserAutorOglasa): </strong>
                                         <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => item.UserAutorOglasa.UserName)</span>
-                                    </p>
-                                    <p class="oglas-item-red-polje">
-                                        <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => item.Stanje): </strong>
-                                        <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => item.Stanje.StanjePredmetaOglasa)</span>
                                     </p>
                                 }
                             </div>
@@ -411,7 +399,7 @@
                 sortiranje = Request.QueryString.Get("sortiranje"),
                 maxCena = Request.QueryString.Get("maxCena"),
                 minCena = Request.QueryString.Get("minCena"),
-                stanje = Request.QueryString.Get("stanje"),
+                //stanje = Request.QueryString.Get("stanje"),
                 //-------------------------------------------------
                 tipNekretnine = Request.QueryString.Get("tipNekretnine"),
                 lokacijaNekretnine = Request.QueryString.Get("lokacijaNekretnine"),
@@ -419,6 +407,8 @@
                 maxKvadratura = Request.QueryString.Get("maxKvadratura"),
                 minBrojSoba = Request.QueryString.Get("minBrojSoba"),
                 maxBrojSoba = Request.QueryString.Get("maxBrojSoba"),
+                vrstaUsluge = Request.QueryString.Get("vrstaUsluge"),
+                tipGradnje = Request.QueryString.Get("tipGradnje"),
             }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded })
         }
         else if (jeLiListaOglasaPoKorisniku)
@@ -442,14 +432,18 @@
             if ("@jeLiListaOglasaPoKorisniku" == "False") {
 
                 var sortiranjeInput = document.querySelector("#sortiranje");
-                var minCenaInput = document.querySelector("#minCena");
-                var maxCenaInput = document.querySelector("#maxCena");
-                var stanjeInput = document.querySelector("#stanje");
-
                 sortiranjeInput.value = urlParams.get("sortiranje");
+
+                var minCenaInput = document.querySelector("#minCena");
                 minCenaInput.value = urlParams.get("minCena");
+
+                var maxCenaInput = document.querySelector("#maxCena");
                 maxCenaInput.value = urlParams.get("maxCena");
-                stanjeInput.value = urlParams.get("stanje");
+
+                if ("@jeLiNekretninaOglas" == "False") {
+                    var stanjeInput = document.querySelector("#stanje");
+                    stanjeInput.value = urlParams.get("stanje");
+                }
             }
 
             if ("@jeLiAutoOglas" == "True") {
@@ -577,8 +571,11 @@
                 var minBrojSobaInput = document.querySelector("#minBrojSoba");
                 minBrojSobaInput.value = urlParams.get("minBrojSoba");
 
-                var maxBrojSobaInput = document.querySelector("#maxBrojSoba");
-                maxBrojSobaInput.value = urlParams.get("maxBrojSoba");
+                var vrstaUslugeInput = document.querySelector("#vrstaUsluge");
+                vrstaUslugeInput.value = urlParams.get("vrstaUsluge");
+
+                var tipGradnjeInput = document.querySelector("#tipGradnje");
+                tipGradnjeInput.value = urlParams.get("tipGradnje");
             }
         })
     </script>

@@ -1,0 +1,14 @@
+﻿@model MiniOglasi.Models.RacunarOglasModels.RacunarOglas
+
+<p class="oglas-item-red-polje">
+    <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => oglas.TipRacunara): </strong>
+    <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => oglas.TipRacunara.Tip)</span>
+</p>
+<p class="oglas-item-red-polje">
+    <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => oglas.MarkaRacunara): </strong>
+    <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => oglas.MarkaRacunara.Marka)</span>
+</p>
+<p class="oglas-item-red-polje">
+    <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(oglas => oglas.MarkaGrafickeKarte): </strong>
+    <span class="vrednost-polja-oglasa">@Html.DisplayFor(oglas => oglas.MarkaGrafickeKarte.MarkaGraficke)</span>
+</p>

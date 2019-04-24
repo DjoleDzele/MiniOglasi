@@ -298,9 +298,31 @@
     <Compile Include="Migrations\201904141613514_DodataRamMemorijaKolona.Designer.cs">
       <DependentUpon>201904141613514_DodataRamMemorijaKolona.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904221536057_DodateTabeleTipGradnjeRezimNekretnine.cs" />
+    <Compile Include="Migrations\201904221536057_DodateTabeleTipGradnjeRezimNekretnine.Designer.cs">
+      <DependentUpon>201904221536057_DodateTabeleTipGradnjeRezimNekretnine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904221540112_SeedRezimNekretnine.cs" />
+    <Compile Include="Migrations\201904221540112_SeedRezimNekretnine.Designer.cs">
+      <DependentUpon>201904221540112_SeedRezimNekretnine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904221543356_SeedTipoviGradnje.cs" />
+    <Compile Include="Migrations\201904221543356_SeedTipoviGradnje.Designer.cs">
+      <DependentUpon>201904221543356_SeedTipoviGradnje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904221729363_StanjeNijeRequiredVise.cs" />
+    <Compile Include="Migrations\201904221729363_StanjeNijeRequiredVise.Designer.cs">
+      <DependentUpon>201904221729363_StanjeNijeRequiredVise.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904222120400_SeedTabeleZaTest.cs" />
+    <Compile Include="Migrations\201904222120400_SeedTabeleZaTest.Designer.cs">
+      <DependentUpon>201904222120400_SeedTabeleZaTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AutoOglasModels\MarkaAuta.cs" />
     <Compile Include="Models\AutoOglasModels\ModelAuta.cs" />
+    <Compile Include="Models\NekretninaOglasModels\RezimOglasaNekretnine.cs" />
+    <Compile Include="Models\NekretninaOglasModels\TipGradnje.cs" />
     <Compile Include="Models\OmiljeniOglasiByUser.cs" />
     <Compile Include="Models\PomocnaKlasa.cs" />
     <Compile Include="Models\RacunarOglasModels\GrafickaKartaMarka.cs" />
@@ -336,6 +358,72 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8059\action-asphalt-auto-210019_190922131344.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8059\action-asphalt-auto-981041_190922131500.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8060\asphalt-auto-automobile-170811_190922561842.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8060\asphalt-auto-automobile-244206_190922561998.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8060\asphalt-auto-automobile-810357_190922562311.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8061\blur-communication-computer-2148217_191122041353.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8061\computer-display-electronics-2120016_191122041509.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8061\computer-keyboard-contemporary-desk-930530_191122041822.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8061\computer-keyboard-facts-indoors-968631_191122041822.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8062\computer-keyboard-connection-contemporary-1714208_191222044153.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8063\apartment-architecture-carpet-584399_191322038661.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8063\apartment-architecture-door-1643384_191322038817.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8063\apartment-condo-condominium-275484_191322039076.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8063\architecture-building-buy-221540_191322039226.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8063\architecture-building-exterior-1029599_191322039386.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8068\access-blur-close-up-2148220_192222260045.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8068\blur-communication-computer-2148217_192222260202.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8068\computer-display-electronics-2120016_192222260358.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8068\computer-keyboard-contemporary-desk-930530_192222260514.jpg" />
+    <Content Include="Images\21722afb-073a-40e3-8008-f79dfdb9555f\8068\computer-keyboard-facts-indoors-968631_192222260670.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8064\automobile-automotive-car-116675_191622519840.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8064\automobile-car-fog-89784_191622519997.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8066\apartment-chair-chicago-1918291_191822465154.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8066\apartment-condo-condominium-275484_191822465311.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8066\architecture-beautiful-home-building-280229_191822465467.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8066\architecture-body-of-water-buildings-1438832_191822465623.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8067\airbnb-apartment-chairs-1428348_191922554778.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8067\apartment-architecture-art-276724_191922554935.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8067\apartment-architecture-carpet-584399_191922555091.jpg" />
+    <Content Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8067\apartment-architecture-door-1643384_191922555247.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8045\4k-wallpaper-automobile-automotive-1149137_194822529143.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8045\action-asphalt-auto-210019_194822529173.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8045\asphalt-auto-automobile-170811_194822529193.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8045\city-1284508_1280_194822529223.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8046\alloy-asphalt-auto-241316_195122315123.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8046\audi-automobile-car-909907_195122315233.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8046\audi-automobile-car-lights-1149831_195122315303.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8046\automobile-automotive-car-116675_195122315353.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8046\automobile-cars-headlights-120049_195122315413.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8047\4k-wallpaper-4x4-automobile-1149056_195422285714.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8047\4k-wallpaper-automobile-automotive-1149137_195422285733.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8047\action-asphalt-auto-210019_195422285793.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8047\action-asphalt-auto-981041_195422285833.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8048\asphalt-auto-automobile-170811_195522413913.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8048\asphalt-auto-automobile-244206_195522413943.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8048\asphalt-auto-automobile-810357_195522413973.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8048\audi-automobile-car-909907_195522414023.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8048\audi-automobile-car-lights-1149831_195522414103.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8049\access-blur-close-up-2148220_190122466219.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8049\blur-communication-computer-2148217_190122466269.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8049\computer-keyboard-facts-indoors-968631_190122466299.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8050\apple-cellphone-computer-keyboard-1779487_190422008829.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8050\computer-keyboard-connection-contemporary-1714208_190422008859.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8051\computer-keyboard-connection-contemporary-1714208_190522210859.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8051\computer-keyboard-contemporary-desk-930530_190522210889.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8051\computer-keyboard-facts-indoors-968631_190522210919.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8056\apartment-architecture-art-276724_191122464812.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8056\apartment-architecture-art-276724_193922085307.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8056\apartment-architecture-carpet-584399_193922085427.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8056\apartment-architecture-chair-1571468_193922085677.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8057\architecture-beautiful-home-building-280229_190622109483.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8057\architecture-brick-building-259957_190622109703.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8057\architecture-building-buy-221540_190622109785.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8058\architecture-building-country-home-1884269_190722247387.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8058\architecture-building-exterior-1029599_190722247699.jpg" />
+    <Content Include="Images\bfb08437-3fad-4ab0-b8c8-70eb1d5b84d0\8058\architecture-building-forest-2091166_190722248012.jpg" />
     <Content Include="Images\thumbnail-kola.jpg" />
     <Content Include="Images\thumbnail-kuca.jpg.jpg" />
     <Content Include="Images\thumbnail-laptop.jpg" />
@@ -428,9 +516,13 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\NekretnineOglasi\NekretninaOglasForm.cshtml" />
+    <Content Include="Views\Shared\_IndexNekretnine.cshtml" />
+    <Content Include="Views\Shared\_IndexAuti.cshtml" />
+    <Content Include="Views\Shared\_IndexRacunari.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\43e80164-3b7a-4be4-860e-6552356f2bb9\8065\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -509,6 +601,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904141613514_DodataRamMemorijaKolona.resx">
       <DependentUpon>201904141613514_DodataRamMemorijaKolona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904221536057_DodateTabeleTipGradnjeRezimNekretnine.resx">
+      <DependentUpon>201904221536057_DodateTabeleTipGradnjeRezimNekretnine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904221540112_SeedRezimNekretnine.resx">
+      <DependentUpon>201904221540112_SeedRezimNekretnine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904221543356_SeedTipoviGradnje.resx">
+      <DependentUpon>201904221543356_SeedTipoviGradnje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904221729363_StanjeNijeRequiredVise.resx">
+      <DependentUpon>201904221729363_StanjeNijeRequiredVise.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904222120400_SeedTabeleZaTest.resx">
+      <DependentUpon>201904222120400_SeedTabeleZaTest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

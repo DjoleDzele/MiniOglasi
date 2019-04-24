@@ -82,6 +82,7 @@
                 </p>
             </div>
         </div>
+
         @* SLIKE ======================================================================= *@
         <div class="slike fotorama"
              data-loop="true"
@@ -106,6 +107,7 @@
         </div>
     </div>
     <div class="ostali-info">
+
         @*OSTALE INFO -------------------------------------------------------------*@
         <table class="detalji-oglasa-tabela">
             @if (Model is AutoOglas)
@@ -120,10 +122,14 @@
             {
                 { Html.RenderPartial("_DetaljiNekretnine", Model); }
             }
-            <tr>
-                <td><strong>Stanje: </strong></td>
-                <td>@Html.DisplayFor(oglas => oglas.Stanje.StanjePredmetaOglasa)</td>
-            </tr>
+
+            @if (!(Model is NekretninaOglas))
+            {
+                <tr>
+                    <td><strong>Stanje: </strong></td>
+                    <td>@Html.DisplayFor(oglas => oglas.Stanje.StanjePredmetaOglasa)</td>
+                </tr>
+            }
             <tr>
                 <td><strong>Postavio: </strong></td>
                 <td>

@@ -1,0 +1,14 @@
+﻿@model MiniOglasi.Models.NekretninaOglasModels.NekretninaOglas
+
+<p class="oglas-item-red-polje">
+    <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(model => model.TipNekretnine): </strong>
+    <span class="vrednost-polja-oglasa">@Html.DisplayFor(model => model.TipNekretnine.Tip)</span>
+</p>
+<p class="oglas-item-red-polje">
+    <strong class="naziv-polja-oglasa">@Html.DisplayNameFor(model => model.Grad): </strong>
+    <span class="vrednost-polja-oglasa">@Html.DisplayFor(model => model.Grad.ImeGrada)</span>
+</p>
+<p class="oglas-item-red-polje">
+    <strong class="naziv-polja-oglasa">Vrsta usluge: </strong>
+    <span class="vrednost-polja-oglasa">@Html.DisplayFor(model => model.RezimOglasaNekretnine.Rezim)</span>
+</p>

@@ -26,7 +26,6 @@ namespace MiniOglasi.Controllers
                 .Include(o => o.Slike)
                 .Include(o => o.Valuta)
                 .Include(o => o.UserAutorOglasa)
-                .Include(o => o.Stanje)
                 .ToList();
 
             ViewBag.Title = "Moji oglasi";
@@ -49,7 +48,6 @@ namespace MiniOglasi.Controllers
                 .Include(om => om.Slike)
                 .Include(om => om.Valuta)
                 .Include(o => o.UserAutorOglasa)
-                .Include(o => o.Stanje)
                 .ToList();
 
             ViewBag.Title = "Omiljeni oglasi";
@@ -70,7 +68,6 @@ namespace MiniOglasi.Controllers
                 .Include(om => om.Slike)
                 .Include(om => om.Valuta)
                 .Include(o => o.UserAutorOglasa)
-                .Include(o => o.Stanje)
                 .Include(o => o.UserAutorOglasa.Grad)
                 .Where(x => x.UserAutorOglasaId == korisnikID).ToList();
 

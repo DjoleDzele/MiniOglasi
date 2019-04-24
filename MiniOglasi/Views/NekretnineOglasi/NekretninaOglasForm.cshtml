@@ -56,10 +56,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NekretninaOglas.StanjeId, htmlAttributes: new { @class = "control-label " })
+            @Html.LabelFor(model => model.NekretninaOglas.TipGradnjeId, htmlAttributes: new { @class = "control-label " })
             <div>
-                @Html.DropDownListFor(model => model.NekretninaOglas.StanjeId, new SelectList(Model.Stanja, "Id", "StanjePredmetaOglasa"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.NekretninaOglas.StanjeId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.NekretninaOglas.TipGradnjeId, new SelectList(Model.TipoviGradnje, "Id", "Tip"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NekretninaOglas.TipGradnjeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NekretninaOglas.RezimOglasaNekretnineId, htmlAttributes: new { @class = "control-label " })
+            <div>
+                @Html.DropDownListFor(model => model.NekretninaOglas.RezimOglasaNekretnineId, new SelectList(Model.RezimiOglasaNekretnina, "Id", "Rezim"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NekretninaOglas.RezimOglasaNekretnineId, "", new { @class = "text-danger" })
             </div>
         </div>
 
