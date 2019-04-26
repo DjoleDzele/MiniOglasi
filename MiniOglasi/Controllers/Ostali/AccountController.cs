@@ -195,6 +195,10 @@ namespace MiniOglasi.Controllers
             }
 
             // If we got this far, something failed, redisplay form
+            ApplicationDbContext dbContext = new ApplicationDbContext();
+            List<Grad> gradovi = dbContext.Gradovi.ToList();
+            model.Gradovi = gradovi;
+
             return View(model);
         }
 

@@ -62,7 +62,7 @@ namespace MiniOglasi.Controllers
 
         public ActionResult OglasiPoKorisniku(int? page, string korisnikID)
         {
-            var user = dbContext.Users.Find(korisnikID);
+            var user = dbContext.Users.Include(u => u.Grad).SingleOrDefault(u => u.Id == korisnikID);
 
             var oglasiPoKorisniku = dbContext.Oglasi
                 .Include(om => om.Slike)

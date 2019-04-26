@@ -89,6 +89,8 @@ namespace MiniOglasi.Models
         [StringLength(100, ErrorMessage = "{0} mora imati bar {2} karaktera.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Sifra")]
+        [RegularExpression(@"^(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d)(?=.*[^\da-zA-Z]+).{6,}$",
+            ErrorMessage = "Minimum 1 veliko i malo slovo, broj i simbol")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
