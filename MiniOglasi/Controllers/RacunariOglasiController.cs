@@ -219,6 +219,7 @@ namespace MiniOglasi.Controllers
             else
             {
                 string userId = User.Identity.GetUserId();
+                int oglasId;
 
                 if (newRacunarOglasViewModel.RacunarOglas.Id != 0)
                 {
@@ -231,7 +232,7 @@ namespace MiniOglasi.Controllers
                         return View("RacunarOglasForm", newRacunarOglasViewModel);
                     }
 
-                    string oglasId = racunarOglasUBazi.Id.ToString();
+                    oglasId = racunarOglasUBazi.Id;
                     PomocnaKlasa.DodajSlikeOglasu(userId, oglasId, racunarOglasUBazi, uploadedImages);
                 }
                 else
@@ -241,14 +242,14 @@ namespace MiniOglasi.Controllers
                     dbContext.Oglasi.Add(newRacunarOglas);
                     dbContext.SaveChanges();
 
-                    string oglasId = newRacunarOglas.Id.ToString();
+                    oglasId = newRacunarOglas.Id;
 
                     PomocnaKlasa.DodajSlikeOglasu(userId, oglasId, newRacunarOglas, uploadedImages);
                 }
 
                 dbContext.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = oglasId });
             }
         }
 

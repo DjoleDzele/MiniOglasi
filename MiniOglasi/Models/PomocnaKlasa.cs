@@ -115,9 +115,9 @@ namespace MiniOglasi.Models
             return TipoviGreskeUploadSlika.NemaGreske;
         }
 
-        public static void DodajSlikeOglasu(string userId, string oglasId, Oglas oglasKomSeDodajuSlike, List<HttpPostedFileBase> uploadedImages)
+        public static void DodajSlikeOglasu(string userId, int oglasId, Oglas oglasKomSeDodajuSlike, List<HttpPostedFileBase> uploadedImages)
         {
-            string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(HostingEnvironment.MapPath(ImagesFolder), userId, oglasId);
+            string punaPutanjaFolderaZaSlikeOglasa = Path.Combine(HostingEnvironment.MapPath(ImagesFolder), userId, oglasId.ToString());
 
             Directory.CreateDirectory(punaPutanjaFolderaZaSlikeOglasa);
 
@@ -125,7 +125,7 @@ namespace MiniOglasi.Models
             {
                 foreach (HttpPostedFileBase slika in uploadedImages)
                 {
-                    Slika novaSlikaZaBazu = SacuvajSlikuIDodajPutanju(slika, userId, oglasId, punaPutanjaFolderaZaSlikeOglasa);
+                    Slika novaSlikaZaBazu = SacuvajSlikuIDodajPutanju(slika, userId, oglasId.ToString(), punaPutanjaFolderaZaSlikeOglasa);
                     oglasKomSeDodajuSlike.Slike.Add(novaSlikaZaBazu);
                 }
             }

@@ -199,6 +199,7 @@ namespace MiniOglasi.Controllers
             else
             {
                 string userId = User.Identity.GetUserId();
+                int oglasId;
 
                 if (newNekretninaOglasViewModel.NekretninaOglas.Id != 0)
                 {
@@ -211,7 +212,7 @@ namespace MiniOglasi.Controllers
                         return View("NekretninaOglasForm", newNekretninaOglasViewModel);
                     }
 
-                    string oglasId = nekretninaOglasUBazi.Id.ToString();
+                    oglasId = nekretninaOglasUBazi.Id;
                     PomocnaKlasa.DodajSlikeOglasu(userId, oglasId, nekretninaOglasUBazi, uploadedImages);
                 }
                 else
@@ -221,14 +222,14 @@ namespace MiniOglasi.Controllers
                     dbContext.Oglasi.Add(newNekretninaOglas);
                     dbContext.SaveChanges();
 
-                    string oglasId = newNekretninaOglas.Id.ToString();
+                    oglasId = newNekretninaOglas.Id;
 
                     PomocnaKlasa.DodajSlikeOglasu(userId, oglasId, newNekretninaOglas, uploadedImages);
                 }
 
                 dbContext.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = oglasId });
             }
         }
 
